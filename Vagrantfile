@@ -13,7 +13,8 @@ Vagrant.configure(2) do |config|
     node.vm.hostname = hostname
     node.vm.network :private_network, ip: "192.168.56.93"
     node.vm.synced_folder "vagrant", "/vagrant", mount_options: ["ro"]
-    node.vm.synced_folder "django", "/var/www/chat/django", owner: "www-data", group: "www-data"
+    node.vm.synced_folder "django", "/var/www/chat/django"
+    node.vm.provision :file, source: "requirements.txt", destination: "/tmp/requirements.txt"
     node.vm.provision :shell, path: "vagrant/bootstrap.sh"
   end
 end
