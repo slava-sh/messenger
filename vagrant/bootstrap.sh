@@ -1,11 +1,23 @@
 #!/bin/bash -ex
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get update -qq
-apt-get install -q -y -f nginx python-virtualenv
-apt-get clean -q
-
 service gunicorn-chat stop || true
+
+apt-get update -qq
+apt-get install -qq -y -f nginx python-virtualenv postgresql libpq-dev python3-dev
+apt-get clean -qq
+
+sed -i 's/\(local\s\+all\s\+all\s\+\)peer/\1md5/' /etc/postgresql/*/main/pg_hba.conf
+service postgresql restart
+cat << EOF | su - postgres -c psql
+CREATE USER chat WITH PASSWORD 'chat';
+CREATE DATABASE chat WITH
+    OWNER=chat
+    LC_COLLATE='en_US.UTF-8'
+    LC_CTYPE='en_US.UTF-8'
+    ENCODING='UTF8'
+    TEMPLATE=template0;
+EOF
 
 cd /var/www/chat
 mkdir -p logs static
@@ -19,6 +31,7 @@ virtualenv -p `which python3` .
 source bin/activate
 
 pip install -qr /tmp/requirements.txt
+pip install -q psycopg2
 pip install -q gunicorn
 
 cd django
