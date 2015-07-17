@@ -4,8 +4,8 @@ from django.conf import settings
 
 class Conversation(models.Model):
     name = models.CharField(max_length=50)
-    members = models.ManyToMany(settings.AUTH_USER_MODEL,
-                                related_name='conversations')
+    members = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                     related_name='conversations')
 
     def __str__(self):
         return self.name
