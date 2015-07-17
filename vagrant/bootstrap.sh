@@ -7,7 +7,8 @@ apt-get update -qq
 apt-get install -qq -y -f nginx python-virtualenv postgresql libpq-dev python3-dev
 apt-get clean -qq
 
-sed -i 's/\(local\s\+all\s\+all\s\+\)peer/\1md5/' /etc/postgresql/*/main/pg_hba.conf
+sed -i "s/#listen_addresses\s\+=\s\+'localhost'/listen_addresses = '*'/" /etc/postgresql/*/main/postgresql.conf
+sed -i "s/\(local\s\+all\s\+all\s\+\)peer/\1md5/" /etc/postgresql/*/main/pg_hba.conf
 service postgresql restart
 cat << EOF | su - postgres -c psql
 CREATE USER chat WITH PASSWORD 'chat';
