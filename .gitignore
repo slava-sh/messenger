@@ -6,3 +6,4 @@ lib
 pip-selfcheck.json
 __pycache__
 django/project/db.sqlite3
+*.pyc
