@@ -1,0 +1,11 @@
+{% extends "chat/layout.html" %}
+
+{% block content %}
+  <p>Hey, {% verbatim %}{{ user.name }}{% endverbatim %}</p>
+
+  {% for conversation in conversations %}
+    <p><a href="{{ conversation.get_absolute_url }}">{{ conversation.name }}</a></p>
+  {% empty %}
+    <p>Start a conversation&hellip;</p>
+  {% endfor %}
+{% endblock content %}

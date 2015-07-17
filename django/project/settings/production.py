@@ -1,6 +1,6 @@
 from .common import *  # noqa
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['chat.dev']
 

@@ -1,0 +1,9 @@
+{% extends "chat/layout.html" %}
+
+{% block content %}
+  {% for message in messages %}
+    <p><strong>{{ message.author }}</strong>: {{ message.text }}</p>
+  {% empty %}
+    <p>Write something&hellip;</p>
+  {% endfor %}
+{% endblock content %}
