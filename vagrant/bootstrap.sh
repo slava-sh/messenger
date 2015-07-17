@@ -34,9 +34,8 @@ pip install -qr /tmp/requirements.txt
 pip install -q psycopg2
 pip install -q gunicorn
 
-cd django
-python manage.py migrate
-python manage.py collectstatic --noinput
+python django/manage.py migrate
+python django/manage.py collectstatic --noinput
 
 service nginx restart
 service gunicorn-chat restart
