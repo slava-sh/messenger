@@ -1,6 +1,6 @@
 import os
 
 if os.getenv('DJANGO_ENVIRONMENT') == 'development':
-    from .development import *
+    from .development import *  # noqa
 else:
-    from .production import *
+    from .production import *  # noqa
