@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.core.urlresolvers import reverse
 
 
 class Conversation(models.Model):
@@ -11,8 +10,9 @@ class Conversation(models.Model):
     def __str__(self):
         return self.name
 
+    @models.permalink
     def get_absolute_url(self):
-        return reverse('chat:conversation', args=[self.pk])
+        return ('chat:conversation', [self.pk])
 
 
 class Message(models.Model):
