@@ -45,11 +45,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'project.wsgi.application'
 
 
-LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
+USE_TZ = False
+LANGUAGE_CODE = 'en-us'
+USE_I18N = False
+USE_L10N = False
 
 
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
