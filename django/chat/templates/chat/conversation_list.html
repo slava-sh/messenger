@@ -1,11 +1,9 @@
 {% extends "chat/base.html" %}
 
-{% block main %}
-  <p>Hey, {{ request.user }}</p>
+{% block nav %}
+  {% include "chat/conversation_list_include.html" %}
+{% endblock nav %}
 
-  {% for conversation in conversations %}
-    <p><a href="{{ conversation.get_absolute_url }}">{{ conversation.name }}</a></p>
-  {% empty %}
-    <p>Start a conversation&hellip;</p>
-  {% endfor %}
+{% block main %}
+  &hellip;
 {% endblock main %}

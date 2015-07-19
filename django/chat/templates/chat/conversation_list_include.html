@@ -1,0 +1,6 @@
+<div class="conversation">{{ request.user }}</div>
+{% for conversation in conversations %}
+  <div class="conversation"><a href="{{ conversation.get_absolute_url }}">{{ conversation.name }}</a></div>
+{% empty %}
+  <div class="conversation">Start a conversation&hellip;</div>
+{% endfor %}

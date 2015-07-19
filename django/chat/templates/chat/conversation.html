@@ -1,9 +1,9 @@
 {% extends "chat/base.html" %}
 
+{% block nav %}
+  {% include "chat/conversation_list_include.html" %}
+{% endblock nav %}
+
 {% block main %}
-  {% for message in messages %}
-    <p><strong>{{ message.author }}</strong>: {{ message.text }}</p>
-  {% empty %}
-    <p>Write something&hellip;</p>
-  {% endfor %}
+  {% include "chat/conversation_include.html" %}
 {% endblock main %}
