@@ -1,6 +1,6 @@
-{% extends "chat/layout.html" %}
+{% extends "chat/base.html" %}
 
-{% block content %}
+{% block main %}
   <p>Hey, {% verbatim %}{{ user.name }}{% endverbatim %}</p>
 
   {% for conversation in conversations %}
@@ -8,4 +8,4 @@
   {% empty %}
     <p>Start a conversation&hellip;</p>
   {% endfor %}
-{% endblock content %}
+{% endblock main %}
