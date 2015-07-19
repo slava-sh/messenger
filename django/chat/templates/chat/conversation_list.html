@@ -1,7 +1,7 @@
 {% extends "chat/base.html" %}
 
 {% block main %}
-  <p>Hey, {% verbatim %}{{ user.name }}{% endverbatim %}</p>
+  <p>Hey, {{ request.user }}</p>
 
   {% for conversation in conversations %}
     <p><a href="{{ conversation.get_absolute_url }}">{{ conversation.name }}</a></p>

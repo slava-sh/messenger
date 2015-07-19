@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from .models import Conversation
 
 
@@ -7,15 +7,15 @@ def home(request):
     return conversation_list(request)
 
 
+@login_required
 def conversation_list(request):
-    user = get_user_model().objects.get(pk=1)
-    conversations = user.conversations.all()
+    conversations = request.user.conversations.all()
     return render(request, 'chat/conversation_list.html', {
-        'user': user,
         'conversations': conversations,
     })
 
 
+@login_required
 def conversation(request, pk):
     conversation = get_object_or_404(Conversation, pk=pk)
     messages = conversation.messages.all()
