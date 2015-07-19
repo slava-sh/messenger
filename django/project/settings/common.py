@@ -1,6 +1,7 @@
 import os
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 
 INSTALLED_APPS = (
@@ -29,7 +30,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(PROJECT_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
