@@ -1,6 +1,6 @@
-<div class="conversation">{{ request.user }} <a href="{% url 'auth_logout' %}">Log out</a></div>
+<div class="conversation">{{ user }} <a href="{% url 'auth_logout' %}">Log out</a></div>
 {% for conversation in conversations %}
   <div class="conversation"><a href="{{ conversation.get_absolute_url }}">{{ conversation.name }}</a></div>
 {% empty %}
-  <div class="conversation">Start a conversation&hellip;</div>
+  <div class="conversation">Start a conversation</div>
 {% endfor %}

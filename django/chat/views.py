@@ -9,17 +9,12 @@ def home(request):
 
 @login_required
 def conversation_list(request):
-    conversations = request.user.conversations.all()
-    return render(request, 'chat/conversation_list.html', {
-        'conversations': conversations,
-    })
+    return render(request, 'chat/conversation_list.html')
 
 
 @login_required
 def conversation(request, pk):
     conversation = get_object_or_404(Conversation, pk=pk)
-    conversations = request.user.conversations.all()
     return render(request, 'chat/conversation.html', {
         'conversation': conversation,
-        'conversations': conversations,
     })

@@ -1,3 +1,4 @@
+{% load chat %}
 <!doctype html>
 <html>
 <head>
@@ -66,7 +67,9 @@
           {% block main %}{% endblock main %}
         </div>
         <div class="nav">
-          {% block nav %}{% endblock nav %}
+          {% block navigation %}
+            {% navigation %}
+          {% endblock navigation %}
         </div>
       {% endblock content %}
     </div>
