@@ -1,5 +1,0 @@
-{% for message in conversation.messages.all %}
-  <p><strong>{{ message.author }}</strong>: {{ message.text }}</p>
-{% empty %}
-  <p>Write something&hellip;</p>
-{% endfor %}
