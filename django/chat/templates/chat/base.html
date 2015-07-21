@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{{ title }}</title>
+  <title>{% block title %}{{ title }}{% endblock %}</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
   <style>
@@ -13,14 +13,14 @@
 
     body {
       height: 100%;
-      background-color: #ddd;
+      background: #ddd;
     }
 
     .container {
       height: 100%;
       max-width: 800px;
       margin: 0 auto;
-      background-color: #fff;
+      background: #fff;
       border-left: 4px solid #000;
       border-right: 4px solid #000;
       display: flex;
@@ -82,7 +82,7 @@
       height: 100%;
       width: 2px;
       left: -2px;
-      background-color: #000;
+      background: #000;
       transition: left 0.1s;
     }
 
@@ -95,7 +95,7 @@
       height: 100%;
       width: 4px;
       left: -4px;
-      background-color: #000;
+      background: #000;
     }
 
     .conversation a:hover:before,
@@ -129,15 +129,10 @@
     textarea {
       border: 2px solid black;
     }
-
-    li {
-      list-style-type: none;
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    {# <div class="header">&alpha;</div> #}
     <div class="content">
       {% block content %}
         <div class="main">

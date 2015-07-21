@@ -1,15 +1,13 @@
 {% extends "chat/base.html" %}
 
+{% block title %}{{ conversation.name }}{% endblock %}
+
 {% block main %}
   <div class="messages">
     {% for message in conversation.messages.all %}
       <div class="message">
         <div class="author">{{ message.author }}</div>
         <div class="text">{{ message.text }}</div>
-      </div>
-    {% empty %}
-      <div class="message">
-        <div class="text">Start a conversation</div>
       </div>
     {% endfor %}
 
