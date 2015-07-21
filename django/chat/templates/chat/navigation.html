@@ -1,7 +1,7 @@
-<div>
+<div class="header">
   {{ user }}
-  <a href="{% url 'chat:create_conversation' %}">New conversation</a>
-  <a href="{% url 'auth_logout' %}">Log out</a>
+  <a href="{% url 'chat:create_conversation' %}"><i class="fa fa-plus"></i></a>
+  <a href="{% url 'auth_logout' %}"><i class="fa fa-sign-out"></i></a>
 </div>
 <div class="conversation-container">
   {% for conversation in conversations %}

@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>{{ title }}</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <style>
     html, body {
       margin: 0;
@@ -26,11 +27,6 @@
       flex-flow: column nowrap;
     }
 
-    .header {
-      border-bottom: 4px solid #000;
-      padding: 0.5em;
-    }
-
     .content {
       height: 100%;
       background-color: #fff;
@@ -42,7 +38,6 @@
       order: 1;
       box-sizing: border-box;
       width: 20vw;
-      height: 100%;
       border-right: 4px solid #000;
       display: flex;
       flex-flow: column nowrap;
@@ -55,13 +50,54 @@
       padding: 1em;
     }
 
+    .header {
+      flex-shrink: 0;
+      padding: 0.5em;
+      border-bottom: 4px solid #000;
+    }
+
     .conversation-container {
       overflow-y: scroll;
     }
 
-    .conversation {
-      padding: 1em;
-      border-bottom: 4px solid #000;
+    .conversation a {
+      display: block;
+      padding: 0.5em;
+      border-bottom: 3px solid #000;
+    }
+
+    .conversation a, .header a {
+      text-decoration: none;
+      color: #000;
+      position: relative;
+    }
+
+    .conversation a:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      left: -2px;
+      background-color: #000;
+      transition: left 0.1s;
+    }
+
+    .conversation a:after {
+      transition: left 0.1s;
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      left: -4px;
+      background-color: #000;
+    }
+
+    .conversation a:hover:before, .conversation a:active:before {
+      left: 0;
     }
   </style>
 </head>
