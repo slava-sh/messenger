@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from .models import Conversation
-from .forms import SendMessageForm
+from .forms import SendMessageForm, CreateConversationForm
+
+User = get_user_model()
 
 
 def home(request):
@@ -28,5 +31,21 @@ def conversation(request, pk):
         form = SendMessageForm()
     return render(request, 'chat/conversation.html', {
         'conversation': conversation,
+        'form': form,
+    })
+
+
+@login_required
+def create_conversation(request):
+    if request.method == 'POST':
+        form = CreateConversationForm(request.POST)
+        if form.is_valid():
+            conversation = form.save()
+            conversation.members.add(request.user)
+            return redirect(conversation)
+    else:
+        form = CreateConversationForm()
+    form.fields['members'].queryset = User.objects.exclude(pk=request.user.pk)
+    return render(request, 'chat/create_conversation.html', {
         'form': form,
     })
