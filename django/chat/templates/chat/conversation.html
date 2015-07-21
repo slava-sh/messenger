@@ -20,4 +20,10 @@
       </form>
     </div>
   </div>
+  <script>
+    $(function() {
+      var $messages = $('.messages');
+      $messages.scrollTop($messages.prop('scrollHeight'));
+    });
+  </script>
 {% endblock main %}
