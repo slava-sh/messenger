@@ -6,7 +6,7 @@
   <div class="messages">
     {% for message in conversation.messages.all %}
       <div class="message">
-        <div class="author">{{ message.author }}</div>
+        <div class="username">{{ user }}</div>
         <div class="text">{{ message.text }}</div>
       </div>
     {% endfor %}
@@ -14,7 +14,7 @@
     <div class="message new-message">
       <form method="post">
         {% csrf_token %}
-        <div class="author">{{ user }}</div>
+        <div class="username">{{ user }}</div>
         <div class="text">{{ form.text }}</div>
         <div><input type="submit" value="Send"></div>
       </form>
