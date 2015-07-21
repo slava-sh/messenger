@@ -6,4 +6,12 @@
   {% empty %}
     <p>Write something</p>
   {% endfor %}
+
+  <div>
+    <form method="post">
+      {% csrf_token %}
+      <p>{{ form.text }}</p>
+      <p><input type="submit"></p>
+    </form>
+  </div>
 {% endblock main %}
