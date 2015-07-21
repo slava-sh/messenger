@@ -1,0 +1,358 @@
+[
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "pbkdf2_sha256$20000$R8eo1vBU9w0V$fYbTXmQznHdC2CdPJxLrPPbAyNfot/IbMT8MK+2V+ms=",
+      "email": "shk.slava@gmail.com",
+      "username": "slava",
+      "is_superuser": true,
+      "user_permissions": [],
+      "date_joined": "2015-07-17T15:34:42.898",
+      "groups": [],
+      "is_active": true,
+      "last_login": "2015-07-21T13:47:56.641",
+      "is_staff": true
+    },
+    "model": "auth.user",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "pbkdf2_sha256$20000$ryMoYFuDDrFa$kIB4d9EL0uoIZ9pDhNkMrPfXVde4EJXsc1Dj3TdLE8M=",
+      "email": "",
+      "username": "kolya2",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-19T17:35:41.271",
+      "groups": [],
+      "is_active": true,
+      "last_login": "2015-07-21T11:20:11.145",
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "pbkdf2_sha256$20000$m9dmGTNtQ7JL$s0Q50JMnk0yE+5gh30aSOFGjWgvSBOdmYFvZsxQnyUY=",
+      "email": "",
+      "username": "third",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T12:59:11.321",
+      "groups": [],
+      "is_active": true,
+      "last_login": "2015-07-21T12:59:11.378",
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user1",
+      "email": "",
+      "username": "user1",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.322",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user2",
+      "email": "",
+      "username": "user2",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.333",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user3",
+      "email": "",
+      "username": "user3",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.335",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user4",
+      "email": "",
+      "username": "user4",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.337",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user5",
+      "email": "",
+      "username": "user5",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.340",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user6",
+      "email": "",
+      "username": "user6",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.343",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user7",
+      "email": "",
+      "username": "user7",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.344",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user8",
+      "email": "",
+      "username": "user8",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.346",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user9",
+      "email": "",
+      "username": "user9",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.347",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "last_name": "",
+      "first_name": "",
+      "password": "user10",
+      "email": "",
+      "username": "user10",
+      "is_superuser": false,
+      "user_permissions": [],
+      "date_joined": "2015-07-21T13:47:31.349",
+      "groups": [],
+      "is_active": true,
+      "last_login": null,
+      "is_staff": false
+    },
+    "model": "auth.user",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "name": "all three",
+      "members": [
+        1,
+        2,
+        3
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "name": "with user1",
+      "members": [
+        1,
+        4
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "name": "with user2",
+      "members": [
+        1,
+        5
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "name": "with user3",
+      "members": [
+        1,
+        6
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "name": "with user4",
+      "members": [
+        1,
+        7
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "name": "with user5",
+      "members": [
+        1,
+        8
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "name": "with user6",
+      "members": [
+        1,
+        9
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "name": "with user7",
+      "members": [
+        1,
+        10
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "name": "with user8",
+      "members": [
+        1,
+        11
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "name": "with user9",
+      "members": [
+        1,
+        12
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "name": "with user10",
+      "members": [
+        1,
+        13
+      ]
+    },
+    "model": "chat.conversation",
+    "pk": 17
+  }
+]
