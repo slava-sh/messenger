@@ -1,17 +1,25 @@
 {% extends "chat/base.html" %}
 
 {% block main %}
-  {% for message in conversation.messages.all %}
-    <p><strong>{{ message.author }}</strong>: {{ message.text }}</p>
-  {% empty %}
-    <p>Write something</p>
-  {% endfor %}
+  <div class="messages">
+    {% for message in conversation.messages.all %}
+      <div class="message">
+        <div class="author">{{ message.author }}</div>
+        <div class="text">{{ message.text }}</div>
+      </div>
+    {% empty %}
+      <div class="message">
+        <div class="text">Start a conversation</div>
+      </div>
+    {% endfor %}
 
-  <div>
-    <form method="post">
-      {% csrf_token %}
-      <p>{{ form.text }}</p>
-      <p><input type="submit"></p>
-    </form>
+    <div class="message new-message">
+      <form method="post">
+        {% csrf_token %}
+        <div class="author">{{ user }}</div>
+        <div class="text">{{ form.text }}</div>
+        <div><input type="submit" value="Send"></div>
+      </form>
+    </div>
   </div>
 {% endblock main %}
