@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!doctype html>
 <html>
 <head>
@@ -5,146 +6,49 @@
   <title>BB Chat</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-  <style>
-    html {
-      height: 100%;
-    }
-
-    body {
-      height: 100%;
-      background: #ddd;
-    }
-
-    .container {
-      height: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-      background: #fff;
-      border-left: 4px solid #000;
-      border-right: 4px solid #000;
-      display: flex;
-      flex-flow: column nowrap;
-    }
-
-    .content {
-      height: 100%;
-      display: flex;
-      flex-flow: row nowrap;
-    }
-
-    .navigation {
-      order: 1;
-      flex: 25 0;
-      box-sizing: border-box;
-      border-right: 4px solid #000;
-      display: flex;
-      flex-flow: column nowrap;
-    }
-
-    .main {
-      order: 2;
-      flex: 75 0;
-      box-sizing: border-box;
-      display: flex;
-      flex-flow: column nowrap;
-    }
-
-    .header {
-      flex: 0 0;
-      padding: 0.5em;
-      border-bottom: 4px solid #000;
-    }
-
-    .conversations,
-    .messages {
-      overflow-y: scroll;
-    }
-
-    .conversation a {
-      display: block;
-      padding: 0.5em;
-      border-bottom: 2px solid #000;
-    }
-
-    .conversation a,
-    .header a {
-      text-decoration: none;
-      color: #000;
-      position: relative;
-    }
-
-    .conversation a:before {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 2px;
-      left: -2px;
-      background: #000;
-      transition: left 0.1s;
-    }
-
-    .conversation a:after {
-      transition: left 0.1s;
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 4px;
-      left: -4px;
-      background: #000;
-    }
-
-    .conversation a:hover:before,
-    .conversation a:active:before {
-      left: 0;
-    }
-
-    .message {
-      max-width: 28em;
-      margin: 0.75em 0;
-      padding-left: 3em;
-    }
-
-    .message .text {
-      white-space: pre-wrap;
-    }
-
-    .new-message textarea {
-      max-width: 28em;
-      width: 100%;
-      height: 2.5em;
-      margin-top: 0.25em;
-    }
-
-    .username {
-      font-weight: bold;
-    }
-
-    input[type="text"],
-    input[type="password"],
-    textarea {
-      border: 2px solid black;
-    }
-  </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min.js"></script>
+  <link rel="stylesheet" href="{% static 'bb_chat/styles.css' %}">
 </head>
 <body>
   <div class="container">
     <div class="content">
-      {% block content %}
-        <div class="main">
-          {% block main %}{% endblock main %}
-        </div>
-        <div class="navigation">
-          {% block navigation %}{% endblock navigation %}
-        </div>
-      {% endblock content %}
+        <div class="main"></div>
+        <div class="navigation"></div>
     </div>
   </div>
+  <script id="navigation-view" type="text/template">
+    <div class="header">
+      <span class="username">{{ user }}</span>
+      <a href="{% url 'chat:create_conversation' %}"><i class="fa fa-plus pull-left"></i></a>
+      <a href="{% url 'auth_logout' %}"><i class="fa fa-sign-out pull-right"></i></a>
+    </div>
+    <div class="conversations">
+      <% conversations.each(function(conversation) { %>
+        <div class="conversation">
+          <a href="<%- conversation.getAbsoluteUrl() %>"><%- conversation.get('name') %></a>
+        </div>
+      <% }); %>
+    </div>
+  </script>
+  <script id="messages-view" type="text/template">
+    <% conversation.messages.each(function(message) { %>
+      <div class="message">
+        <div class="username"><%- message.get('author') %></div>
+        <div class="text"><%- message.get('text') %></div>
+      </div>
+    <% }); %>
+
+    <div class="message new-message">
+      <form method="post">
+        {% csrf_token %}
+        <div class="username">{{ user }}</div>
+        <div class="text">{{ form.text }}</div>
+        <div><input type="submit" value="Send"></div>
+      </form>
+    </div>
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min.js"></script>
+  <script src="{% static 'bb_chat/app.js' %}"></script>
 </body>
 </html>

@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^bb/', include('bb_chat.urls', namespace='bb_chat')),
     url(r'^', include('chat.urls', namespace='chat')),
 ]
