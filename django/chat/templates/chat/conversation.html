@@ -6,7 +6,7 @@
   <div class="messages">
     {% for message in conversation.messages.all %}
       <div class="message">
-        <div class="username">{{ user }}</div>
+        <div class="username">{{ message.author }}</div>
         <div class="text">{{ message.text }}</div>
       </div>
     {% endfor %}

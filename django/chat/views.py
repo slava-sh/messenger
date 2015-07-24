@@ -19,6 +19,7 @@ def conversation_list(request):
 @login_required
 def conversation(request, pk):
     conversation = get_object_or_404(Conversation, pk=pk)
+    # todo validate membership
     if request.method == 'POST':
         form = SendMessageForm(request.POST)
         if form.is_valid():
