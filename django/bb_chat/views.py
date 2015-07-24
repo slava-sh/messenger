@@ -5,7 +5,7 @@ from functools import wraps
 from chat.models import Conversation
 
 
-def home(request):
+def home(request, *args, **kwargs):
     return render(request, 'bb_chat/index.html')
 
 
