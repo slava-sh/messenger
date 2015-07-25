@@ -8,7 +8,7 @@ class Conversations extends Backbone.Collection
   model: Conversation
   url: '/bb/conversations'
 
-class ConversationView extends Backbone.View
+class ConversationItemView extends Backbone.View
   tagName: 'div'
   className: 'conversation'
   template: _.template $('#conversation-view').html()
@@ -17,15 +17,12 @@ class ConversationView extends Backbone.View
     @$el.html @template()
     this
 
-class ConversationsView extends Backbone.View
-  # tagName: 'div'
-  # className: 'conversations'
-  el: '.navigation'
-  template: _.template $('#navigation-view').html()
+class ConversationListView extends Backbone.View
+  template: _.template $('#conversation-list-view').html()
 
   initialize: ->
     @collection = new Conversations()
-    @collection.bind 'update', @render
+    @listenTo @collection, 'update', @render
     @collection.fetch()
     return
 
@@ -34,50 +31,71 @@ class ConversationsView extends Backbone.View
       conversations: @collection
     this
 
-class MessagesView extends Backbone.View
-  tagName: 'div'
-  className: 'messages'
-  template: _.template $('#messages-view').html()
+class ChatView extends Backbone.View
+  el: '.main'
+  template: _.template $('#chat-view').html()
 
   initialize: ->
-    @model.bind 'update', @render
-    @render()
+    @model = new Conversation id: @id
+    @listenTo @model, 'change', @render
+    @model.fetch()
     return
 
   render: =>
     @$el.html @template
       conversation: @model
-    console.log @$el.html()
+    messages = @$el.find('.messages')
+    messages.scrollTop messages.prop 'scrollHeight'
+    this
+
+class NavigationView extends Backbone.View
+  el: '.navigation'
+  template: _.template $('#navigation-view').html()
+
+  initialize: ->
+    @conversationListView = new ConversationListView()
+    return
+
+  render: =>
+    @$el.html @template()
+    @conversationListView.$el = @.$('.conversations')
+    @conversationListView.render()
     this
 
 class Router extends Backbone.Router
   routes:
+    '':       'home'
     'c/:id/': 'conversation'
 
-  initialize: ->
-    $(document).on 'click', 'a[href]', (e) ->
+  initialize:->
+    $(document).on 'click', 'a[href]', (e)->
       href = this.getAttribute 'href'
       root = Backbone.history.root
       if href.startsWith root
         e.preventDefault()
         Backbone.history.navigate href.substr(root.length), trigger: true
       return
+    Backbone.history.start
+      pushState: true
+      root: '/bb/'
+    return
+
+  execute: (callback, args, name) ->
+    console.log "route #{name}(#{args})"
+    super callback, args, name
+
+  home: ->
     return
 
   conversation: (id) ->
-    conversation = new Conversation id: id
-    window.conversation = conversation
-    conversation.fetch()
-    view = new MessagesView model: conversation
-    $('.main').html view.$el
+    chatView = new ChatView id: id
+    window.chatView = chatView
     return
 
-$ ->
-  conversationsView = new ConversationsView()
-  router = new Router()
-  Backbone.history.start
-    pushState: true
-    root: '/bb/'
-  window.router = router
-  window.conversationsView = conversationsView
-  return
+class App
+  constructor: ->
+    @router = new Router()
+    @navigationView = new NavigationView()
+    @navigationView.render()
+
+(exports ? this).App = App
