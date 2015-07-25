@@ -24,7 +24,7 @@
     <div class="conversations">
       <% conversations.each(function(conversation) { %>
         <div class="conversation">
-          <a href="<%- conversation.getAbsoluteUrl() %>"><%- conversation.get('name') %></a>
+          <a href="<%- conversation.getViewUrl() %>"><%- conversation.get('name') %></a>
         </div>
       <% }); %>
     </div>

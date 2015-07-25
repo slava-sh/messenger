@@ -29,4 +29,5 @@ def conversation(request, pk):
     # TODO: validate membership
     response = model_to_dict(conversation, fields=['id', 'name'])
     response['members'] = list(conversation.members.values('id', 'username'))
+    response['messages'] = list(conversation.messages.values('id', 'author', 'text'))
     return response

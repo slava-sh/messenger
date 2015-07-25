@@ -1,5 +1,6 @@
 var Conversation = Backbone.Model.extend({
-  getAbsoluteUrl: function() {
+  urlRoot: '/bb/conversations',
+  getViewUrl: function() {
     return '/bb/c/' + this.get('id') + '/';
   }
 });
@@ -40,8 +41,14 @@ var MessagesView = Backbone.View.extend({
   tagName: 'div',
   className: 'messages',
   template: _.template($('#messages-view').html()),
+  initialize: function() {
+    _.bindAll(this, 'render');
+    this.model.bind('update', this.render);
+    this.render();
+  },
   render: function() {
-    this.$el.html(this.template({conversation: this.conversation}));
+    this.$el.html(this.template({conversation: this.model}));
+    console.log(this.$el.html());
     return this;
   },
 });
@@ -56,13 +63,16 @@ var Router = Backbone.Router.extend({
       var root = Backbone.history.root;
       if (href.startsWith(root)) {
         e.preventDefault();
-        console.log(href.substr(root.length));
         Backbone.history.navigate(href.substr(root.length), true);
       }
     });
   },
-  conversation: function() {
-    console.log(arguments);
+  conversation: function(id) {
+    var conversation = new Conversation({id: id});
+    window.c = conversation;
+    conversation.fetch();
+    var view = new MessagesView({model: conversation});
+    $('.main').html(view.$el);
   },
 });
 
