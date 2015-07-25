@@ -30,19 +30,30 @@ class ConversationListView extends Backbone.View
       conversations: @collection
     this
 
+class MessageListView extends Backbone.View
+  className: 'messages'
+  template: _.template $('#message-list-view').html()
+
+  render: =>
+    @$el.html @template
+      messages: @model.get('messages')
+    this
+
 class ChatView extends Backbone.View
   className: 'chat'
   template: _.template $('#chat-view').html()
 
   initialize: ->
     @model = new Conversation id: @id
+    @messageListView = new MessageListView model: @model
     @listenTo @model, 'change', @render
     @model.fetch()
     return
 
   render: =>
     @$el.html @template
-      conversation: @model
+    @messageListView.$el = @.$('.messages')
+    @messageListView.render()
     @$el.scrollTop @$el.prop 'scrollHeight'
     this
 

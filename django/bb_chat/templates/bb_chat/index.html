@@ -31,25 +31,23 @@
     <% }); %>
   </script>
   <script id="chat-view" type="text/template">
-    <div class="chat">
-      <div class="messages">
-        <% _.each(conversation.get('messages'), function(message) { %>
-          <div class="message">
-            <div class="username"><%- message.author %></div>
-            <div class="text"><%- message.text %></div>
-          </div>
-        <% }); %>
-      </div>
-
-      <div class="message new-message">
-        <form method="post">
-          {% csrf_token %}
-          <div class="username">{{ user }}</div>
-          <div class="text"><textarea></textarea></div>
-          <div><input type="submit" value="Send"></div>
-        </form>
-      </div>
+    <div class="messages"></div>
+    <div class="message new-message">
+      <form method="post">
+        {% csrf_token %}
+        <div class="username">{{ user }}</div>
+        <div class="text"><textarea></textarea></div>
+        <div><input type="submit" value="Send"></div>
+      </form>
     </div>
+  </script>
+  <script id="message-list-view" type="text/template">
+    <% _.each(messages, function(message) { %>
+      <div class="message">
+        <div class="username"><%- message.author %></div>
+        <div class="text"><%- message.text %></div>
+      </div>
+    <% }); %>
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
