@@ -1,8 +1,17 @@
+class Message extends Backbone.Model
+
+class Messages extends Backbone.Collection
+  model: Message
+
 class Conversation extends Backbone.Model
   urlRoot: '/bb/conversations'
 
   getViewUrl: ->
     '/bb/c/' + @get('id') + '/'
+
+  parse: (response, options) ->
+    response.messages = new Messages response.messages
+    return response
 
 class Conversations extends Backbone.Collection
   model: Conversation
@@ -30,43 +39,75 @@ class ConversationListView extends Backbone.View
       conversations: @collection
     this
 
-class MessageListView extends Backbone.View
-  className: 'messages'
-  template: _.template $('#message-list-view').html()
+class MessageItemView extends Backbone.View
+  className: 'message'
+  template: _.template $('#message-item-view').html()
+
+  initialize: ->
+    @listenTo @model, 'change', @render
 
   render: =>
     @$el.html @template
-      messages: @model.get('messages')
+      message: @model
     this
+
+class MessageListView extends Backbone.View
+  className: 'messages'
+
+  initialize: ->
+    @listenTo @collection, 'add', @addMessage
+
+  render: =>
+    @collection.each @addMessage
+    this
+
+  addMessage: (message) =>
+    messageView = new MessageItemView model: message
+    @$el.append messageView.render().$el
 
 class ChatView extends Backbone.View
   className: 'chat'
   template: _.template $('#chat-view').html()
+  events:
+    'submit .new-message form': 'sendMessage'
 
   initialize: ->
     @model = new Conversation id: @id
-    @messageListView = new MessageListView model: @model
     @listenTo @model, 'change', @render
     @model.fetch()
     return
 
   render: =>
     @$el.html @template
+    @messageListView = new MessageListView collection: @model.get('messages')
     @messageListView.$el = @.$('.messages')
     @messageListView.render()
-    @$el.scrollTop @$el.prop 'scrollHeight'
+    @scrollToBottom()
     this
+
+  scrollToBottom: ->
+    @$el.scrollTop @$el.prop 'scrollHeight'
+
+  sendMessage: (event) =>
+    event.preventDefault()
+    data = _.object(_.map($(event.target).serializeArray(), _.values))
+    message = new Message text: data.text
+    message.url = "/bb/conversations/#{@id}/messages"
+    message.save {},
+      beforeSend: (xhr) =>
+        xhr.setRequestHeader 'X-CSRFToken', data.csrfmiddlewaretoken
+      success: =>
+        @$el.find('textarea') .val ''
+        @messageListView.collection.add message
+        @scrollToBottom()
 
 class NavigationView extends Backbone.View
   el: '.navigation'
   template: _.template $('#navigation-view').html()
 
-  initialize: ->
-    @conversationListView = new ConversationListView()
-    return
-
   render: =>
     @$el.html @template()
+    @conversationListView = new ConversationListView()
     @conversationListView.$el = @.$('.conversations')
     @conversationListView.render()
     this
@@ -77,11 +118,11 @@ class Router extends Backbone.Router
     'c/:id/': 'conversation'
 
   initialize:->
-    $(document).on 'click', 'a[href]', (e)->
+    $(document).on 'click', 'a[href]', (event) ->
       href = this.getAttribute 'href'
       root = Backbone.history.root
       if href.startsWith root
-        e.preventDefault()
+        event.preventDefault()
         Backbone.history.navigate href.substr(root.length), trigger: true
       return
     Backbone.history.start
