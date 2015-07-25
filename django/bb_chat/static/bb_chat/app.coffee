@@ -9,7 +9,6 @@ class Conversations extends Backbone.Collection
   url: '/bb/conversations'
 
 class ConversationItemView extends Backbone.View
-  tagName: 'div'
   className: 'conversation'
   template: _.template $('#conversation-view').html()
 
@@ -32,7 +31,7 @@ class ConversationListView extends Backbone.View
     this
 
 class ChatView extends Backbone.View
-  el: '.main'
+  className: 'chat'
   template: _.template $('#chat-view').html()
 
   initialize: ->
@@ -44,8 +43,7 @@ class ChatView extends Backbone.View
   render: =>
     @$el.html @template
       conversation: @model
-    messages = @$el.find('.messages')
-    messages.scrollTop messages.prop 'scrollHeight'
+    @$el.scrollTop @$el.prop 'scrollHeight'
     this
 
 class NavigationView extends Backbone.View
@@ -89,6 +87,7 @@ class Router extends Backbone.Router
 
   conversation: (id) ->
     chatView = new ChatView id: id
+    $('.main').html(chatView.$el)
     window.chatView = chatView
     return
 

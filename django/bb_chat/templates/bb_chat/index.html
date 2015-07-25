@@ -31,13 +31,15 @@
     <% }); %>
   </script>
   <script id="chat-view" type="text/template">
-    <div class="messages">
-      <% _.each(conversation.get('messages'), function(message) { %>
-        <div class="message">
-          <div class="username"><%- message.author %></div>
-          <div class="text"><%- message.text %></div>
-        </div>
-      <% }); %>
+    <div class="chat">
+      <div class="messages">
+        <% _.each(conversation.get('messages'), function(message) { %>
+          <div class="message">
+            <div class="username"><%- message.author %></div>
+            <div class="text"><%- message.text %></div>
+          </div>
+        <% }); %>
+      </div>
 
       <div class="message new-message">
         <form method="post">

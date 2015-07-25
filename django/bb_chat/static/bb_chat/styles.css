@@ -48,7 +48,7 @@ body {
 }
 
 .conversations,
-.messages {
+.chat {
   overflow-y: scroll;
 }
 
