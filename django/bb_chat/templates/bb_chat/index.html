@@ -48,12 +48,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min.js"></script>
-  <script src="http://coffeescript.org/extras/coffee-script.js"></script>
-  <script type="text/coffeescript" data-src="{% static 'bb_chat/app.coffee' %}"></script>
-  <script type="text/coffeescript">
-    $ ->
-      window.app = new App()
-      return
-  </script>
+  <script src="{% static 'bb_chat/app.js' %}"></script>
 </body>
 </html>

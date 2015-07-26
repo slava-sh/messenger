@@ -141,4 +141,15 @@ class App
     @navigationView = new NavigationView
     @navigationView.render()
 
-(exports ? this).App = App
+module.exports =
+  Message: Message
+  Conversation: Conversation
+  Messages: Messages
+  Conversations: Conversations
+  ConversationListView: ConversationListView
+  MessageItemView: MessageItemView
+  MessageListView: MessageListView
+  ChatView: ChatView
+  NavigationView: NavigationView
+  Router: Router
+  App: App
