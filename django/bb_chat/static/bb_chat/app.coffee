@@ -29,7 +29,7 @@ class ConversationListView extends Backbone.View
   template: _.template $('#conversation-list-view').html()
 
   initialize: ->
-    @collection = new Conversations()
+    @collection = new Conversations
     @listenTo @collection, 'update', @render
     @collection.fetch()
     return
@@ -90,7 +90,7 @@ class ChatView extends Backbone.View
 
   sendMessage: (event) =>
     event.preventDefault()
-    data = _.object(_.map($(event.target).serializeArray(), _.values))
+    data = _.object _.map $(event.target).serializeArray(), _.values
     message = new Message text: data.text
     message.url = "/bb/conversations/#{@id}/messages"
     message.save {},
@@ -107,7 +107,7 @@ class NavigationView extends Backbone.View
 
   render: =>
     @$el.html @template()
-    @conversationListView = new ConversationListView()
+    @conversationListView = new ConversationListView
     @conversationListView.$el = @.$('.conversations')
     @conversationListView.render()
     this
@@ -139,14 +139,13 @@ class Router extends Backbone.Router
 
   conversation: (id) ->
     chatView = new ChatView id: id
-    $('.main').html(chatView.$el)
     window.chatView = chatView
     return
 
 class App
   constructor: ->
-    @router = new Router()
-    @navigationView = new NavigationView()
+    @router = new Router
+    @navigationView = new NavigationView
     @navigationView.render()
 
 (exports ? this).App = App
