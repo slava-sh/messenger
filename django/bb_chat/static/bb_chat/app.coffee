@@ -1,37 +1,30 @@
 class Message extends Backbone.Model
 
-class Messages extends Backbone.Collection
-  model: Message
-
 class Conversation extends Backbone.Model
   urlRoot: '/bb/conversations'
+
+  parse: (response, options) ->
+    if not @messages?
+      @messages = new Messages
+    @messages.add response.messages, merge: true
+    delete response.messages
+    return response
 
   getViewUrl: ->
     '/bb/c/' + @get('id') + '/'
 
-  parse: (response, options) ->
-    response.messages = new Messages response.messages
-    return response
+class Messages extends Backbone.Collection
+  model: Message
 
 class Conversations extends Backbone.Collection
   model: Conversation
   url: '/bb/conversations'
 
-class ConversationItemView extends Backbone.View
-  className: 'conversation'
-  template: _.template $('#conversation-view').html()
-
-  render: ->
-    @$el.html @template()
-    this
-
 class ConversationListView extends Backbone.View
   template: _.template $('#conversation-list-view').html()
 
   initialize: ->
-    @collection = new Conversations
     @listenTo @collection, 'update', @render
-    @collection.fetch()
     return
 
   render: =>
@@ -82,7 +75,7 @@ class ChatView extends Backbone.View
 
   render: =>
     @$el.html @template
-    @messageListView = new MessageListView collection: @model.get('messages')
+    @messageListView = new MessageListView collection: @model.messages
     @messageListView.$el = @.$('.messages')
     @messageListView.render()
     @messageListView.scrollToBottom()
@@ -93,8 +86,8 @@ class ChatView extends Backbone.View
     data = _.object _.map $(event.target).serializeArray(), _.values
     message = new Message text: data.text
     message.url = "/bb/conversations/#{@id}/messages"
-    message.save {},
-      beforeSend: (xhr) =>
+    message.save null,
+      beforeSend: (xhr) ->
         xhr.setRequestHeader 'X-CSRFToken', data.csrfmiddlewaretoken
       success: =>
         @$el.find('textarea') .val ''
@@ -108,8 +101,9 @@ class NavigationView extends Backbone.View
   render: =>
     @$el.html @template()
     @conversationListView = new ConversationListView
+      collection: new Conversations
+    @conversationListView.collection.fetch()
     @conversationListView.$el = @.$('.conversations')
-    @conversationListView.render()
     this
 
 class Router extends Backbone.Router
@@ -135,7 +129,6 @@ class Router extends Backbone.Router
     super callback, args, name
 
   home: ->
-    return
 
   conversation: (id) ->
     chatView = new ChatView id: id
