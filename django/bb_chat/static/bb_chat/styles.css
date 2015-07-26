@@ -10,10 +10,10 @@ body {
 .container {
   height: 100%;
   max-width: 800px;
+  box-sizing: border-box;
   margin: 0 auto;
   background: #fff;
-  border-left: 4px solid #000;
-  border-right: 4px solid #000;
+  border: 4px solid #000;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -85,8 +85,8 @@ body {
 
 .message {
   max-width: 28em;
-  margin: 0.75em 0;
-  padding-left: 3em;
+  margin: 0.75em 1em;
+  padding-left: 2em;
 }
 
 .message .text {
@@ -95,7 +95,7 @@ body {
 
 .new-message {
   flex: none;
-  padding: 0.75em 0 0.75em 3em;
+  padding: 0.75em 1em 0.75em 3em;
   border-top: 4px solid #000;
 }
 
