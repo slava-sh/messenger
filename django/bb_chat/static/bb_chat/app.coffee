@@ -65,6 +65,9 @@ class MessageListView extends Backbone.View
     messageView = new MessageItemView model: message
     @$el.append messageView.render().$el
 
+  scrollToBottom: ->
+    @$el.scrollTop @$el.prop 'scrollHeight'
+
 class ChatView extends Backbone.View
   el: '.main'
   template: _.template $('#chat-view').html()
@@ -82,11 +85,8 @@ class ChatView extends Backbone.View
     @messageListView = new MessageListView collection: @model.get('messages')
     @messageListView.$el = @.$('.messages')
     @messageListView.render()
-    @scrollToBottom()
+    @messageListView.scrollToBottom()
     this
-
-  scrollToBottom: ->
-    @$el.scrollTop @$el.prop 'scrollHeight'
 
   sendMessage: (event) =>
     event.preventDefault()
@@ -99,7 +99,7 @@ class ChatView extends Backbone.View
       success: =>
         @$el.find('textarea') .val ''
         @messageListView.collection.add message
-        @scrollToBottom()
+        @messageListView.scrollToBottom()
 
 class NavigationView extends Backbone.View
   el: '.navigation'
