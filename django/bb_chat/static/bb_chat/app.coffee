@@ -66,7 +66,7 @@ class MessageListView extends Backbone.View
     @$el.append messageView.render().$el
 
 class ChatView extends Backbone.View
-  className: 'chat'
+  el: '.main'
   template: _.template $('#chat-view').html()
   events:
     'submit .new-message form': 'sendMessage'

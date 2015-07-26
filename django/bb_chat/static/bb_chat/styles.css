@@ -26,7 +26,7 @@ body {
 
 .navigation {
   order: 1;
-  flex: 25 0;
+  flex: 25;
   box-sizing: border-box;
   border-right: 4px solid #000;
   display: flex;
@@ -35,20 +35,21 @@ body {
 
 .main {
   order: 2;
-  flex: 75 0;
+  flex: 75;
   box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
 }
 
 .header {
-  flex: 0 0;
+  flex: none;
   padding: 0.5em;
   border-bottom: 4px solid #000;
 }
 
 .conversations,
-.chat {
+.messages {
+  flex: auto;
   overflow-y: scroll;
 }
 
@@ -92,11 +93,16 @@ body {
   white-space: pre-wrap;
 }
 
+.new-message {
+  flex: none;
+  padding: 0.75em 0 0.75em 3em;
+  border-top: 4px solid #000;
+}
+
 .new-message textarea {
   max-width: 28em;
   width: 100%;
   height: 2.5em;
-  margin-top: 0.25em;
 }
 
 .username {
