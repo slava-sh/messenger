@@ -1,24 +1,7 @@
-class Message extends Backbone.Model
-
-class Conversation extends Backbone.Model
-  urlRoot: '/bb/conversations'
-
-  parse: (response, options) ->
-    if not @messages?
-      @messages = new Messages
-    @messages.add response.messages, merge: true
-    delete response.messages
-    return response
-
-  getViewUrl: ->
-    '/bb/c/' + @get('id') + '/'
-
-class Messages extends Backbone.Collection
-  model: Message
-
-class Conversations extends Backbone.Collection
-  model: Conversation
-  url: '/bb/conversations'
+Backbone    = require('backbone')
+$           = require('jquery')
+_           = require('lodash')
+models      = require('./models')
 
 class ConversationListView extends Backbone.View
   template: _.template $('#conversation-list-view').html()
@@ -69,7 +52,7 @@ class ChatView extends Backbone.View
     'submit .new-message form': 'sendMessage'
 
   initialize: ->
-    @model = new Conversation id: @id
+    @model = new models.Conversation id: @id
     @listenTo @model, 'change', @render
     @model.fetch()
     return
@@ -85,7 +68,7 @@ class ChatView extends Backbone.View
   sendMessage: (event) =>
     event.preventDefault()
     data = _.object _.map $(event.target).serializeArray(), _.values
-    message = new Message text: data.text
+    message = new models.Message text: data.text
     message.url = "/bb/conversations/#{@id}/messages"
     message.save null,
       beforeSend: (xhr) ->
@@ -100,7 +83,7 @@ class NavigationView extends Backbone.View
 
   initialize: ->
     @conversationListView = new ConversationListView
-      collection: new Conversations
+      collection: new models.Conversations
     @conversationListView.collection.fetch()
     @render()
     return
@@ -144,20 +127,11 @@ class AppView extends Backbone.View
     @mainView.setElement @.$('.main')
     return
 
-class AppRouter extends Backbone.Router
-  routes:
-    '':       'home'
-    'c/:id/': 'conversation'
-
-  execute: (callback, args, name) ->
-    console.log "route #{name}(#{args})"
-    super callback, args, name
-
-  start: ->
-    Backbone.history.start
-      pushState: true
-      root: '/bb/'
-
-module.exports =
-  AppView: AppView
-  AppRouter: AppRouter
+module.exports = {
+  ConversationListView
+  MessageItemView
+  MessageListView
+  ChatView
+  NavigationView
+  AppView
+}

@@ -1,4 +1,6 @@
-{AppRouter, AppView} = require('./lib')
+$         = require('jquery')
+AppRouter = require('./router')
+{AppView} = require('./views')
 
 $ ->
   router = new AppRouter
