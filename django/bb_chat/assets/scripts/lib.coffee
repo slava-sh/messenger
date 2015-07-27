@@ -56,7 +56,7 @@ class MessageListView extends Backbone.View
 
   addMessage: (message) =>
     messageView = new MessageItemView model: message
-    @$el.append messageView.render().$el
+    @$el.append messageView.render().el
 
   scrollToBottom: ->
     @$el.scrollTop @$el.prop 'scrollHeight'
@@ -76,7 +76,7 @@ class ChatView extends Backbone.View
   render: =>
     @$el.html @template
     @messageListView = new MessageListView collection: @model.messages
-    @messageListView.$el = @.$('.messages')
+    @messageListView.setElement @.$('.messages')
     @messageListView.render()
     @messageListView.scrollToBottom()
     this
@@ -90,7 +90,7 @@ class ChatView extends Backbone.View
       beforeSend: (xhr) ->
         xhr.setRequestHeader 'X-CSRFToken', data.csrfmiddlewaretoken
       success: =>
-        @$el.find('textarea') .val ''
+        @.$('textarea') .val ''
         @messageListView.collection.add message
         @messageListView.scrollToBottom()
 
@@ -102,8 +102,8 @@ class NavigationView extends Backbone.View
     @$el.html @template()
     @conversationListView = new ConversationListView
       collection: new Conversations
+    @conversationListView.setElement @.$('.conversations')
     @conversationListView.collection.fetch()
-    @conversationListView.$el = @.$('.conversations')
     this
 
 class Router extends Backbone.Router
