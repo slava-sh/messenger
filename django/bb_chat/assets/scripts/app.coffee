@@ -1,5 +1,7 @@
-lib = require('./lib')
+{AppRouter, AppView} = require('./lib')
 
 $ ->
-  window.app = new lib.App()
+  router = new AppRouter
+  app    = new AppView router: router
+  router.start()
   return

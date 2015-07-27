@@ -38,6 +38,7 @@ class MessageItemView extends Backbone.View
 
   initialize: ->
     @listenTo @model, 'change', @render
+    return
 
   render: =>
     @$el.html @template
@@ -49,6 +50,7 @@ class MessageListView extends Backbone.View
 
   initialize: ->
     @listenTo @collection, 'add', @addMessage
+    return
 
   render: =>
     @collection.each @addMessage
@@ -62,7 +64,6 @@ class MessageListView extends Backbone.View
     @$el.scrollTop @$el.prop 'scrollHeight'
 
 class ChatView extends Backbone.View
-  el: '.main'
   template: _.template $('#chat-view').html()
   events:
     'submit .new-message form': 'sendMessage'
@@ -95,61 +96,68 @@ class ChatView extends Backbone.View
         @messageListView.scrollToBottom()
 
 class NavigationView extends Backbone.View
-  el: '.navigation'
   template: _.template $('#navigation-view').html()
+
+  initialize: ->
+    @conversationListView = new ConversationListView
+      collection: new Conversations
+    @conversationListView.collection.fetch()
+    @render()
+    return
 
   render: =>
     @$el.html @template()
-    @conversationListView = new ConversationListView
-      collection: new Conversations
     @conversationListView.setElement @.$('.conversations')
-    @conversationListView.collection.fetch()
     this
 
-class Router extends Backbone.Router
-  routes:
-    '':       'home'
-    'c/:id/': 'conversation'
+class AppView extends Backbone.View
+  el: '.container'
+  template: _.template $('#app-view').html()
 
-  initialize:->
-    $(document).on 'click', 'a[href]', (event) ->
+  initialize: (options) ->
+    @mainView = null
+    @navigationView = new NavigationView
+    @render()
+    @$el.on 'click', 'a[href]', (event) ->
       href = this.getAttribute 'href'
       root = Backbone.history.root
       if href.startsWith root
         event.preventDefault()
         Backbone.history.navigate href.substr(root.length), trigger: true
       return
-    Backbone.history.start
-      pushState: true
-      root: '/bb/'
+
+    router = options.router
+    @listenTo router, 'route:conversation', @showConversation
     return
+
+  render: =>
+    @$el.html @template()
+    if @mainView?
+      @mainView.setElement @.$('.main')
+      @mainView.render()
+    @navigationView.setElement @.$('.navigation')
+    @navigationView.render()
+    this
+
+  showConversation: (id) =>
+    @mainView = new ChatView id: id
+    @mainView.setElement @.$('.main')
+    return
+
+class AppRouter extends Backbone.Router
+  routes:
+    '':       'home'
+    'c/:id/': 'conversation'
 
   execute: (callback, args, name) ->
     console.log "route #{name}(#{args})"
     super callback, args, name
 
-  home: ->
-
-  conversation: (id) ->
-    chatView = new ChatView id: id
-    window.chatView = chatView
-    return
-
-class App
-  constructor: ->
-    @router = new Router
-    @navigationView = new NavigationView
-    @navigationView.render()
+  start: ->
+    Backbone.history.start
+      pushState: true
+      root: '/bb/'
 
 module.exports =
-  Message: Message
-  Conversation: Conversation
-  Messages: Messages
-  Conversations: Conversations
-  ConversationListView: ConversationListView
-  MessageItemView: MessageItemView
-  MessageListView: MessageListView
-  ChatView: ChatView
-  NavigationView: NavigationView
-  Router: Router
-  App: App
+  AppView: AppView
+  AppRouter: AppRouter
