@@ -15,6 +15,10 @@ class Conversation(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super().save(*args, **kwargs)
+
     @models.permalink
     def get_absolute_url(self):
         return ('chat:conversation', [self.pk])
@@ -32,6 +36,6 @@ class Message(models.Model):
     def save(self, *args, **kwargs):
         if self.pk is None:
             self.time = timezone.now()
-            self.conversation.updated_at = self.time
+            self.conversation.updated_at = None
             self.conversation.save()
         super().save(*args, **kwargs)
