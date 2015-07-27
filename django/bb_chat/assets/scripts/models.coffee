@@ -1,4 +1,4 @@
-Backbone = require('backbone')
+Backbone = require 'backbone'
 
 class Message extends Backbone.Model
 

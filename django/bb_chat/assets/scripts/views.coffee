@@ -1,10 +1,13 @@
-Backbone    = require('backbone')
-$           = require('jquery')
-_           = require('lodash')
-models      = require('./models')
+Backbone = require 'backbone'
+$        = require 'jquery'
+_        = require 'lodash'
+models   = require './models'
+
+compileTemplate = (name) ->
+  _.template require "templates/#{name}.html"
 
 class ConversationListView extends Backbone.View
-  template: _.template $('#conversation-list-view').html()
+  template: compileTemplate 'conversation-list'
 
   initialize: ->
     @listenTo @collection, 'update', @render
@@ -17,7 +20,7 @@ class ConversationListView extends Backbone.View
 
 class MessageItemView extends Backbone.View
   className: 'message'
-  template: _.template $('#message-item-view').html()
+  template: compileTemplate 'message-item'
 
   initialize: ->
     @listenTo @model, 'change', @render
@@ -42,12 +45,14 @@ class MessageListView extends Backbone.View
   addMessage: (message) =>
     messageView = new MessageItemView model: message
     @$el.append messageView.render().el
+    this
 
   scrollToBottom: ->
     @$el.scrollTop @$el.prop 'scrollHeight'
+    this
 
 class ChatView extends Backbone.View
-  template: _.template $('#chat-view').html()
+  template: compileTemplate 'chat'
   events:
     'submit .new-message form': 'sendMessage'
 
@@ -60,9 +65,9 @@ class ChatView extends Backbone.View
   render: =>
     @$el.html @template
     @messageListView = new MessageListView collection: @model.messages
-    @messageListView.setElement @.$('.messages')
-    @messageListView.render()
-    @messageListView.scrollToBottom()
+      .setElement @.$('.messages')
+      .render()
+      .scrollToBottom()
     this
 
   sendMessage: (event) =>
@@ -70,16 +75,14 @@ class ChatView extends Backbone.View
     data = _.object _.map $(event.target).serializeArray(), _.values
     message = new models.Message text: data.text
     message.url = "/bb/conversations/#{@id}/messages"
-    message.save null,
-      beforeSend: (xhr) ->
-        xhr.setRequestHeader 'X-CSRFToken', data.csrfmiddlewaretoken
-      success: =>
-        @.$('textarea') .val ''
-        @messageListView.collection.add message
-        @messageListView.scrollToBottom()
+    message.save null, success: =>
+      @.$('textarea') .val ''
+      @messageListView.collection.add message
+      @messageListView.scrollToBottom()
+    this
 
 class NavigationView extends Backbone.View
-  template: _.template $('#navigation-view').html()
+  template: compileTemplate 'navigation'
 
   initialize: ->
     @conversationListView = new ConversationListView
@@ -94,8 +97,7 @@ class NavigationView extends Backbone.View
     this
 
 class AppView extends Backbone.View
-  el: '.container'
-  template: _.template $('#app-view').html()
+  template: compileTemplate 'app'
 
   initialize: (options) ->
     @mainView = null
@@ -115,17 +117,18 @@ class AppView extends Backbone.View
 
   render: =>
     @$el.html @template()
-    if @mainView?
-      @mainView.setElement @.$('.main')
-      @mainView.render()
-    @navigationView.setElement @.$('.navigation')
-    @navigationView.render()
+    @mainView
+      ?.setElement @.$('.main')
+      .render()
+    @navigationView
+      .setElement @.$('.navigation')
+      .render()
     this
 
   showConversation: (id) =>
     @mainView = new ChatView id: id
-    @mainView.setElement @.$('.main')
-    return
+      .setElement @.$('.main')
+    this
 
 module.exports = {
   ConversationListView

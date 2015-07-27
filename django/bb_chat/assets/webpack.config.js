@@ -23,11 +23,13 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.coffee$/, loader: 'coffee-loader' },
+      { test: /\.html$/,   loader: 'html-loader' },
     ],
   },
   resolve: {
-    modulesDirectories: [__dirname, 'node_modules', 'bower_components'],
-    extensions: ['.coffee', '.js']
+    root: __dirname,
+    modulesDirectories: ['node_modules', 'bower_components'],
+    extensions: ['', '.coffee', '.js']
   },
   devtool: 'source-map',
 };

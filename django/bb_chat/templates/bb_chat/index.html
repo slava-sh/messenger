@@ -10,48 +10,19 @@
 </head>
 <body>
   <div class="container"></div>
-  <script type="text/template" id="app-view">
-    <div class="content">
-      <div class="main"></div>
-      <div class="navigation"></div>
-    </div>
-  </script>
-  <script type="text/template" id="navigation-view">
-    <div class="header">
-      <span class="username">{{ user }}</span>
-      <a href="{% url 'chat:create_conversation' %}"><i class="fa fa-plus pull-left"></i></a>
-      <a href="{% url 'auth_logout' %}"><i class="fa fa-sign-out pull-right"></i></a>
-    </div>
-    <div class="conversations"></div>
-  </script>
-  <script type="text/template" id="conversation-list-view">
-    <% conversations.each(function(conversation) { %>
-      <div class="conversation">
-        <a href="<%- conversation.getViewUrl() %>"><%- conversation.get('name') %></a>
-      </div>
-    <% }); %>
-  </script>
-  <script type="text/template" id="chat-view">
-    <div class="messages"></div>
-    <div class="new-message">
-      <form method="post">
-        {% csrf_token %}
-        <div class="username">{{ user }}</div>
-        <div class="text"><textarea name="text"></textarea></div>
-        <div><input type="submit" value="Send"></div>
-      </form>
-    </div>
-  </script>
-  <script type="text/template" id="message-item-view">
-    <div class="username"><%- message.get('author') %></div>
-    <div class="text"><%- message.get('text') %></div>
+  <script>
+    var App = {
+      user: '{{ user|escapejs }}',
+    };
   </script>
   {% if debug %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone.js"></script>
   {% else %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min.js"></script>
   {% endif %}
