@@ -68,7 +68,7 @@ class ChatView extends Backbone.View
     @$el.html @template
       conversation: @model
     @messageListView = new MessageListView collection: @model.messages
-      .setElement @.$('.messages')
+      .setElement @$('.messages')
       .render()
       .scrollToBottom()
     this
@@ -79,7 +79,7 @@ class ChatView extends Backbone.View
     message = new models.Message text: data.text
     message.url = "/bb/conversations/#{@id}/messages"
     message.save null, success: =>
-      @.$('textarea') .val ''
+      @$('textarea') .val ''
       @messageListView.collection.add message
       @messageListView.scrollToBottom()
     this
@@ -97,7 +97,7 @@ class NavigationView extends Backbone.View
 
   render: =>
     @$el.html @template()
-    @conversationListView.setElement @.$('.conversations')
+    @conversationListView.setElement @$('.conversations')
     this
 
 class AppView extends Backbone.View
@@ -119,8 +119,8 @@ class AppView extends Backbone.View
   render: =>
     @$el.html @template()
     if @mainView?
-      @.$('.main').html @mainView.render().el
-    @.$('.aside').html @navigationView.render().el
+      @$('.main').html @mainView.render().el
+    @$('.aside').html @navigationView.render().el
     this
 
   handleLinkClick: (event) =>
@@ -135,7 +135,7 @@ class AppView extends Backbone.View
     @mainView?.remove()
     @mainView = view
     if @mainView?
-      @.$('.main').html @mainView.el
+      @$('.main').html @mainView.el
     this
 
   showHome: =>
