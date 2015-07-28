@@ -9,7 +9,7 @@ compileTemplate = (name) ->
 class ConversationListView extends Backbone.View
   template: compileTemplate 'conversation-list'
 
-  initialize: ->
+  initialize: =>
     @listenTo @collection, 'update', @render
     return
 
@@ -22,7 +22,7 @@ class MessageItemView extends Backbone.View
   className: 'message'
   template: compileTemplate 'message-item'
 
-  initialize: ->
+  initialize: =>
     @listenTo @model, 'change', @render
     return
 
@@ -34,7 +34,7 @@ class MessageItemView extends Backbone.View
 class MessageListView extends Backbone.View
   className: 'messages'
 
-  initialize: ->
+  initialize: =>
     @listenTo @collection, 'add', @addMessage
     return
 
@@ -47,16 +47,17 @@ class MessageListView extends Backbone.View
     @$el.append messageView.render().el
     this
 
-  scrollToBottom: ->
+  scrollToBottom: =>
     @$el.scrollTop @$el.prop 'scrollHeight'
     this
 
 class ChatView extends Backbone.View
+  className: 'chat'
   template: compileTemplate 'chat'
   events:
     'submit .new-message form': 'sendMessage'
 
-  initialize: ->
+  initialize: =>
     @model = new models.Conversation id: @id
     @listenTo @model, 'change', @render
     @model.fetch()
@@ -85,7 +86,7 @@ class ChatView extends Backbone.View
 class NavigationView extends Backbone.View
   template: compileTemplate 'navigation'
 
-  initialize: ->
+  initialize: =>
     @conversationListView = new ConversationListView
       collection: new models.Conversations
     @conversationListView.collection.fetch()
@@ -102,12 +103,13 @@ class AppView extends Backbone.View
   events:
     'click a[href]': 'handleLinkClick'
 
-  initialize: (options) ->
+  initialize: (options) =>
     @mainView = null
     @navigationView = new NavigationView
     @render()
 
     router = options.router
+    @listenTo router, 'route:home', @showHome
     @listenTo router, 'route:conversation', @showConversation
     return
 
@@ -121,7 +123,7 @@ class AppView extends Backbone.View
       .render()
     this
 
-  handleLinkClick: (event) ->
+  handleLinkClick: (event) =>
     href = event.target.getAttribute 'href'
     root = Backbone.history.root
     if href.startsWith root
@@ -129,10 +131,17 @@ class AppView extends Backbone.View
       Backbone.history.navigate href.substr(root.length), trigger: true
     return
 
-  showConversation: (id) =>
-    @mainView = new ChatView id: id
-      .setElement @.$('.main')
+  setMainView: (view) =>
+    @mainView?.remove()
+    @mainView = view
+    @.$('.main').html @mainView?.el ? null
     this
+
+  showHome: =>
+    @setMainView null
+
+  showConversation: (id) =>
+    @setMainView new ChatView id: id
 
 module.exports = {
   ConversationListView

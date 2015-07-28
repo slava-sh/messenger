@@ -36,9 +36,8 @@ body {
 .main {
   order: 2;
   flex: 75;
-  box-sizing: border-box;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
 }
 
 .header {
@@ -81,6 +80,12 @@ body {
 .conversation a:hover:before,
 .conversation a:active:before {
   left: 0;
+}
+
+.chat {
+  flex: auto;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .message {
