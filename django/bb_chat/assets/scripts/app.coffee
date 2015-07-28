@@ -4,7 +4,8 @@ AppRouter = require './router'
 
 $ ->
   router = new AppRouter
-  app    = new AppView router: router, el: '.container'
+  app    = new AppView router: router
+  $('body').append(app.el)
   router.start()
   return
 

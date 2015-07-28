@@ -84,6 +84,7 @@ class ChatView extends Backbone.View
     this
 
 class NavigationView extends Backbone.View
+  className: 'navigation'
   template: compileTemplate 'navigation'
 
   initialize: =>
@@ -99,6 +100,7 @@ class NavigationView extends Backbone.View
     this
 
 class AppView extends Backbone.View
+  className: 'app'
   template: compileTemplate 'app'
   events:
     'click a[href]': 'handleLinkClick'
@@ -115,12 +117,9 @@ class AppView extends Backbone.View
 
   render: =>
     @$el.html @template()
-    @mainView
-      ?.setElement @.$('.main')
-      .render()
-    @navigationView
-      .setElement @.$('.navigation')
-      .render()
+    if @mainView?
+      @.$('.main').html @mainView.render().el
+    @.$('.aside').html @navigationView.render().el
     this
 
   handleLinkClick: (event) =>
@@ -134,7 +133,8 @@ class AppView extends Backbone.View
   setMainView: (view) =>
     @mainView?.remove()
     @mainView = view
-    @.$('.main').html @mainView?.el ? null
+    if @mainView?
+      @.$('.main').html @mainView.el
     this
 
   showHome: =>
