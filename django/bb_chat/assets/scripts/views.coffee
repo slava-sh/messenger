@@ -64,6 +64,7 @@ class ChatView extends Backbone.View
 
   render: =>
     @$el.html @template
+      conversation: @model
     @messageListView = new MessageListView collection: @model.messages
       .setElement @.$('.messages')
       .render()
