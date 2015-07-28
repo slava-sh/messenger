@@ -7,6 +7,7 @@ compileTemplate = (name) ->
   _.template require "templates/#{name}.html"
 
 class ConversationListView extends Backbone.View
+  className: 'conversations'
   template: compileTemplate 'conversation-list'
 
   initialize: =>
@@ -18,9 +19,9 @@ class ConversationListView extends Backbone.View
       conversations: @collection
     this
 
-class MessageItemView extends Backbone.View
+class MessageView extends Backbone.View
   className: 'message'
-  template: compileTemplate 'message-item'
+  template: compileTemplate 'message'
 
   initialize: =>
     @listenTo @model, 'change', @render
@@ -43,7 +44,7 @@ class MessageListView extends Backbone.View
     this
 
   addMessage: (message) =>
-    messageView = new MessageItemView model: message
+    messageView = new MessageView model: message
     @$el.append messageView.render().el
     this
 
@@ -145,7 +146,7 @@ class AppView extends Backbone.View
 
 module.exports = {
   ConversationListView
-  MessageItemView
+  MessageView
   MessageListView
   ChatView
   NavigationView
