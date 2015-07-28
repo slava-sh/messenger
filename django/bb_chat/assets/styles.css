@@ -23,23 +23,17 @@ body {
 
 .content {
   height: 100%;
-}
-
-.content,
-.main,
-.aside {
   display: flex;
   flex-flow: row nowrap;
 }
 
-.chat,
+.main,
 .navigation {
-  flex: auto;
   display: flex;
   flex-flow: column nowrap;
 }
 
-.aside {
+.navigation {
   order: 1;
   flex: 25;
   border-right: 4px solid #000;

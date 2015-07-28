@@ -6,7 +6,22 @@ models   = require './models'
 compileTemplate = (name) ->
   _.template require "templates/#{name}.html"
 
-class ConversationListView extends Backbone.View
+class BaseView extends Backbone.View
+  setElement: =>
+    super arguments...
+    @$el.addClass @className
+
+  render: =>
+    @$el.html @template()
+    this
+
+  destroy: =>
+    @undelegateEvents()
+    @stopListening()
+    @$el.empty()
+    this
+
+class ConversationListView extends BaseView
   className: 'conversations'
   template: compileTemplate 'conversation-list'
 
@@ -19,7 +34,7 @@ class ConversationListView extends Backbone.View
       conversations: @collection
     this
 
-class MessageView extends Backbone.View
+class MessageView extends BaseView
   className: 'message'
   template: compileTemplate 'message'
 
@@ -32,7 +47,7 @@ class MessageView extends Backbone.View
       message: @model
     this
 
-class MessageListView extends Backbone.View
+class MessageListView extends BaseView
   className: 'messages'
 
   initialize: =>
@@ -52,7 +67,7 @@ class MessageListView extends Backbone.View
     @$el.scrollTop @$el.prop 'scrollHeight'
     this
 
-class ChatView extends Backbone.View
+class ChatView extends BaseView
   className: 'chat'
   template: compileTemplate 'chat'
   events:
@@ -67,8 +82,9 @@ class ChatView extends Backbone.View
   render: =>
     @$el.html @template
       conversation: @model
-    @messageListView = new MessageListView collection: @model.messages
-      .setElement @$('.messages')
+    @messageListView = new MessageListView
+        collection: @model.messages
+        el: @$('.messages')
       .render()
       .scrollToBottom()
     this
@@ -84,44 +100,33 @@ class ChatView extends Backbone.View
       @messageListView.scrollToBottom()
     this
 
-class NavigationView extends Backbone.View
+class NavigationView extends BaseView
   className: 'navigation'
   template: compileTemplate 'navigation'
 
   initialize: =>
+    @render()
     @conversationListView = new ConversationListView
       collection: new models.Conversations
+      el: @$('.conversations')
     @conversationListView.collection.fetch()
-    @render()
     return
 
-  render: =>
-    @$el.html @template()
-    @conversationListView.setElement @$('.conversations')
-    this
-
-class AppView extends Backbone.View
+class AppView extends BaseView
   className: 'app'
   template: compileTemplate 'app'
   events:
     'click a[href]': 'handleLinkClick'
 
   initialize: (options) =>
-    @mainView = null
-    @navigationView = new NavigationView
     @render()
+    @mainView = null
+    @navigationView = new NavigationView el: @$('.navigation')
 
     router = options.router
     @listenTo router, 'route:home', @showHome
     @listenTo router, 'route:conversation', @showConversation
     return
-
-  render: =>
-    @$el.html @template()
-    if @mainView?
-      @$('.main').html @mainView.render().el
-    @$('.aside').html @navigationView.render().el
-    this
 
   handleLinkClick: (event) =>
     href = event.target.getAttribute 'href'
@@ -132,10 +137,10 @@ class AppView extends Backbone.View
     return
 
   setMainView: (view) =>
-    @mainView?.remove()
+    @mainView?.destroy()
     @mainView = view
     if @mainView?
-      @$('.main').html @mainView.el
+      @mainView.setElement @$('.main')
     this
 
   showHome: =>
