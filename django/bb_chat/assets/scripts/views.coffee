@@ -98,18 +98,13 @@ class NavigationView extends Backbone.View
 
 class AppView extends Backbone.View
   template: compileTemplate 'app'
+  events:
+    'click a[href]': 'handleLinkClick'
 
   initialize: (options) ->
     @mainView = null
     @navigationView = new NavigationView
     @render()
-    @$el.on 'click', 'a[href]', (event) ->
-      href = this.getAttribute 'href'
-      root = Backbone.history.root
-      if href.startsWith root
-        event.preventDefault()
-        Backbone.history.navigate href.substr(root.length), trigger: true
-      return
 
     router = options.router
     @listenTo router, 'route:conversation', @showConversation
@@ -124,6 +119,14 @@ class AppView extends Backbone.View
       .setElement @.$('.navigation')
       .render()
     this
+
+  handleLinkClick: (event) ->
+    href = event.target.getAttribute 'href'
+    root = Backbone.history.root
+    if href.startsWith root
+      event.preventDefault()
+      Backbone.history.navigate href.substr(root.length), trigger: true
+    return
 
   showConversation: (id) =>
     @mainView = new ChatView id: id
