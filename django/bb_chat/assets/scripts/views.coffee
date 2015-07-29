@@ -68,7 +68,7 @@ class MessageListView extends BaseView
 
   addMessage: (message) =>
     messageView = new MessageView model: message
-    @$el.append messageView.render().$el
+    @$el.append messageView.render().el
     this
 
   scrollToBottom: =>
