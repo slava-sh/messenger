@@ -17,11 +17,15 @@ class BaseView extends Backbone.View
       .attr 'data-view', @constructor.name
     this
 
-  destroy: =>
-    @stopListening()
+  destroy: (options = {}) =>
+    saveElement = options.saveElement ? false
     @undelegateEvents()
-    @$el.empty()
-    @setElement null
+    @stopListening()
+    if saveElement
+      @$el.empty()
+      @setElement null
+    else
+      @_removeElement()
     this
 
 class ConversationListView extends BaseView
@@ -155,7 +159,7 @@ class AppView extends BaseView
     return
 
   setMainView: (view) =>
-    @mainView?.destroy()
+    @mainView?.destroy saveElement: true
     @mainView = view
     @mainView
       ?.setElement @$('.main')
