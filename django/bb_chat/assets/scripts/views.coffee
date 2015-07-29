@@ -8,17 +8,20 @@ compileTemplate = (name) ->
 
 class BaseView extends Backbone.View
   setElement: =>
+    @$el
+      ?.removeClass @className ? null
+      .removeAttr 'data-view'
     super arguments...
-    @$el.addClass @className
-
-  render: =>
-    @$el.html @template()
+    @$el
+      .addClass @className
+      .attr 'data-view', @constructor.name
     this
 
   destroy: =>
-    @undelegateEvents()
     @stopListening()
+    @undelegateEvents()
     @$el.empty()
+    @setElement null
     this
 
 class ConversationListView extends BaseView
@@ -55,12 +58,13 @@ class MessageListView extends BaseView
     return
 
   render: =>
+    @$el.empty()
     @collection.each @addMessage
     this
 
   addMessage: (message) =>
     messageView = new MessageView model: message
-    @$el.append messageView.render().el
+    @$el.append messageView.render().$el
     this
 
   scrollToBottom: =>
@@ -75,6 +79,7 @@ class ChatView extends BaseView
 
   initialize: =>
     @model = new models.Conversation id: @id
+    @messageListView = new MessageListView collection: @model.messages
     @listenTo @model, 'change', @render
     @model.fetch()
     return
@@ -82,9 +87,8 @@ class ChatView extends BaseView
   render: =>
     @$el.html @template
       conversation: @model
-    @messageListView = new MessageListView
-        collection: @model.messages
-        el: @$('.messages')
+    @messageListView
+      .setElement @$('.messages')
       .render()
       .scrollToBottom()
     this
@@ -105,12 +109,17 @@ class NavigationView extends BaseView
   template: compileTemplate 'navigation'
 
   initialize: =>
-    @render()
     @conversationListView = new ConversationListView
       collection: new models.Conversations
-      el: @$('.conversations')
     @conversationListView.collection.fetch()
     return
+
+  render: =>
+    @$el.html @template()
+    @conversationListView
+      .setElement @$('.conversations')
+      .render()
+    this
 
 class AppView extends BaseView
   className: 'app'
@@ -119,14 +128,23 @@ class AppView extends BaseView
     'click a[href]': 'handleLinkClick'
 
   initialize: (options) =>
-    @render()
     @mainView = null
-    @navigationView = new NavigationView el: @$('.navigation')
+    @navigationView = new NavigationView
 
     router = options.router
     @listenTo router, 'route:home', @showHome
     @listenTo router, 'route:conversation', @showConversation
     return
+
+  render: =>
+    @$el.html @template()
+    @mainView
+      ?.setElement @$('.main')
+      .render()
+    @navigationView
+      .setElement @$('.navigation')
+      .render()
+    this
 
   handleLinkClick: (event) =>
     href = event.target.getAttribute 'href'
@@ -139,8 +157,9 @@ class AppView extends BaseView
   setMainView: (view) =>
     @mainView?.destroy()
     @mainView = view
-    if @mainView?
-      @mainView.setElement @$('.main')
+    @mainView
+      ?.setElement @$('.main')
+      .render()
     this
 
   showHome: =>
@@ -157,3 +176,5 @@ module.exports = {
   NavigationView
   AppView
 }
+
+window.Views = module.exports

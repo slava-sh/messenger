@@ -8,6 +8,10 @@ class Messages extends Backbone.Collection
 class Conversation extends Backbone.Model
   urlRoot: '/bb/conversations'
 
+  initialize: =>
+    @messages = new Messages
+    return
+
   parse: (response, options) ->
     if not @messages?
       @messages = new Messages

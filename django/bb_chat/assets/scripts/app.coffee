@@ -5,7 +5,7 @@ AppRouter = require './router'
 $ ->
   router = new AppRouter
   app    = new AppView router: router
-  $('body').append(app.el)
+  $('body').append app.render().$el
   router.start()
   return
 
