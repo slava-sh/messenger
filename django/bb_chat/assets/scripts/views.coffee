@@ -33,7 +33,7 @@ class ConversationListView extends BaseView
   template: compileTemplate 'conversation-list'
 
   initialize: =>
-    @listenTo @collection, 'update', @render
+    @listenTo @collection, 'reset', @render
     return
 
   render: =>
@@ -115,7 +115,7 @@ class NavigationView extends BaseView
   initialize: =>
     @conversationListView = new ConversationListView
       collection: new models.Conversations
-    @conversationListView.collection.fetch()
+    @conversationListView.collection.fetch reset: true
     return
 
   render: =>
