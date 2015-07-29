@@ -1,4 +1,4 @@
-Backbone = require 'backbone'
+Backbone = require('backbone')
 
 class Message extends Backbone.Model
 
@@ -8,16 +8,16 @@ class Messages extends Backbone.Collection
 class Conversation extends Backbone.Model
   urlRoot: '/bb/conversations'
 
-  initialize: =>
-    @messages = new Messages
+  initialize: ->
+    @messages = new Messages()
     return
 
   parse: (response, options) ->
-    if not @messages?
-      @messages = new Messages
-    @messages.add response.messages, merge: true
+    unless @messages?
+      @messages = new Messages()
+    @messages.add(response.messages, merge: true)
     delete response.messages
-    return response
+    response
 
   getViewUrl: ->
     '/bb/c/' + @get('id') + '/'

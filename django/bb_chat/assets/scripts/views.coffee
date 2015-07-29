@@ -1,176 +1,176 @@
-Backbone = require 'backbone'
-$        = require 'jquery'
-_        = require 'lodash'
-models   = require './models'
+Backbone = require('backbone')
+$        = require('jquery')
+_        = require('lodash')
+models   = require('./models')
 
 compileTemplate = (name) ->
-  _.template require "templates/#{name}.html"
+  _.template(require("templates/#{name}.html"))
 
 class BaseView extends Backbone.View
-  setElement: =>
+  setElement: ->
     @$el
-      ?.removeClass @className ? null
-      .removeAttr 'data-view'
-    super arguments...
+      ?.removeClass(@className ? null)
+      .removeAttr('data-view')
+    super(arguments...)
     @$el
-      .addClass @className
-      .attr 'data-view', @constructor.name
+      .addClass(@className)
+      .attr('data-view', @constructor.name)
     this
 
-  dispose: (options = {}) =>
+  dispose: (options = {}) ->
     saveElement = options.saveElement ? false
     @undelegateEvents()
     @stopListening()
     if saveElement
       @$el.empty()
-      @setElement null
+      @setElement(null)
     else
       @_removeElement()
     this
 
 class ConversationListView extends BaseView
   className: 'conversations'
-  template: compileTemplate 'conversation-list'
+  template: compileTemplate('conversation-list')
 
-  initialize: =>
-    @listenTo @collection, 'reset', @render
+  initialize: ->
+    @listenTo(@collection, 'reset', @render)
     return
 
-  render: =>
-    @$el.html @template
-      conversations: @collection
+  render: ->
+    @$el.html(@template(conversations: @collection))
     this
 
 class MessageView extends BaseView
   className: 'message'
-  template: compileTemplate 'message'
+  template: compileTemplate('message')
 
-  initialize: =>
-    @listenTo @model, 'change', @render
+  initialize: ->
+    @listenTo(@model, 'change', @render)
     return
 
-  render: =>
-    @$el.html @template
-      message: @model
+  render: ->
+    @$el.html(@template(message: @model))
     this
 
 class MessageListView extends BaseView
   className: 'messages'
 
-  initialize: =>
-    @listenTo @collection, 'add', @addMessage
+  initialize: ->
+    @listenTo(@collection, 'add', @addMessage)
     return
 
-  render: =>
+  render: ->
     @$el.empty()
-    @collection.each @addMessage
+    @collection.each(@addMessage, this)
     this
 
-  addMessage: (message) =>
-    messageView = new MessageView model: message
-    @$el.append messageView.render().el
+  addMessage: (message) ->
+    messageView = new MessageView(model: message)
+    @$el.append(messageView.render().el)
     this
 
-  scrollToBottom: =>
-    @$el.scrollTop @$el.prop 'scrollHeight'
+  scrollToBottom: ->
+    @$el.scrollTop(@$el.prop('scrollHeight'))
     this
 
 class ChatView extends BaseView
   className: 'chat'
-  template: compileTemplate 'chat'
+  template: compileTemplate('chat')
   events:
     'submit .new-message form': 'sendMessage'
 
-  initialize: =>
-    @model = new models.Conversation id: @id
-    @messageListView = new MessageListView collection: @model.messages
-    @listenTo @model, 'change', @render
+  initialize: ->
+    @model = new models.Conversation(id: @id)
+    @messageListView = new MessageListView(collection: @model.messages)
+    @listenTo(@model, 'change', @render)
     @model.fetch()
     return
 
-  render: =>
-    @$el.html @template
-      conversation: @model
+  render: ->
+    @$el.html(@template(conversation: @model))
     @messageListView
-      .setElement @$('.messages')
+      .setElement(@$('.messages'))
       .render()
       .scrollToBottom()
     this
 
-  sendMessage: (event) =>
+  sendMessage: (event) ->
     event.preventDefault()
-    data = _.object _.map $(event.target).serializeArray(), _.values
-    message = new models.Message text: data.text
+    data = _.object(_.map($(event.target).serializeArray(), _.values))
+    message = new models.Message(text: data.text)
     message.url = "/bb/conversations/#{@id}/messages"
-    message.save null, success: =>
-      @$('textarea') .val ''
-      @messageListView.collection.add message
-      @messageListView.scrollToBottom()
+    message.save(null,
+      success: =>
+        @$('textarea').val('')
+        @messageListView.collection.add(message)
+        @messageListView.scrollToBottom()
+    )
     this
 
 class NavigationView extends BaseView
   className: 'navigation'
-  template: compileTemplate 'navigation'
+  template: compileTemplate('navigation')
 
-  initialize: =>
-    @conversationListView = new ConversationListView
-      collection: new models.Conversations
-    @conversationListView.collection.fetch reset: true
+  initialize: ->
+    @conversationListView = new ConversationListView(
+      collection: new models.Conversations()
+    )
+    @conversationListView.collection.fetch(reset: true)
     return
 
-  render: =>
-    @$el.html @template()
+  render: ->
+    @$el.html(@template())
     @conversationListView
-      .setElement @$('.conversations')
+      .setElement(@$('.conversations'))
       .render()
     this
 
 class AppView extends BaseView
   className: 'app'
-  template: compileTemplate 'app'
+  template: compileTemplate('app')
   events:
     'click a[href]': 'handleLinkClick'
 
-  initialize: (options) =>
+  initialize: (options) ->
     @mainView = null
-    @navigationView = new NavigationView
+    @navigationView = new NavigationView()
 
     router = options.router
-    @listenTo router, 'route:home', @showHome
-    @listenTo router, 'route:conversation', @showConversation
+    @listenTo(router, 'route:home', @showHome)
+    @listenTo(router, 'route:conversation', @showConversation)
     return
 
-  render: =>
-    @$el.html @template()
+  render: ->
+    @$el.html(@template())
     @mainView
-      ?.setElement @$('.main')
+      ?.setElement(@$('.main'))
       .render()
     @navigationView
-      .setElement @$('.navigation')
+      .setElement(@$('.navigation'))
       .render()
     this
 
-  handleLinkClick: (event) =>
-    href = event.target.getAttribute 'href'
+  handleLinkClick: (event) ->
+    href = event.target.getAttribute('href')
     root = Backbone.history.root
-    if href.startsWith root
+    if href.startsWith(root)
       event.preventDefault()
-      Backbone.history.navigate href.substr(root.length), trigger: true
+      Backbone.history.navigate(href.substr(root.length), trigger: true)
     return
 
-  setMainView: (view) =>
-    @mainView?.dispose saveElement: true
+  setMainView: (view) ->
+    @mainView?.dispose(saveElement: true)
     @mainView = view
     @mainView
-      ?.setElement @$('.main')
+      ?.setElement(@$('.main'))
       .render()
     this
 
-  showHome: =>
-    @setMainView null
+  showHome: ->
+    @setMainView(null)
 
-  showConversation: (id) =>
-    @setMainView new ChatView id: id
+  showConversation: (id) ->
+    @setMainView(new ChatView(id: id))
 
 module.exports = {
   ConversationListView
