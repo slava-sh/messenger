@@ -14,6 +14,7 @@ INSTALLED_APPS = (
     'registration',
     'chat',
     'bb_chat',
+    'react_chat',
 )
 
 MIDDLEWARE_CLASSES = (
