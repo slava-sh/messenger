@@ -5,15 +5,12 @@ module.exports =
   context: __dirname
   entry:
     app: 'app/bootstrap'
+    vendor: ['react', 'alt']
   output:
     path: path.resolve(__dirname, '../static/react_chat/')
     filename: '[name].js'
-  externals:
-    'jquery': 'jQuery'
-    'backbone': 'Backbone'
-    'lodash': '_'
-    'react': 'React'
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
     # new webpack.optimize.UglifyJsPlugin()
     # new webpack.optimize.OccurenceOrderPlugin()
     # new webpack.optimize.DedupePlugin()

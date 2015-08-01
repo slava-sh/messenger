@@ -1,7 +1,24 @@
 import React from 'react';
+import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
+import ConversationStore from 'app/stores/ConversationStore';
+import ConversationActions from 'app/actions/ConversationActions';
 
 export default React.createClass({
+  mixins: [ReactStateMagicMixin],
+
+  statics: {
+    registerStores: {
+      conversations: ConversationStore,
+    }
+  },
+
+  componentWillMount() {
+    ConversationActions.requestConversations();
+  },
+
   render() {
+    console.log('render');
+    console.log(this.state);
     let conversations = []
     for (let i of '1234567890') {
       conversations.push(
