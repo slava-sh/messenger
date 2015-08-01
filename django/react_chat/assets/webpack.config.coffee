@@ -1,16 +1,19 @@
-path    = require 'path'
-webpack = require 'webpack'
+path              = require 'path'
+webpack           = require 'webpack'
+SplitByPathPlugin = require 'webpack-split-by-path'
 
 module.exports =
   context: __dirname
   entry:
     app: 'app/bootstrap'
-    vendor: ['react', 'alt']
   output:
     path: path.resolve(__dirname, '../static/react_chat/')
     filename: '[name].js'
+    chunkFilename: '[name].js'
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+    new SplitByPathPlugin [
+      { path: path.resolve(__dirname, 'node_modules/'), name: 'vendor' }
+    ]
     # new webpack.optimize.UglifyJsPlugin()
     # new webpack.optimize.OccurenceOrderPlugin()
     # new webpack.optimize.DedupePlugin()
