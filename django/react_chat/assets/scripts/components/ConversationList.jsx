@@ -4,6 +4,7 @@ import ConversationStore from 'app/stores/ConversationStore';
 import ConversationActions from 'app/actions/ConversationActions';
 
 export default React.createClass({
+  displayName: 'ConversationList',
   mixins: [ReactStateMagicMixin],
 
   statics: {

@@ -2,6 +2,8 @@ import React from 'react';
 import Message from 'app/components/Message';
 
 export default React.createClass({
+  displayName: 'MessageList',
+
   render() {
     let messages = []
     for (let i of '1234567890') {

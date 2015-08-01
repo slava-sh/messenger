@@ -3,6 +3,8 @@ import Chat from 'app/components/Chat';
 import Navigation from 'app/components/Navigation';
 
 export default React.createClass({
+  displayName: 'App',
+
   render() {
     return (
       <div className="container">

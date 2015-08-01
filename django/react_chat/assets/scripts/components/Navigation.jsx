@@ -2,6 +2,8 @@ import React from 'react';
 import ConversationList from 'app/components/ConversationList';
 
 export default React.createClass({
+  displayName: 'Navigation',
+
   render() {
     return (
       <div className="navigation">

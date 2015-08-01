@@ -1,6 +1,8 @@
 import React from 'react';
 
 export default React.createClass({
+  displayName: 'Message',
+
   render() {
     return (
       <div className="message">

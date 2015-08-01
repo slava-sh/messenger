@@ -2,6 +2,8 @@ import React from 'react';
 import MessageList from 'app/components/MessageList';
 
 export default React.createClass({
+  displayName: 'Chat',
+
   render() {
     return (
       <div className="main">

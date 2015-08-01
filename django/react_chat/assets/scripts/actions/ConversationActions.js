@@ -2,6 +2,8 @@ import alt from 'app/alt';
 import { fetchApi } from 'app/utils';
 
 export default alt.createActions({
+  displayName: 'ConversationActions',
+
   requestConversations() {
     this.dispatch();
     fetchApi('/react/conversations')
