@@ -1,24 +1,36 @@
 import React from 'react';
-import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
+import FluxyMixin from 'alt/mixins/FluxyMixin';
 import ConversationStore from 'app/stores/ConversationStore';
 import ConversationActions from 'app/actions/ConversationActions';
 
 export default React.createClass({
   displayName: 'ConversationList',
-  mixins: [ReactStateMagicMixin],
+  mixins: [FluxyMixin],
 
   statics: {
-    registerStores: {
-      conversations: ConversationStore,
-    },
+    storeListeners: [ConversationStore],
+  },
+
+  onChange() {
+    this.updateState();
+  },
+
+  updateState() {
+    this.setState({
+      conversations: ConversationStore.getState().conversations,
+    });
   },
 
   componentWillMount() {
+    this.updateState();
+  },
+
+  componentDidMount() {
     ConversationActions.requestConversations();
   },
 
   render() {
-    let conversations = []
+    let conversations = [];
     for (let conversation of this.state.conversations) {
       conversations.push(
         <div key={conversation.id} className="conversation">

@@ -13,13 +13,7 @@ export default alt.createStore({
     conversations: [],
   },
 
-  publicMethods: {
-    getState() {
-      return this.state.conversations;
-    }
-  },
-
   receiveConversations(conversations) {
-    this.state.conversations = conversations;
+    this.setState({ conversations });
   },
 });
