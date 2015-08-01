@@ -15,4 +15,14 @@ export default alt.createActions(class ConversationActions {
   receiveConversations(conversations) {
     this.dispatch(conversations);
   }
+
+  requestConversation(id) {
+    this.dispatch();
+    fetchApi(`/react/conversations/${id}`)
+      .then((data) => this.actions.receiveConversation(data));
+  }
+
+  receiveConversation(conversation) {
+    this.dispatch(conversation);
+  }
 });

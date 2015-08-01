@@ -3,9 +3,6 @@ import Navigation from 'app/components/Navigation';
 
 export default React.createClass({
   displayName: 'DefaultLayout',
-  propTypes: {
-    main: PropTypes.any.isRequired,
-  },
 
   render() {
     return (

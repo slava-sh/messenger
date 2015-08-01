@@ -25,19 +25,24 @@ def api(request_method_list):
     return decorator
 
 
-@api('POST')
+#@api(['GET', 'POST']) # TODO
+@api('GET')
 def messages(request, pk):
     conversation = get_object_or_404(Conversation, pk=pk)
     # todo validate membership
-    data = json.loads(request.body.decode())
-    form = SendMessageForm(data)
-    if form.is_valid():
-        message = form.save(commit=False)
-        message.conversation = conversation
-        message.author = request.user
-        message.save()
-        return model_to_dict(message, fields=['id', 'author', 'text'])
-    return {'errors': form.errors}
+    if request.method == 'GET':
+        messages = conversation.messages.values('id', 'author', 'text')
+        return list(messages)
+    else:
+        data = json.loads(request.body.decode())
+        form = SendMessageForm(data)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.conversation = conversation
+            message.author = request.user
+            message.save()
+            return model_to_dict(message, fields=['id', 'author', 'text'])
+        return {'errors': form.errors}
 
 
 @api('GET')

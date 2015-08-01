@@ -6,9 +6,10 @@ export default React.createClass({
   displayName: 'ConversationPage',
 
   render() {
+    let conversationId = +this.props.params.id;
     return (
       <DefaultLayout>
-        <Chat />
+        <Chat conversationId={conversationId} />
       </DefaultLayout>
     );
   },

@@ -32,7 +32,7 @@ export default React.createClass({
     let conversations = [];
     for (let conversation of this.state.conversations) {
       conversations.push(
-        <div key={conversation.id} className="conversation">
+        <div key={`${conversation.id}`} className="conversation">
           <Link to="conversation" params={{id: conversation.id}} activeClass="active">
             {conversation.name}
           </Link>

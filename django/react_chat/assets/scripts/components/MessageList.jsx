@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import FluxyMixin from 'alt/mixins/FluxyMixin';
 import Message from 'app/components/Message';
+import ConversationStore from 'app/stores/ConversationStore';
+import ConversationActions from 'app/actions/ConversationActions';
 
 export default React.createClass({
   displayName: 'MessageList',
+  propTypes: {
+    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  },
 
   render() {
-    let messages = []
-    for (let i of '1234567890') {
-      messages.push(<Message key={i} />);
-    }
-    return <div className="messages">{messages}</div>;
+    return (
+      <div className="messages">
+        {this.props.messages.map((message) => {
+          return <Message key={message.id} message={message} />
+        })}
+      </div>
+    );
   },
 });
