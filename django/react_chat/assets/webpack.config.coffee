@@ -4,7 +4,7 @@ webpack = require 'webpack'
 module.exports =
   context: __dirname
   entry:
-    app: 'scripts/app'
+    app: 'app/bootstrap'
   output:
     path: path.resolve(__dirname, '../static/react_chat/')
     filename: '[name].js'
@@ -20,12 +20,13 @@ module.exports =
   ]
   module:
     loaders: [
-      { js:   /\.js$/,     loader: 'babel-loader?stage=0' }
-      { jsx:  /\.jsx$/,    loader: 'babel-loader?stage=0' }
+      { test: /\.jsx?$/,   loader: 'babel-loader?stage=0' }
       { test: /\.coffee$/, loader: 'coffee-loader' }
     ]
   resolve:
     root: __dirname
-    modulesDirectories: ['node_modules', 'bower_components']
+    alias:
+      app: 'scripts'
+    modulesDirectories: ['node_modules']
     extensions: ['', '.js', '.jsx', '.coffee']
-  devtool: 'source-map'
+  devtool: 'inline-source-map'

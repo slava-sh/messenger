@@ -1,5 +1,5 @@
 import React from 'react';
-import MessageList from './MessageList';
+import MessageList from 'app/components/MessageList';
 
 export default React.createClass({
   render: function() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import ConversationList from './ConversationList';
+import ConversationList from 'app/components/ConversationList';
 
 export default React.createClass({
   render: function() {

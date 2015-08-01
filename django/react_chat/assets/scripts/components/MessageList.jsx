@@ -1,5 +1,5 @@
 import React from 'react';
-import Message from './Message';
+import Message from 'app/components/Message';
 
 export default React.createClass({
   render: function() {
