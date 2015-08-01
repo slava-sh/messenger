@@ -2,7 +2,7 @@ import React from 'react';
 import MessageList from 'app/components/MessageList';
 
 export default React.createClass({
-  render: function() {
+  render() {
     return (
       <div className="main">
         <div className="header">
@@ -19,5 +19,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });

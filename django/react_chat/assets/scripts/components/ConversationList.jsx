@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default React.createClass({
-  render: function() {
+  render() {
     let conversations = []
     for (let i of '1234567890') {
       conversations.push(
@@ -11,5 +11,5 @@ export default React.createClass({
       );
     }
     return <div className="conversations">{conversations}</div>;
-  }
+  },
 });

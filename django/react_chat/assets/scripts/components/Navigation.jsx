@@ -2,7 +2,7 @@ import React from 'react';
 import ConversationList from 'app/components/ConversationList';
 
 export default React.createClass({
-  render: function() {
+  render() {
     return (
       <div className="navigation">
         <div className="header">
@@ -13,5 +13,5 @@ export default React.createClass({
         <ConversationList />
       </div>
     );
-  }
+  },
 });

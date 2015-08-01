@@ -3,7 +3,7 @@ import Chat from 'app/components/Chat';
 import Navigation from 'app/components/Navigation';
 
 export default React.createClass({
-  render: function() {
+  render() {
     return (
       <div className="container">
         <div className="content">
@@ -12,5 +12,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
