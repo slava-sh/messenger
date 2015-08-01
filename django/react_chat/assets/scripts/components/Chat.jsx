@@ -6,7 +6,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="main">
+      <div className="chat">
         <div className="header">
           <span className="username">%- conversation.get('name') %</span>
           <a href="#"><i className="fa fa-gear pull-right"></i></a>

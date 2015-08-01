@@ -1,11 +1,12 @@
 import React from 'react';
 import Router, { Route, DefaultRoute, NotFoundRoute } from 'react-router';
-import App from 'app/components/App';
+import HomePage from 'app/pages/HomePage';
+import ConversationPage from 'app/pages/ConversationPage';
 
 const routes = (
   <Route path="/react/">
-    <DefaultRoute name="home" handler={App} />
-    <Route path="c/:id/" name="conversation" handler={App} />
+    <DefaultRoute name="home" handler={HomePage} />
+    <Route path="c/:id/" name="conversation" handler={ConversationPage} />
   </Route>
 );
 
