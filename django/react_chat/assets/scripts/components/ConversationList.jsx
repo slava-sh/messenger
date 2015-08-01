@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import FluxyMixin from 'alt/mixins/FluxyMixin';
 import ConversationStore from 'app/stores/ConversationStore';
 import ConversationActions from 'app/actions/ConversationActions';
@@ -32,7 +33,9 @@ export default React.createClass({
     for (let conversation of this.state.conversations) {
       conversations.push(
         <div key={conversation.id} className="conversation">
-          <a href="?">{conversation.name}</a>
+          <Link to="conversation" params={{id: conversation.id}} activeClass="active">
+            {conversation.name}
+          </Link>
         </div>
       );
     }

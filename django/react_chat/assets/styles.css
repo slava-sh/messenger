@@ -85,6 +85,7 @@ body {
   transition: left 0.1s;
 }
 
+.conversation a.active:before,
 .conversation a:hover:before,
 .conversation a:active:before {
   left: 0;
