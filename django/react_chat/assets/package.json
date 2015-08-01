@@ -4,7 +4,8 @@
     "flux": "^2.0.3",
     "keymirror": "^0.1.1",
     "object-assign": "^3.0.0",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "whatwg-fetch": "^0.9.0"
   },
   "devDependencies": {
     "babel-core": "^5.8.19",

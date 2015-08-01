@@ -9,7 +9,7 @@ export default React.createClass({
   statics: {
     registerStores: {
       conversations: ConversationStore,
-    }
+    },
   },
 
   componentWillMount() {
@@ -17,13 +17,11 @@ export default React.createClass({
   },
 
   render() {
-    console.log('render');
-    console.log(this.state);
     let conversations = []
-    for (let i of '1234567890') {
+    for (let conversation of this.state.conversations) {
       conversations.push(
-        <div key={i} className="conversation">
-          <a href="?">%- conversation.get('name') %</a>
+        <div key={conversation.id} className="conversation">
+          <a href="?">{conversation.name}</a>
         </div>
       );
     }

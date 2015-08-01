@@ -4,12 +4,22 @@ import ConversationActions  from 'app/actions/ConversationActions';
 
 export default alt.createStore({
   displayName: 'ConversationStore',
+
   bindListeners: {
-    requestConversations: ConversationActions.REQUEST_CONVERSATIONS,
+    receiveConversations: ConversationActions.RECEIVE_CONVERSATIONS,
   },
 
-  requestConversations() {
-    console.log('requesting conversations');
-    return false;
+  state: {
+    conversations: [],
+  },
+
+  publicMethods: {
+    getState() {
+      return this.state.conversations;
+    }
+  },
+
+  receiveConversations(conversations) {
+    this.state.conversations = conversations;
   },
 });
