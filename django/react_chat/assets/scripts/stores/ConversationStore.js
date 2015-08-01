@@ -2,24 +2,21 @@ import React, { PropTypes } from 'react';
 import alt from 'app/alt';
 import ConversationActions  from 'app/actions/ConversationActions';
 
-export default alt.createStore({
-  displayName: 'ConversationStore',
+export default alt.createStore(class ConversationStore {
 
-  bindListeners: {
-    receiveConversations: ConversationActions.RECEIVE_CONVERSATIONS,
-  },
+  constructor() {
+    this.conversations = [];
 
-  state: {
-    conversations: [],
-  },
+    this.bindListeners({
+      onReceiveConversations: ConversationActions.RECEIVE_CONVERSATIONS,
+    });
+  }
 
-  publicMethods: {
-    getConversations() {
-      return this.getState().conversations;
-    },
-  },
+  static getConversations() {
+    return this.getState().conversations;
+  }
 
-  receiveConversations(conversations) {
-    this.setState({ conversations });
-  },
+  onReceiveConversations(conversations) {
+    this.conversations = conversations;
+  }
 });

@@ -1,8 +1,7 @@
 import alt from 'app/alt';
 import { fetchApi } from 'app/utils';
 
-export default alt.createActions({
-  displayName: 'ConversationActions',
+export default alt.createActions(class ConversationActions {
 
   requestConversations() {
     this.dispatch();
@@ -11,9 +10,9 @@ export default alt.createActions({
       .catch((error) => {
         console.log('request failed', error);
       });
-  },
+  }
 
   receiveConversations(conversations) {
     this.dispatch(conversations);
-  },
+  }
 });
