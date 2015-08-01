@@ -17,7 +17,7 @@ export default React.createClass({
 
   updateState() {
     this.setState({
-      conversations: ConversationStore.getState().conversations,
+      conversations: ConversationStore.getConversations(),
     });
   },
 
