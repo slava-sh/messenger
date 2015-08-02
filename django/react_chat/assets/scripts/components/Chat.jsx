@@ -25,7 +25,7 @@ export default React.createClass({
     };
   },
 
-  getState() {
+  getStateFromStores() {
     let conversationId = this.props.conversationId;
     return {
       conversation: ConversationStore.getConversation(conversationId),
@@ -34,12 +34,29 @@ export default React.createClass({
   },
 
   onChange() {
-    this.setState(this.getState());
+    this.setState(this.getStateFromStores());
   },
 
   componentDidMount() {
+    this.requestData();
+  },
+
+  componentWillReceiveProps() {
+    this.requestData();
+  },
+
+  requestData() {
     ConversationActions.requestConversation(this.props.conversationId);
     MessageActions.requestMessages(this.props.conversationId);
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    this.scrollToBottom();
+  },
+
+  scrollToBottom() {
+    var messageList = this.refs.messageList.getDOMNode();
+    messageList.scrollTop = messageList.scrollHeight;
   },
 
   render() {
@@ -51,7 +68,7 @@ export default React.createClass({
           </span>
           <a href="#"><i className="fa fa-gear pull-right"></i></a>
         </div>
-        <MessageList messages={this.state.messages} />
+        <MessageList ref="messageList" messages={this.state.messages} />
         <div className="new-message">
           <form method="post">
             <div className="username">%- App.user %</div>

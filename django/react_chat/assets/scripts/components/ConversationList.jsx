@@ -4,12 +4,6 @@ import FluxyMixin from 'alt/mixins/FluxyMixin';
 import ConversationStore from 'app/stores/ConversationStore';
 import ConversationActions from 'app/actions/ConversationActions';
 
-function getState() {
-  return {
-    conversations: ConversationStore.getConversations(),
-  };
-}
-
 export default React.createClass({
   displayName: 'ConversationList',
   mixins: [FluxyMixin],
@@ -18,10 +12,16 @@ export default React.createClass({
     storeListeners: [ConversationStore],
   },
 
-  getInitialState: getState,
+  getInitialState: () => this.getStateFromStores(),
+
+  getStateFromStores() {
+    return {
+      conversations: ConversationStore.getConversations(),
+    };
+  },
 
   onChange() {
-    this.setState(getState());
+    this.setState(this.getStateFromStores());
   },
 
   componentDidMount() {
