@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import FluxyMixin from 'alt/mixins/FluxyMixin';
 import MessageList from 'app/components/MessageList';
@@ -14,14 +15,12 @@ export default React.createClass({
   },
 
   statics: {
-    storeListeners: [ConversationStore],
+    storeListeners: [ConversationStore, MessageStore],
   },
 
   getInitialState() {
     return {
-      conversation: {
-        name: null,
-      },
+      conversation: undefined,
       messages: [],
     };
   },
@@ -47,7 +46,9 @@ export default React.createClass({
     return (
       <div className="chat">
         <div className="header">
-          <span className="username">{this.state.conversation.name}</span>
+          <span className="username">
+            {_.get(this.state, 'conversation.name')}
+          </span>
           <a href="#"><i className="fa fa-gear pull-right"></i></a>
         </div>
         <MessageList messages={this.state.messages} />

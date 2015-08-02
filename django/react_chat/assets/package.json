@@ -4,10 +4,10 @@
     "flux": "^2.0.3",
     "got": "^4.1.1",
     "keymirror": "^0.1.1",
+    "lodash": "^3.10.0",
     "object-assign": "^3.0.0",
     "react": "^0.13.3",
-    "react-router": "^0.13.3",
-    "whatwg-fetch": "^0.9.0"
+    "react-router": "^0.13.3"
   },
   "devDependencies": {
     "babel-core": "^5.8.19",
