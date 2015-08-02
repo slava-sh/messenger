@@ -1,3 +1,3 @@
 import Alt from 'alt';
 
-export default new Alt();
+export default window.alt = new Alt();

@@ -12,9 +12,13 @@
 </head>
 <body>
   <script>
-    initialize({
-      user: '{{ user|escapejs }}',
-    });
+    initialize(JSON.stringify({
+      CurrentUserStore: {
+        user: {
+          name: '{{ user|escapejs }}',
+        },
+      },
+    }));
   </script>
 </body>
 </html>

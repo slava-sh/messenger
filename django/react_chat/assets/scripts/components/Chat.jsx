@@ -3,8 +3,9 @@ import React, { PropTypes } from 'react';
 import DocumentTitle from 'react-document-title';
 import FluxyMixin from 'alt/mixins/FluxyMixin';
 import MessageList from 'app/components/MessageList';
-import ConversationStore from 'app/stores/ConversationStore';
 import MessageStore from 'app/stores/MessageStore';
+import ConversationStore from 'app/stores/ConversationStore';
+import CurrentUserStore from 'app/stores/CurrentUserStore';
 import ConversationActions from 'app/actions/ConversationActions';
 import MessageActions from 'app/actions/MessageActions';
 
@@ -16,13 +17,14 @@ export default React.createClass({
   },
 
   statics: {
-    storeListeners: [ConversationStore, MessageStore],
+    storeListeners: [ConversationStore, MessageStore, CurrentUserStore],
   },
 
   getInitialState() {
     return {
       conversation: undefined,
       messages: [],
+      currentUser: undefined,
     };
   },
 
@@ -31,6 +33,7 @@ export default React.createClass({
     return {
       conversation: ConversationStore.getConversation(conversationId),
       messages: MessageStore.getMessages(conversationId),
+      currentUser: CurrentUserStore.getUser(),
     };
   },
 
@@ -72,7 +75,9 @@ export default React.createClass({
           <MessageList ref="messageList" messages={this.state.messages} />
           <div className="new-message">
             <form method="post">
-              <div className="username">%- App.user %</div>
+              <div className="username">
+                {_.get(this.state, 'currentUser.name', '')}
+              </div>
               <div className="text"><textarea name="text" /></div>
               <div><input type="submit" value="Send" /></div>
             </form>
