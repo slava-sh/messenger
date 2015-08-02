@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import DocumentTitle from 'react-document-title';
 import Navigation from 'app/components/Navigation';
 
 export default React.createClass({
@@ -6,14 +7,16 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container">
-        <div className="content">
-          <div className="main">
-            {this.props.children}
+      <DocumentTitle title="React Chat">
+        <div className="container">
+          <div className="content">
+            <div className="main">
+              {this.props.children}
+            </div>
+            <Navigation />
           </div>
-          <Navigation />
         </div>
-      </div>
+      </DocumentTitle>
     );
   },
 });

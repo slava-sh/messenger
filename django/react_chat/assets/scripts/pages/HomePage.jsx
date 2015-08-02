@@ -1,4 +1,5 @@
 import React from 'react';
+import DocumentTitle from 'react-document-title';
 import DefaultLayout from 'app/components/DefaultLayout';
 
 export default React.createClass({
@@ -7,7 +8,9 @@ export default React.createClass({
   render() {
     return (
       <DefaultLayout>
-        Home
+        <DocumentTitle title="Home">
+          Home
+        </DocumentTitle>
       </DefaultLayout>
     );
   },

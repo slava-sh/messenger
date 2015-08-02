@@ -12,7 +12,9 @@ export default React.createClass({
     storeListeners: [ConversationStore],
   },
 
-  getInitialState: () => this.getStateFromStores(),
+  getInitialState() {
+    return this.getStateFromStores();
+  },
 
   getStateFromStores() {
     return {
