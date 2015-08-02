@@ -11,11 +11,10 @@ export default React.createClass({
   },
 
   render() {
+    let messages = this.props.messages;
     return (
       <div className="messages">
-        {this.props.messages.map((message) => {
-          return <Message key={message.id} message={message} />
-        })}
+        {messages.map((message) => <Message key={message.id} message={message} />)}
       </div>
     );
   },
