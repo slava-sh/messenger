@@ -1,6 +1,5 @@
-import React, { PropTypes } from 'react';
 import alt from 'app/alt';
-import MessageActions  from 'app/actions/MessageActions';
+import MessageActions from 'app/actions/MessageActions';
 
 export default alt.createStore(class MessageStore {
 

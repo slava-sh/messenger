@@ -1,7 +1,5 @@
-import React, { PropTypes } from 'react';
-import assign  from 'object-assign';
 import alt from 'app/alt';
-import ConversationActions  from 'app/actions/ConversationActions';
+import ConversationActions from 'app/actions/ConversationActions';
 
 export default alt.createStore(class ConversationStore {
 
