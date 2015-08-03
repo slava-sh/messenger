@@ -1,0 +1,24 @@
+---
+parser: babel-eslint
+
+plugins:
+  - react
+
+env:
+  browser: true
+  node: true
+
+extends:
+  "eslint:recommended"
+
+rules:
+  comma-dangle: [2, always-multiline]
+  react/jsx-boolean-value: [2, always]
+  react/jsx-no-undef: 2
+  react/jsx-quotes: [2, double]
+  react/jsx-uses-react: 2
+  react/jsx-uses-vars: 2
+  react/no-unknown-property: 2
+  react/react-in-jsx-scope: 2
+  react/self-closing-comp: 2
+  react/wrap-multilines: [2, {declaration: false, assignment: false}]
