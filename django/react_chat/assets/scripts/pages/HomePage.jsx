@@ -9,7 +9,9 @@ export default React.createClass({
     return (
       <DefaultLayout>
         <DocumentTitle title="Home">
-          Home
+          <div>
+            Home
+          </div>
         </DocumentTitle>
       </DefaultLayout>
     );
