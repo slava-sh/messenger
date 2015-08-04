@@ -8,13 +8,11 @@ export default React.createClass({
   render() {
     return (
       <DocumentTitle title="React Chat">
-        <div className="container">
-          <div className="content">
-            <div className="main">
-              {this.props.children}
-            </div>
-            <Navigation />
+        <div className="content">
+          <div className="main">
+            {this.props.children}
           </div>
+          <Navigation />
         </div>
       </DocumentTitle>
     );

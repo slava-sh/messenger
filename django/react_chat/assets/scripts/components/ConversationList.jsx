@@ -1,44 +1,35 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import ConversationStore from 'app/stores/ConversationStore';
-import ConversationActions from 'app/actions/ConversationActions';
+import { requestConversations } from 'app/actions/conversation';
 
-export default React.createClass({
+function select(state) {
+  const { conversations, router } = state;
+  return {
+    conversations,
+    router
+  };
+}
+
+export default connect(select)(React.createClass({
   displayName: 'ConversationList',
 
-  statics: {
-    storeListeners: [ConversationStore],
-  },
-
-  getInitialState() {
-    return this.getStateFromStores();
-  },
-
-  getStateFromStores() {
-    return {
-      conversations: ConversationStore.getConversations(),
-    };
-  },
-
-  onChange() {
-    this.setState(this.getStateFromStores());
-  },
-
   componentDidMount() {
-    ConversationActions.requestConversations();
+    this.props.dispatch(requestConversations());
   },
 
   render() {
-    let conversations = [];
-    for (let conversation of this.state.conversations) {
-      conversations.push(
-        <div key={`${conversation.id}`} className="conversation">
-          <Link to="conversation" params={{id: conversation.id}} activeClass="active">
-            {conversation.name}
-          </Link>
-        </div>
-      );
-    }
-    return <div className="conversations">{conversations}</div>;
-  },
-});
+    const { conversations, dispatch } = this.props;
+    return (
+      <div className="conversations">
+        {conversations.map(conversation => (
+          <div key={`${conversation.id}`} className="conversation">
+            <Link to={`/react/c/${conversation.id}/`} activeClass="active">
+              {conversation.name}
+            </Link>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}));

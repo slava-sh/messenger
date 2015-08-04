@@ -1,5 +1,4 @@
 import React from 'react';
-import CurrentUserStore from 'app/stores/CurrentUserStore';
 import ConversationList from 'app/components/ConversationList';
 
 export default React.createClass({
@@ -9,8 +8,8 @@ export default React.createClass({
     return (
       <div className="navigation">
         <div className="header">
-          <span className="username">{/*FIXME*/CurrentUserStore.getUser().name}</span>
-          <a href="/bb/c/new"><i className="fa fa-plus pull-left" /></a>
+          <span className="username">/*FIXME*/</span>
+          <a href="/react/c/new"><i className="fa fa-plus pull-left" /></a>
           <a href="/accounts/logout"><i className="fa fa-sign-out pull-right" /></a>
         </div>
         <ConversationList />

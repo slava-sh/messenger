@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 import Message from 'app/components/Message';
-import ConversationStore from 'app/stores/ConversationStore';
-import ConversationActions from 'app/actions/ConversationActions';
 
 export default React.createClass({
   displayName: 'MessageList',
