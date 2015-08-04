@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import DocumentTitle from 'react-document-title';
-import FluxyMixin from 'alt/mixins/FluxyMixin';
 import MessageList from 'app/components/MessageList';
 import MessageStore from 'app/stores/MessageStore';
 import ConversationStore from 'app/stores/ConversationStore';
@@ -11,7 +10,6 @@ import MessageActions from 'app/actions/MessageActions';
 
 export default React.createClass({
   displayName: 'Chat',
-  mixins: [FluxyMixin],
   propTypes: {
     conversationId: PropTypes.number.isRequired,
   },

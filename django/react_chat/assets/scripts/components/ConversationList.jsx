@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
-import FluxyMixin from 'alt/mixins/FluxyMixin';
 import ConversationStore from 'app/stores/ConversationStore';
 import ConversationActions from 'app/actions/ConversationActions';
 
 export default React.createClass({
   displayName: 'ConversationList',
-  mixins: [FluxyMixin],
 
   statics: {
     storeListeners: [ConversationStore],

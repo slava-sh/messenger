@@ -20,13 +20,12 @@ module.exports =
   ]
   module:
     loaders: [
-      { test: /\.jsx?$/,   loader: 'babel-loader?stage=0' }
-      { test: /\.coffee$/, loader: 'coffee-loader' }
+      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   resolve:
     root: __dirname
     alias:
       app: 'scripts'
     modulesDirectories: ['node_modules']
-    extensions: ['', '.js', '.jsx', '.coffee']
+    extensions: ['', '.js', '.jsx']
   devtool: 'inline-source-map'

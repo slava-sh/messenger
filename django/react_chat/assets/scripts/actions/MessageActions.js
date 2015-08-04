@@ -1,7 +1,6 @@
-import alt from 'app/alt';
 import { fetchApi } from 'app/utils';
 
-export default alt.createActions(class MessageActions {
+export default class MessageActions {
 
   requestMessages(conversationId) {
     this.dispatch();
@@ -15,4 +14,4 @@ export default alt.createActions(class MessageActions {
   receiveMessages({ conversationId, messages }) {
     this.dispatch({ conversationId, messages });
   }
-});
+};

@@ -1,6 +1,5 @@
-import alt from 'app/alt';
 
-export default alt.createStore(class CurrentUserStore {
+export default class CurrentUserStore {
 
   constructor() {
     this.user = undefined;
@@ -9,4 +8,4 @@ export default alt.createStore(class CurrentUserStore {
   static getUser() {
     return this.getState().user;
   }
-});
+};

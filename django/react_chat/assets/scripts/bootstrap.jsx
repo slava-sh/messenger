@@ -1,19 +1,41 @@
 import React from 'react';
-import Router, { Route, DefaultRoute, NotFoundRoute } from 'react-router';
-import alt from 'app/alt';
-import HomePage from 'app/pages/HomePage';
-import ConversationPage from 'app/pages/ConversationPage';
+import ReactDOM from 'react-dom';
+import { Router, Route } from 'react-router';
+import { history } from 'react-router/lib/BrowserHistory';
+import { reduxRouteComponent, routerStateReducer } from 'redux-react-router';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+//import HomePage from 'app/pages/HomePage';
+//import ConversationPage from 'app/pages/ConversationPage';
 
-const routes = (
-  <Route path="/react/">
-    <DefaultRoute name="home" handler={HomePage} />
-    <Route path="c/:id/" name="conversation" handler={ConversationPage} />
-  </Route>
-);
+const HomePage = React.createClass({
+  render() {
+    return <div>Home</div>;
+  }
+});
+
+const ConversationPage = React.createClass({
+  render() {
+    return <div>Conversation</div>;
+  }
+});
 
 window.initialize = function(snapshot) {
-  alt.bootstrap(snapshot);
-  Router.run(routes, Router.HistoryLocation, (Handler, state) => {
-    React.render(<Handler />, document.body);
-  });
+  // TODO: bootstrap(snapshot);
+  function reducer(state = {}, action) {
+    return {
+      router: routerStateReducer(state.router, action)
+    };
+  }
+  let store = createStore(reducer);
+  ReactDOM.render((
+    <Router history={history}>
+      <Route component={reduxRouteComponent(store)}>
+        <Route path="/react/" name="home" component={HomePage} />
+        <Route path="/react/c/:id/" name="conversation" component={ConversationPage} />
+      </Route>
+    </Router>
+  ), document.querySelector('.container'));
+  window.Router = Router;
+  window.store = store;
 }

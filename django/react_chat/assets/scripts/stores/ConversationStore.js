@@ -1,7 +1,6 @@
-import alt from 'app/alt';
 import ConversationActions from 'app/actions/ConversationActions';
 
-export default alt.createStore(class ConversationStore {
+export default class ConversationStore {
 
   constructor() {
     this.conversations = [];
@@ -35,4 +34,4 @@ export default alt.createStore(class ConversationStore {
     }
     this.conversationsById[conversation.id] = conversation;
   }
-});
+};

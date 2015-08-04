@@ -12,7 +12,6 @@ extends:
   "eslint:recommended"
 
 rules:
-  comma-dangle: [2, always-multiline]
   react/jsx-boolean-value: [2, always]
   react/jsx-no-undef: 2
   react/jsx-quotes: [2, double]

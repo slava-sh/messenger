@@ -1,7 +1,6 @@
-import alt from 'app/alt';
 import MessageActions from 'app/actions/MessageActions';
 
-export default alt.createStore(class MessageStore {
+export default class MessageStore {
 
   constructor() {
     this.messages = [];
@@ -18,4 +17,4 @@ export default alt.createStore(class MessageStore {
   onReceiveMessages({ conversationId, messages }) {
     this.messages = messages;
   }
-});
+};

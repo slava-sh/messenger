@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import FluxyMixin from 'alt/mixins/FluxyMixin';
 import Message from 'app/components/Message';
 import ConversationStore from 'app/stores/ConversationStore';
 import ConversationActions from 'app/actions/ConversationActions';
