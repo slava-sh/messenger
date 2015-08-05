@@ -8,7 +8,7 @@ export function requestMessages(conversationId) {
     apiRequest(`/react/conversations/${conversationId}/messages`)
       .then((data) => dispatch(receiveMessages({
         conversationId,
-        messages: data,
+        messages: data
       })));
   }
 }

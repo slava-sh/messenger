@@ -21,7 +21,7 @@ const Navigation = React.createClass({
         <ConversationList conversations={conversations} router={router} />
       </div>
     );
-  },
+  }
 });
 
 export default Navigation;

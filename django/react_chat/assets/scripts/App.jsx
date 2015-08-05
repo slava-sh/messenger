@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
 import { reduxRouteComponent } from 'redux-react-router';
@@ -23,6 +23,10 @@ export function createApp(state) {
 }
 
 const App = React.createClass({
+  propTypes: {
+    store: PropTypes.object.isRequired
+  },
+
   render() {
     return (
       <Router history={history}>

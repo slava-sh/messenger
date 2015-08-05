@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import DefaultLayout from 'app/pages/DefaultLayout';
 import ChatContainer from 'app/containers/ChatContainer';
 
 const ConversationPage = React.createClass({
+  propTypes: {
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    }).isRequired
+  },
+
   render() {
     let conversationId = +this.props.params.id;
     return (
@@ -10,7 +16,7 @@ const ConversationPage = React.createClass({
         <ChatContainer conversationId={conversationId} />
       </DefaultLayout>
     );
-  },
+  }
 });
 
 export default ConversationPage;

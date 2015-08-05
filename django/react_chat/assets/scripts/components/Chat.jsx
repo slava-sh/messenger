@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import DocumentTitle from 'react-document-title';
 import MessageList from 'app/components/MessageList';
-import { requestMessages } from 'app/actions/message';
 
 const Chat = React.createClass({
   propTypes: {
@@ -10,7 +9,7 @@ const Chat = React.createClass({
     messages: PropTypes.array.isRequired
   },
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     this.scrollToBottom();
   },
 
@@ -40,7 +39,7 @@ const Chat = React.createClass({
         </div>
       </DocumentTitle>
     );
-  },
+  }
 });
 
 export default Chat;

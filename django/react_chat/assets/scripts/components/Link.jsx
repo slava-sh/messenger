@@ -5,7 +5,8 @@ const Link = React.createClass({
   propTypes: {
     router: PropTypes.shape({
       pathname: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    children: PropTypes.node
   },
 
   render() {

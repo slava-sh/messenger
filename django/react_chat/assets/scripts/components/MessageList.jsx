@@ -3,7 +3,7 @@ import Message from 'app/components/Message';
 
 const MessageList = React.createClass({
   propTypes: {
-    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+    messages: PropTypes.arrayOf(PropTypes.object).isRequired
   },
 
   render() {
@@ -14,7 +14,7 @@ const MessageList = React.createClass({
         ))}
       </div>
     );
-  },
+  }
 });
 
 export default MessageList;

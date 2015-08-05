@@ -3,6 +3,10 @@ import DocumentTitle from 'react-document-title';
 import NavigationContainer from 'app/containers/NavigationContainer';
 
 const DefaultLayout = React.createClass({
+  propTypes: {
+    children: PropTypes.node
+  },
+
   render() {
     return (
       <DocumentTitle title="React Chat">
@@ -12,7 +16,7 @@ const DefaultLayout = React.createClass({
         </div>
       </DocumentTitle>
     );
-  },
+  }
 });
 
 export default DefaultLayout;

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const Message = React.createClass({
   propTypes: {
-    message: PropTypes.object.isRequired,
+    message: PropTypes.object.isRequired
   },
 
   render() {
@@ -12,7 +12,7 @@ const Message = React.createClass({
         <div className="text">{this.props.message.text}</div>
       </div>
     );
-  },
+  }
 });
 
 export default Message;

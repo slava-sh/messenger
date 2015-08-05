@@ -8,7 +8,8 @@ const select = state => pick(state, 'user', 'conversations', 'messages');
 
 const ChatContainer = React.createClass({
   propTypes: {
-    conversationId: PropTypes.number.isRequired
+    conversationId: PropTypes.number.isRequired,
+    dispatch: PropTypes.func.isRequired
   },
 
   componentDidMount() {

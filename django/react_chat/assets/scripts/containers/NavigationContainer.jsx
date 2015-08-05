@@ -7,6 +7,10 @@ import { requestConversations } from 'app/actions/conversation';
 const select = state => pick(state, 'router', 'user', 'conversations');
 
 const NavigationContainer = React.createClass({
+  propTypes: {
+    dispatch: PropTypes.func.isRequired
+  },
+
   componentDidMount() {
     this.props.dispatch(requestConversations());
   },
