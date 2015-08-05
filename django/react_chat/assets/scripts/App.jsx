@@ -1,9 +1,10 @@
 import React from 'react';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
-import { reduxRouteComponent, routerStateReducer as router } from 'redux-react-router';
+import { reduxRouteComponent } from 'redux-react-router';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
+import router from 'app/reducers/router';
 import user from 'app/reducers/user';
 import conversations from 'app/reducers/conversations';
 import messages from 'app/reducers/messages';
