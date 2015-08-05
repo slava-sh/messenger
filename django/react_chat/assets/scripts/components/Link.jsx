@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link as ImpureLink } from 'react-router';
 
-export const Link = React.createClass({
+const Link = React.createClass({
   propTypes: {
     router: PropTypes.shape({
       pathname: PropTypes.string.isRequired

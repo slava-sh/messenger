@@ -1,8 +1,8 @@
 import { handleActions } from 'redux-actions';
 
-export const initialState = [];
+const initialState = [];
 
-export const reducer = handleActions({
+const reducer = handleActions({
   RECEIVE_MESSAGES: (state, action) => action.payload.messages
 }, initialState);
 

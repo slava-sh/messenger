@@ -21,7 +21,7 @@ export function createApp(state) {
   return <App store={store} />;
 }
 
-export const App = React.createClass({
+const App = React.createClass({
   render() {
     return (
       <Router history={history}>
