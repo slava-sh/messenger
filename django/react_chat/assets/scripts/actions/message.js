@@ -1,11 +1,11 @@
-import { fetchApi } from 'app/utils';
+import { apiRequest } from 'app/utils';
 
 export function requestMessages(conversationId) {
   return dispatch => {
     dispatch({
       type: 'REQUEST_MESSAGES'
     });
-    fetchApi(`/react/conversations/${conversationId}/messages`)
+    apiRequest(`/react/conversations/${conversationId}/messages`)
       .then((data) => dispatch(receiveMessages({
         conversationId,
         messages: data,

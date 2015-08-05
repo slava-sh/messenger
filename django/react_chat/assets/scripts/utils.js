@@ -1,9 +1,9 @@
-import _ from 'lodash';
+import assign from 'lodash/object/assign';
 import got from 'got';
 
-export function fetchApi(url, options) {
-  options = _.assign({
-    json: true,
+export function apiRequest(url, options) {
+  options = assign({
+    json: true
   }, options);
   return got(url, options).then((response) => response.body);
 }

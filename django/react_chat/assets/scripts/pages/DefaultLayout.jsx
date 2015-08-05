@@ -1,20 +1,18 @@
 import React, { PropTypes } from 'react';
 import DocumentTitle from 'react-document-title';
-import Navigation from 'app/components/Navigation';
+import NavigationContainer from 'app/containers/NavigationContainer';
 
-export default React.createClass({
-  displayName: 'DefaultLayout',
-
+const DefaultLayout = React.createClass({
   render() {
     return (
       <DocumentTitle title="React Chat">
         <div className="content">
-          <div className="main">
-            {this.props.children}
-          </div>
-          <Navigation />
+          <div className="main">{this.props.children}</div>
+          <NavigationContainer />
         </div>
       </DocumentTitle>
     );
   },
 });
+
+export default DefaultLayout;

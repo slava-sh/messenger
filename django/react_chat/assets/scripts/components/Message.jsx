@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default React.createClass({
-  displayName: 'Message',
+const Message = React.createClass({
   propTypes: {
     message: PropTypes.object.isRequired,
   },
@@ -15,3 +14,5 @@ export default React.createClass({
     );
   },
 });
+
+export default Message;

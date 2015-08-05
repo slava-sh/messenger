@@ -1,17 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import ConversationList from 'app/components/ConversationList';
 
-function select(state) {
-  const { user } = state;
-  return {
-    user
-  };
-}
-
-export default connect(select)(React.createClass({
-  displayName: 'Navigation',
-
+const Navigation = React.createClass({
   render() {
     return (
       <div className="navigation">
@@ -20,8 +10,10 @@ export default connect(select)(React.createClass({
           <a href="/react/c/new"><i className="fa fa-plus pull-left" /></a>
           <a href="/accounts/logout"><i className="fa fa-sign-out pull-right" /></a>
         </div>
-        <ConversationList />
+        <ConversationList conversations={this.props.conversations} />
       </div>
     );
   },
-}));
+});
+
+export default Navigation;

@@ -1,36 +1,13 @@
-import _ from 'lodash';
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import MessageList from 'app/components/MessageList';
-import { requestMessages } from 'app/actions/messages';
+import { requestMessages } from 'app/actions/message';
 
-function select(state) {
-  const { messages } = state;
-  return {
-    messages
-  };
-}
-
-export default connect(select)(React.createClass({
-  displayName: 'Chat',
+const Chat = React.createClass({
   propTypes: {
-    conversationId: PropTypes.number.isRequired,
-  },
-
-  componentDidMount() {
-    this.requestData();
-  },
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.conversationId !== this.props.conversationId) {
-      this.requestData();
-    }
-  },
-
-  requestData() {
-// ConversationActions.requestConversation(this.props.conversationId);
-    this.props.dispatch(requestMessages(this.props.conversationId));
+    user: PropTypes.object.isRequired,
+    conversation: PropTypes.object.isRequired,
+    messages: PropTypes.array.isRequired
   },
 
   componentDidUpdate(prevProps, prevState) {
@@ -44,20 +21,18 @@ export default connect(select)(React.createClass({
   },
 
   render() {
-    let conversationName = _.get(this.props, 'conversation.name', '');
+    const { user, conversation, messages } = this.props;
     return (
-      <DocumentTitle title={conversationName}>
+      <DocumentTitle title={conversation.name}>
         <div className="chat">
           <div className="header">
-            <span className="username">{conversationName}</span>
+            <span className="username">{conversation.name}</span>
             <a href="#"><i className="fa fa-gear pull-right"></i></a>
           </div>
-          {/*TODO ref="messageList"*/} <MessageList messages={this.props.messages} />
+          {/*TODO ref="messageList"*/} <MessageList messages={messages} />
           <div className="new-message">
             <form method="post">
-              <div className="username">
-                {_.get(this.props, 'currentUser.name', '')}
-              </div>
+              <div className="username">{user.name}</div>
               <div className="text"><textarea name="text" /></div>
               <div><input type="submit" value="Send" /></div>
             </form>
@@ -66,4 +41,6 @@ export default connect(select)(React.createClass({
       </DocumentTitle>
     );
   },
-}));
+});
+
+export default Chat;

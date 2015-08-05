@@ -1,15 +1,12 @@
-import { fetchApi } from 'app/utils';
+import { apiRequest } from 'app/utils';
 
 export function requestConversations() {
   return dispatch => {
     dispatch({
       type: 'REQUEST_CONVERSATIONS'
     });
-    fetchApi('/react/conversations')
-      .then((data) => dispatch(receiveConversations(data)))
-      .catch((error) => {
-        console.log('request failed', error);
-      });
+    apiRequest('/react/conversations')
+      .then((data) => dispatch(receiveConversations(data)));
   }
 }
 

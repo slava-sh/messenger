@@ -1,30 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { requestConversations } from 'app/actions/conversation';
 
-function select(state) {
-  const { conversations, router } = state;
-  return {
-    conversations,
-    router
-  };
-}
-
-export default connect(select)(React.createClass({
-  displayName: 'ConversationList',
-
-  componentDidMount() {
-    this.props.dispatch(requestConversations());
+const ConversationList = React.createClass({
+  propTypes: {
+    conversations: PropTypes.arrayOf(PropTypes.object).isRequired,
   },
 
   render() {
-    const { conversations, dispatch } = this.props;
     return (
       <div className="conversations">
-        {conversations.map(conversation => (
-          <div key={`${conversation.id}`} className="conversation">
-            <Link to={`/react/c/${conversation.id}/`} activeClass="active">
+        {this.props.conversations.map(conversation => (
+          <div key={conversation.id} className="conversation">
+            <Link to={`/react/c/${conversation.id}/`} activeClassName="active">
               {conversation.name}
             </Link>
           </div>
@@ -32,4 +19,6 @@ export default connect(select)(React.createClass({
       </div>
     );
   }
-}));
+});
+
+export default ConversationList;

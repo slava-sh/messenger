@@ -1,10 +1,8 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
-import DefaultLayout from 'app/components/DefaultLayout';
+import DefaultLayout from 'app/pages/DefaultLayout';
 
-export default React.createClass({
-  displayName: 'HomePage',
-
+const HomePage = React.createClass({
   render() {
     return (
       <DefaultLayout>
@@ -17,3 +15,5 @@ export default React.createClass({
     );
   },
 });
+
+export default HomePage;
