@@ -4,7 +4,7 @@ import pick from 'lodash/object/pick';
 import Navigation from 'app/components/Navigation';
 import { requestConversations } from 'app/actions/conversation';
 
-const select = state => pick(state, 'user', 'conversations');
+const select = state => pick(state, 'router', 'user', 'conversations');
 
 const NavigationContainer = React.createClass({
   componentDidMount() {
