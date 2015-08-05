@@ -5,7 +5,7 @@ SplitByPathPlugin = require 'webpack-split-by-path'
 module.exports =
   context: __dirname
   entry:
-    app: 'app/bootstrap'
+    app: 'app'
   output:
     path: path.resolve(__dirname, '../static/react_chat/')
     filename: '[name].js'

@@ -13,13 +13,11 @@
 <body>
   <div class="container"></div>
   <script>
-    initialize(JSON.stringify({
-      CurrentUserStore: {
-        user: {
-          name: '{{ user|escapejs }}',
-        },
-      },
-    }));
+    initialize({
+      user: {
+        name: '{{ user|escapejs }}'
+      }
+    });
   </script>
 </body>
 </html>
