@@ -11,8 +11,8 @@ const DefaultLayout = React.createClass({
     return (
       <DocumentTitle title="React Chat">
         <div className="content">
-          <div className="main">{this.props.children}</div>
-          <NavigationContainer />
+          <main>{this.props.children}</main>
+          <aside><NavigationContainer /></aside>
         </div>
       </DocumentTitle>
     );

@@ -27,19 +27,25 @@ body {
   flex-flow: row nowrap;
 }
 
-.navigation {
+.content > aside {
   order: 1;
   flex: 25;
   border-right: 4px solid #000;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
 }
 
-.main {
+.content > main {
   order: 2;
   flex: 75;
   display: flex;
   flex-flow: row nowrap;
+}
+
+.navigation {
+  flex: auto;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .chat {
