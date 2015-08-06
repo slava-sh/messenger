@@ -2,12 +2,14 @@ import React, { PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import DocumentTitle from 'react-document-title';
 import MessageList from 'app/components/MessageList';
+import MessageForm from 'app/components/MessageForm';
 import Spinner from 'app/components/Spinner';
 
 const Chat = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
-    conversation: PropTypes.object
+    conversation: PropTypes.object,
+    sendMessage: PropTypes.func.isRequired
   },
 
   componentDidUpdate() {
@@ -22,7 +24,7 @@ const Chat = React.createClass({
   },
 
   render() {
-    const { user, conversation } = this.props;
+    const { user, conversation, sendMessage } = this.props;
     if (!conversation) {
       return <Spinner />;
     }
@@ -37,13 +39,7 @@ const Chat = React.createClass({
             messages={conversation.messages}
             ref={node => this.messageList = node}
           />
-          <div className="new-message">
-            <form method="post">
-              <div className="username">{user.name}</div>
-              <div className="text"><textarea name="text" /></div>
-              <div><input type="submit" value="Send" /></div>
-            </form>
-          </div>
+          <MessageForm user={user} sendMessage={sendMessage} />
         </div>
       </DocumentTitle>
     );

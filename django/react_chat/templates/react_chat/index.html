@@ -15,7 +15,8 @@
   <script>
     initialize({
       user: {
-        name: '{{ user|escapejs }}'
+        name: '{{ user|escapejs }}',
+        csrfToken: '{{ csrf_token|escapejs }}'
       }
     });
   </script>

@@ -46,12 +46,25 @@ export function receiveMessages({ conversationId, messages }) {
   };
 }
 
-//  requestConversation(id) {
-//    this.dispatch();
-//    fetchApi(`/react/conversations/${id}`)
-//      .then((data) => this.actions.receiveConversation(data));
-//  }
-//
-//  receiveConversation(conversation) {
-//    this.dispatch(conversation);
-//  }
+export function sendMessage(text) {
+  return (dispatch, getState) => {
+    const { user, conversationStore } = getState();
+    const conversationId = conversationStore.currentConversationId;
+    const message = { author: user.name, text };
+    dispatch({
+      type: 'SEND_MESSAGE',
+      payload: { conversationId, message }
+    });
+    apiRequest(`/react/conversations/${conversationId}/messages`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': user.csrfToken
+      },
+      body: { text }
+    })
+      .then(data => dispatch({
+        type: 'SEND_MESSAGE_SUCCESS',
+        payload: data
+      }));
+  }
+}

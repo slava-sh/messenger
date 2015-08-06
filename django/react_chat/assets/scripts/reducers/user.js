@@ -1,7 +1,8 @@
 import { handleActions } from 'redux-actions';
 
 const initialState = {
-  name: 'Anonymous'
+  name: 'Anonymous',
+  csrfToken: null
 };
 
 const reducer = handleActions({

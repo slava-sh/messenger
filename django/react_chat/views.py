@@ -13,7 +13,7 @@ def home(request, *args, **kwargs):
 
 
 def api(request_method_list):
-    if isinstance(request_method_list, list):
+    if not isinstance(request_method_list, list):
         request_method_list = [request_method_list]
     def decorator(view):
         @require_http_methods(request_method_list)
@@ -25,23 +25,26 @@ def api(request_method_list):
     return decorator
 
 
-#@api(['GET', 'POST']) # TODO
-@api('GET')
+@api(['GET', 'POST'])
 def messages(request, pk):
+    #import time
+    #from random import randint
+    #time.sleep(randint(0, 7) / 10.0)
     conversation = get_object_or_404(Conversation, pk=pk)
-    # todo validate membership
+    # TODO: validate membership
     if request.method == 'GET':
         messages = conversation.messages.values('id', 'author', 'text')
         return list(messages)
     else:
-        data = json.loads(request.body.decode())
-        form = SendMessageForm(data)
+        #data = json.loads(request.body.decode())
+        form = SendMessageForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
             message.conversation = conversation
             message.author = request.user
             message.save()
             return model_to_dict(message, fields=['id', 'author', 'text'])
+        # TODO: return HTTP 40x
         return {'errors': form.errors}
 
 
