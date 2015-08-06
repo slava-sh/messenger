@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import DocumentTitle from 'react-document-title';
 import MessageList from 'app/components/MessageList';
 import Spinner from 'app/components/Spinner';
@@ -14,9 +15,10 @@ const Chat = React.createClass({
   },
 
   scrollToBottom() {
-    return;
-    var messageList = React.findDOMNode(this.refs.messageList);
-    messageList.scrollTop = messageList.scrollHeight;
+    var messageList = findDOMNode(this.messageList);
+    if (messageList) {
+      messageList.scrollTop = messageList.scrollHeight;
+    }
   },
 
   render() {
@@ -31,8 +33,10 @@ const Chat = React.createClass({
             <span className="username">{conversation.name}</span>
             <a href="#"><i className="fa fa-gear pull-right"></i></a>
           </div>
-          {/*TODO ref="messageList"*/}
-          <MessageList messages={conversation.messages} />
+          <MessageList
+            messages={conversation.messages}
+            ref={node => this.messageList = node}
+          />
           <div className="new-message">
             <form method="post">
               <div className="username">{user.name}</div>
