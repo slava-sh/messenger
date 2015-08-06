@@ -135,4 +135,27 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: fade-in 1s, fa-zoom-in 0.5s;
+}
+
+.spinner > i {
+  animation-duration: 1s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fa-zoom-in {
+  from {
+    font-size: 0;
+  }
+  to {
+    font-size: 100%;
+  }
 }
