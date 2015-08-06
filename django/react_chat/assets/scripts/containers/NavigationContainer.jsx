@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import pick from 'lodash/object/pick';
 import { requestConversations } from 'app/actions/conversation';
 import Navigation from 'app/components/Navigation';
 

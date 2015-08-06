@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import DocumentTitle from 'react-document-title';
-import { getCurrentConversation } from 'app/utils/conversationStore';
 import MessageList from 'app/components/MessageList';
 import Spinner from 'app/components/Spinner';
 

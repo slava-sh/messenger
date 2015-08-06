@@ -25,7 +25,7 @@ const reducer = handleActions({
     }
   },
 
-  REQUEST_MESSAGES: (state, action) => {
+  REQUEST_MESSAGES: (state) => {
     return {
       ...state,
       currentMessages: null
@@ -40,7 +40,7 @@ const reducer = handleActions({
       ...state,
       currentMessages: action.payload.messages
     }
-  },
+  }
 }, initialState);
 
 export default reducer;
