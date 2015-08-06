@@ -7,7 +7,7 @@ import Spinner from 'app/components/Spinner';
 const Chat = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
-    conversation: PropTypes.object.isRequired
+    conversation: PropTypes.object
   },
 
   componentDidUpdate() {
@@ -22,6 +22,9 @@ const Chat = React.createClass({
 
   render() {
     const { user, conversation } = this.props;
+    if (!conversation) {
+      return <Spinner />;
+    }
     return (
       <DocumentTitle title={conversation.name}>
         <div className="chat">

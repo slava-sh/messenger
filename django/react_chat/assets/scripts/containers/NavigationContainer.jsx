@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import pick from 'lodash/object/pick';
 import { requestConversations } from 'app/actions/conversation';
 import Navigation from 'app/components/Navigation';
-import Spinner from 'app/components/Spinner';
 
 const select = state => {
   const { router, user, conversationStore } = state;
@@ -25,9 +24,6 @@ const NavigationContainer = React.createClass({
 
   render() {
     var { dispatch, ...other } = this.props;
-    if (!this.props.conversations) {
-      return <Spinner />;
-    }
     return <Navigation {...other} />;
   }
 });

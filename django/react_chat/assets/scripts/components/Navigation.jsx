@@ -1,16 +1,20 @@
 import React, { PropTypes } from 'react';
 import Link from 'app/components/Link';
 import ConversationList from 'app/components/ConversationList';
+import Spinner from 'app/components/Spinner';
 
 const Navigation = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
-    conversations: PropTypes.arrayOf(PropTypes.object).isRequired,
+    conversations: PropTypes.arrayOf(PropTypes.object),
     router: PropTypes.object.isRequired
   },
 
   render() {
     const { user, conversations, router } = this.props;
+    if (!conversations) {
+      return <Spinner />;
+    }
     return (
       <div className="navigation">
         <div className="header">
