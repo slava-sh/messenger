@@ -1,15 +1,16 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import pick from 'lodash/object/pick';
-import Navigation from 'app/components/Navigation';
 import { requestConversations } from 'app/actions/conversation';
+import Navigation from 'app/components/Navigation';
+import Spinner from 'app/components/Spinner';
 
 const select = state => {
-  const { router, user, conversation } = state;
+  const { router, user, conversationStore } = state;
   return {
     router,
     user,
-    conversations: conversation.entries
+    conversations: conversationStore.entries
   };
 };
 
@@ -24,6 +25,9 @@ const NavigationContainer = React.createClass({
 
   render() {
     var { dispatch, ...other } = this.props;
+    if (!this.props.conversations) {
+      return <Spinner />;
+    }
     return <Navigation {...other} />;
   }
 });

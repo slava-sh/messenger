@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import pick from 'lodash/object/pick';
-import Chat from 'app/components/Chat';
+import { getCurrentConversation } from 'app/utils/conversationStore';
 import { selectConversation } from 'app/actions/conversation';
+import Chat from 'app/components/Chat';
+import Spinner from 'app/components/Spinner';
 
-const select = state => pick(state, 'user', 'conversation');
+const select = state => pick(state, 'user', 'conversationStore');
 
 const ChatContainer = React.createClass({
   propTypes: {
@@ -18,13 +20,17 @@ const ChatContainer = React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    const { dispatch, conversationId } = this.props;
+    const { dispatch } = this.props;
     dispatch(selectConversation(newProps.conversationId));
   },
 
   render() {
-    const { dispatch, conversationId, ...other } = this.props;
-    return <Chat {...other} />;
+    const { dispatch, conversationId, conversationStore, ...other } = this.props;
+    const conversation = getCurrentConversation(conversationStore);
+    if (!conversation) {
+      return <Spinner />;;
+    }
+    return <Chat {...other} conversation={conversation} />;
   }
 });
 

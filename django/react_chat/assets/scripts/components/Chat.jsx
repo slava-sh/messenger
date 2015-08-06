@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import DocumentTitle from 'react-document-title';
+import { getCurrentConversation } from 'app/utils/conversationStore';
 import MessageList from 'app/components/MessageList';
+import Spinner from 'app/components/Spinner';
 
 const Chat = React.createClass({
   propTypes: {
@@ -20,19 +22,15 @@ const Chat = React.createClass({
 
   render() {
     const { user, conversation } = this.props;
-    const currentConversation = {
-      name: '???',
-      messages: conversation.currentMessages
-    };
     return (
-      <DocumentTitle title={currentConversation.name}>
+      <DocumentTitle title={conversation.name}>
         <div className="chat">
           <div className="header">
-            <span className="username">{currentConversation.name}</span>
+            <span className="username">{conversation.name}</span>
             <a href="#"><i className="fa fa-gear pull-right"></i></a>
           </div>
           {/*TODO ref="messageList"*/}
-          <MessageList messages={currentConversation.messages} />
+          <MessageList messages={conversation.messages} />
           <div className="new-message">
             <form method="post">
               <div className="username">{user.name}</div>

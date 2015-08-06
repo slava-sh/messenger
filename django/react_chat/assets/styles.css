@@ -128,3 +128,11 @@ input[type="password"],
 textarea {
   border: 2px solid black;
 }
+
+.spinner {
+  flex: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

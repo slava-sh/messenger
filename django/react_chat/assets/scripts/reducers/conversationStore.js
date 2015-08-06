@@ -1,9 +1,9 @@
 import { handleActions } from 'redux-actions';
 
 const initialState = {
-  entries: [],
+  entries: null,
   currentConversationId: null,
-  currentMessages: []
+  currentMessages: null
 };
 
 const reducer = handleActions({
@@ -21,8 +21,14 @@ const reducer = handleActions({
     }
     return {
       ...state,
-      currentConversationId: action.payload.conversationId,
-      currentMessages: []
+      currentConversationId: action.payload.conversationId
+    }
+  },
+
+  REQUEST_MESSAGES: (state, action) => {
+    return {
+      ...state,
+      currentMessages: null
     }
   },
 

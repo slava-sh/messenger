@@ -6,7 +6,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import router from 'app/reducers/router';
 import user from 'app/reducers/user';
-import conversation from 'app/reducers/conversation';
+import conversationStore from 'app/reducers/conversationStore';
 import HomePage from 'app/pages/HomePage';
 import ConversationPage from 'app/pages/ConversationPage';
 
@@ -14,7 +14,7 @@ export function createApp(state) {
   const reducer = combineReducers({
     router,
     user,
-    conversation
+    conversationStore
   });
   const store = applyMiddleware(thunk)(createStore)(reducer, state);
   return <App store={store} />;

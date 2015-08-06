@@ -17,7 +17,7 @@ export function receiveConversations(conversations) {
 
 export function selectConversation(conversationId) {
   return (dispatch, getState) => {
-    if (conversationId === getState().conversation.currentConversationId) {
+    if (conversationId === getState().conversationStore.currentConversationId) {
       return;
     }
     dispatch({
