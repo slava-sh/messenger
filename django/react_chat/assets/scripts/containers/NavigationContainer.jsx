@@ -4,7 +4,14 @@ import pick from 'lodash/object/pick';
 import Navigation from 'app/components/Navigation';
 import { requestConversations } from 'app/actions/conversation';
 
-const select = state => pick(state, 'router', 'user', 'conversations');
+const select = state => {
+  const { router, user, conversation } = state;
+  return {
+    router,
+    user,
+    conversations: conversation.entries
+  };
+};
 
 const NavigationContainer = React.createClass({
   propTypes: {

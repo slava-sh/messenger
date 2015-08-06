@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import pick from 'lodash/object/pick';
 import Chat from 'app/components/Chat';
-import { requestMessages } from 'app/actions/message';
+import { selectConversation } from 'app/actions/conversation';
 
-const select = state => pick(state, 'user', 'conversations', 'messages');
+const select = state => pick(state, 'user', 'conversation');
 
 const ChatContainer = React.createClass({
   propTypes: {
@@ -13,25 +13,18 @@ const ChatContainer = React.createClass({
   },
 
   componentDidMount() {
-    this.requestData();
+    const { dispatch, conversationId } = this.props;
+    dispatch(selectConversation(conversationId));
   },
 
   componentWillReceiveProps(newProps) {
-    if (newProps.conversationId !== this.props.conversationId) {
-      this.requestData();
-    }
-  },
-
-  requestData() {
     const { dispatch, conversationId } = this.props;
-    // TODO: dispatch(requestConversation(conversationId));
-    dispatch(requestMessages(conversationId));
+    dispatch(selectConversation(newProps.conversationId));
   },
 
   render() {
     const { dispatch, conversationId, ...other } = this.props;
-    // TODO: props.conversation
-    return <Chat {...other} conversation={{name: '?'}} />;
+    return <Chat {...other} />;
   }
 });
 

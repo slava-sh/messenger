@@ -5,8 +5,7 @@ import MessageList from 'app/components/MessageList';
 const Chat = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
-    conversation: PropTypes.object.isRequired,
-    messages: PropTypes.array.isRequired
+    conversation: PropTypes.object.isRequired
   },
 
   componentDidUpdate() {
@@ -20,15 +19,20 @@ const Chat = React.createClass({
   },
 
   render() {
-    const { user, conversation, messages } = this.props;
+    const { user, conversation } = this.props;
+    const currentConversation = {
+      name: '???',
+      messages: conversation.currentMessages
+    };
     return (
-      <DocumentTitle title={conversation.name}>
+      <DocumentTitle title={currentConversation.name}>
         <div className="chat">
           <div className="header">
-            <span className="username">{conversation.name}</span>
+            <span className="username">{currentConversation.name}</span>
             <a href="#"><i className="fa fa-gear pull-right"></i></a>
           </div>
-          {/*TODO ref="messageList"*/} <MessageList messages={messages} />
+          {/*TODO ref="messageList"*/}
+          <MessageList messages={currentConversation.messages} />
           <div className="new-message">
             <form method="post">
               <div className="username">{user.name}</div>
