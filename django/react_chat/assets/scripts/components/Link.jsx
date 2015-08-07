@@ -3,15 +3,14 @@ import { Link as ImpureLink } from 'react-router';
 
 const Link = React.createClass({
   propTypes: {
-    router: PropTypes.shape({
-      pathname: PropTypes.string.isRequired
-    }).isRequired,
-    children: PropTypes.node
+    router: PropTypes.object.isRequired,
+    children: PropTypes.node.isRequired,
   },
 
   render() {
-    return <ImpureLink {...this.props}>{this.props.children}</ImpureLink>;
-  }
+    const { children, router, ...other } = this.props;
+    return <ImpureLink {...other}>{children}</ImpureLink>;
+  },
 });
 
 export default Link;

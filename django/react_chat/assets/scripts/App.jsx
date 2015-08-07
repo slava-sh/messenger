@@ -14,7 +14,7 @@ export function createApp(state) {
   const reducer = combineReducers({
     router,
     user,
-    conversationStore
+    conversationStore,
   });
   const store = applyMiddleware(thunk)(createStore)(reducer, state);
   return <App store={store} />;
@@ -22,7 +22,7 @@ export function createApp(state) {
 
 const App = React.createClass({
   propTypes: {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
   },
 
   render() {
@@ -34,7 +34,7 @@ const App = React.createClass({
         </Route>
       </Router>
     );
-  }
+  },
 });
 
 export default App;

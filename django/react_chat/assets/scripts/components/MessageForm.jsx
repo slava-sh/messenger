@@ -1,13 +1,9 @@
 import React, { PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
-import DocumentTitle from 'react-document-title';
-import MessageList from 'app/components/MessageList';
-import Spinner from 'app/components/Spinner';
 
 const MessageForm = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
-    sendMessage: PropTypes.func.isRequired
+    sendMessage: PropTypes.func.isRequired,
   },
 
   onSubmit(event) {
@@ -41,7 +37,7 @@ const MessageForm = React.createClass({
         </form>
       </div>
     );
-  }
+  },
 });
 
 export default MessageForm;

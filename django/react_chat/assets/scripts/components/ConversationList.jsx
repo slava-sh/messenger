@@ -4,7 +4,7 @@ import Link from 'app/components/Link';
 const ConversationList = React.createClass({
   propTypes: {
     conversations: PropTypes.arrayOf(PropTypes.object).isRequired,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
   },
 
   render() {
@@ -20,7 +20,7 @@ const ConversationList = React.createClass({
         ))}
       </div>
     );
-  }
+  },
 });
 
 export default ConversationList;

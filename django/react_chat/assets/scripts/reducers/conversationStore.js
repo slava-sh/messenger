@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions';
 const initialState = {
   entries: null,
   currentConversationId: null,
-  currentMessages: null
+  currentMessages: null,
 };
 
 const reducer = handleActions({
@@ -11,8 +11,8 @@ const reducer = handleActions({
   RECEIVE_CONVERSATIONS: (state, action) => {
     return {
       ...state,
-      entries: action.payload.conversations
-    }
+      entries: action.payload.conversations,
+    };
   },
 
   SELECT_CONVERSATION: (state, action) => {
@@ -21,15 +21,15 @@ const reducer = handleActions({
     }
     return {
       ...state,
-      currentConversationId: action.payload.conversationId
-    }
+      currentConversationId: action.payload.conversationId,
+    };
   },
 
   REQUEST_MESSAGES: (state) => {
     return {
       ...state,
-      currentMessages: null
-    }
+      currentMessages: null,
+    };
   },
 
   RECEIVE_MESSAGES: (state, action) => {
@@ -38,8 +38,8 @@ const reducer = handleActions({
     }
     return {
       ...state,
-      currentMessages: action.payload.messages
-    }
+      currentMessages: action.payload.messages,
+    };
   },
 
   SEND_MESSAGE: (state, action) => {
@@ -48,9 +48,9 @@ const reducer = handleActions({
     }
     return {
       ...state,
-      currentMessages: [...state.currentMessages, action.payload.message]
-    }
-  }
+      currentMessages: [...state.currentMessages, action.payload.message],
+    };
+  },
 }, initialState);
 
 export default reducer;

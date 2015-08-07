@@ -8,6 +8,6 @@ export function getCurrentConversation(store) {
   }
   return {
     ...conversation,
-    messages: currentMessages
+    messages: currentMessages,
   };
 }

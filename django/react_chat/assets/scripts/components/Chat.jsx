@@ -9,7 +9,7 @@ const Chat = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
     conversation: PropTypes.object,
-    sendMessage: PropTypes.func.isRequired
+    sendMessage: PropTypes.func.isRequired,
   },
 
   componentDidUpdate() {
@@ -17,7 +17,7 @@ const Chat = React.createClass({
   },
 
   scrollToBottom() {
-    var messageList = findDOMNode(this.messageList);
+    const messageList = findDOMNode(this.messageList);
     if (messageList) {
       messageList.scrollTop = messageList.scrollHeight;
     }
@@ -43,7 +43,7 @@ const Chat = React.createClass({
         </div>
       </DocumentTitle>
     );
-  }
+  },
 });
 
 export default Chat;

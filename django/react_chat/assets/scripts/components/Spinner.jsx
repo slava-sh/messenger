@@ -7,7 +7,7 @@ const Spinner = React.createClass({
         <i className="fa fa-refresh fa-spin fa-3x" />
       </div>
     );
-  }
+  },
 });
 
 export default Spinner;

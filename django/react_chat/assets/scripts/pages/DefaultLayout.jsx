@@ -4,7 +4,7 @@ import NavigationContainer from 'app/containers/NavigationContainer';
 
 const DefaultLayout = React.createClass({
   propTypes: {
-    children: PropTypes.node
+    children: PropTypes.node,
   },
 
   render() {
@@ -16,7 +16,7 @@ const DefaultLayout = React.createClass({
         </div>
       </DocumentTitle>
     );
-  }
+  },
 });
 
 export default DefaultLayout;

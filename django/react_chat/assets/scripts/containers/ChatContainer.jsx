@@ -12,7 +12,7 @@ const ChatContainer = React.createClass({
   propTypes: {
     conversationId: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
-    conversationStore: PropTypes.object
+    conversationStore: PropTypes.object,
   },
 
   componentDidMount() {
@@ -30,7 +30,7 @@ const ChatContainer = React.createClass({
     const conversation = getCurrentConversation(conversationStore);
     const actions = bindActionCreators({ sendMessage }, dispatch);
     return <Chat {...other} {...actions} conversation={conversation} />;
-  }
+  },
 });
 
 export default connect(select)(ChatContainer);

@@ -8,13 +8,13 @@ const select = state => {
   return {
     router,
     user,
-    conversations: conversationStore.entries
+    conversations: conversationStore.entries,
   };
 };
 
 const NavigationContainer = React.createClass({
   propTypes: {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -22,9 +22,9 @@ const NavigationContainer = React.createClass({
   },
 
   render() {
-    var { dispatch, ...other } = this.props;
+    const { dispatch, ...other } = this.props;
     return <Navigation {...other} />;
-  }
+  },
 });
 
 export default connect(select)(NavigationContainer);

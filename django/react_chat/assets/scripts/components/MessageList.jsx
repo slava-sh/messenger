@@ -4,7 +4,7 @@ import Spinner from 'app/components/Spinner';
 
 const MessageList = React.createClass({
   propTypes: {
-    messages: PropTypes.arrayOf(PropTypes.object)
+    messages: PropTypes.arrayOf(PropTypes.object),
   },
 
   render() {
@@ -18,7 +18,7 @@ const MessageList = React.createClass({
         ))}
       </div>
     );
-  }
+  },
 });
 
 export default MessageList;

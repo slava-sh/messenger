@@ -7,7 +7,7 @@ const Navigation = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
     conversations: PropTypes.arrayOf(PropTypes.object),
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
   },
 
   render() {
@@ -25,7 +25,7 @@ const Navigation = React.createClass({
         <ConversationList conversations={conversations} router={router} />
       </div>
     );
-  }
+  },
 });
 
 export default Navigation;

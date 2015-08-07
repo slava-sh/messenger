@@ -13,7 +13,7 @@ const HomePage = React.createClass({
         </DocumentTitle>
       </DefaultLayout>
     );
-  }
+  },
 });
 
 export default HomePage;

@@ -2,10 +2,9 @@ import { handleActions } from 'redux-actions';
 
 const initialState = {
   name: 'Anonymous',
-  csrfToken: null
+  csrfToken: null,
 };
 
-const reducer = handleActions({
-}, initialState);
+const reducer = handleActions({}, initialState);
 
 export default reducer;
