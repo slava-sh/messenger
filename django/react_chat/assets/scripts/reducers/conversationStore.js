@@ -42,7 +42,7 @@ const reducer = handleActions({
     };
   },
 
-  SEND_MESSAGE: (state, action) => {
+  RECEIVE_MESSAGE: (state, action) => {
     if (action.payload.conversationId !== state.currentConversationId) {
       return state;
     }

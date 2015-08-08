@@ -1,4 +1,5 @@
 import { apiRequest } from 'app/utils';
+import * as ApiClient from 'app/utils/ApiClient';
 
 export function receiveConversations(conversations) {
   return {
@@ -22,9 +23,17 @@ export function receiveMessages({ conversationId, messages }) {
   };
 }
 
+export function receiveMessage({ conversationId, message }) {
+  return {
+    type: 'RECEIVE_MESSAGE',
+    payload: { conversationId, message },
+  };
+}
+
 export function requestMessages(conversationId) {
   return dispatch => {
     dispatch({ type: 'REQUEST_MESSAGES' });
+    ApiClient.requestMessages(conversationId, function() {console.log('got', arguments)}); // eslint-disable-line
     apiRequest(`/react/conversations/${conversationId}/messages`)
       .then(data => dispatch(receiveMessages({
         conversationId,
@@ -55,16 +64,6 @@ export function sendMessage(text) {
       type: 'SEND_MESSAGE',
       payload: { conversationId, message },
     });
-    apiRequest(`/react/conversations/${conversationId}/messages`, {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': user.csrfToken,
-      },
-      body: { text },
-    })
-      .then(data => dispatch({
-        type: 'SEND_MESSAGE_SUCCESS',
-        payload: data,
-      }));
+    ApiClient.sendMessage(conversationId, message);
   };
 }
