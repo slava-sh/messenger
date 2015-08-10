@@ -58,3 +58,10 @@ USE_L10N = False
 
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
 STATIC_URL = '/static/'
+
+BROKER_URL = 'amqp://guest@localhost//'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_ROUTES = {
+    'react_chat.tasks.notify_clients': {'queue': 'notifications'}
+}

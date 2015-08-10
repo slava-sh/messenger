@@ -4,7 +4,7 @@ export DEBIAN_FRONTEND=noninteractive
 service gunicorn-chat stop || true
 
 apt-get update -qq
-apt-get install -qq -y -f nginx python-virtualenv postgresql libpq-dev python3-dev
+apt-get install -qq -y -f nginx python-virtualenv postgresql libpq-dev python3-dev rabbitmq-server nodejs npm
 apt-get clean -qq
 
 sed -i "s/#listen_addresses\s\+=\s\+'localhost'/listen_addresses = '*'/" /etc/postgresql/*/main/postgresql.conf

@@ -15,10 +15,11 @@
   <script>
     initialize({
       user: {
+        id: '{{ user.pk|escapejs }}',
         name: '{{ user|escapejs }}',
-        csrfToken: '{{ csrf_token|escapejs }}'
-      }
-    });
+        csrfToken: '{{ csrf_token|escapejs }}',
+      },
+    }, 'http://{{ request.get_host }}:3000'); {# TODO #}
   </script>
 </body>
 </html>

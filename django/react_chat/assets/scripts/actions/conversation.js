@@ -64,6 +64,12 @@ export function sendMessage(text) {
       type: 'SEND_MESSAGE',
       payload: { conversationId, message },
     });
-    ApiClient.sendMessage(conversationId, message);
+    apiRequest(`/react/conversations/${conversationId}/messages`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': user.csrfToken,
+      },
+      body: { text },
+    });
   };
 }
