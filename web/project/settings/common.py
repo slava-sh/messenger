@@ -13,8 +13,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'registration',
     'chat',
-    #'bb_chat',
-    #'react_chat',
+    'bb_chat',
+    'react_chat',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,7 +59,7 @@ USE_L10N = False
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
 STATIC_URL = '/static/'
 
-BROKER_URL = 'amqp://guest@localhost//'
+BROKER_URL = 'amqp://guest@queue//'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_ROUTES = {

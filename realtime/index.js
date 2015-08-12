@@ -33,7 +33,7 @@ io.on('connection', function(socket) {
   });
 });
 
-var connection = amqp.createConnection();
+var connection = amqp.createConnection({ host: 'queue' });
 connection.on('ready', function() {
   var queueOptions = { durable: true, autoDelete: false };
   connection.queue('notifications', queueOptions, function(queue) {

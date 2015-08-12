@@ -1,8 +1,17 @@
-db:
-  image: postgres
 web:
   build: web
   ports:
     - "8000:8000"
   links:
     - db
+    - queue
+realtime:
+  build: realtime
+  ports:
+    - "3000:3000"
+  links:
+    - queue
+db:
+  image: postgres
+queue:
+  image: rabbitmq
