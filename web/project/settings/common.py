@@ -13,8 +13,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'registration',
     'chat',
-    'bb_chat',
-    'react_chat',
+    #'bb_chat',
+    #'react_chat',
 )
 
 MIDDLEWARE_CLASSES = (

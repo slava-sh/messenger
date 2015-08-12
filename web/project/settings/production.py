@@ -2,14 +2,15 @@ from .common import *  # noqa
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['chat.dev']
+#ALLOWED_HOSTS = ['chat.dev']
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'chat',
-        'USER': 'chat',
-        'PASSWORD': 'chat',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 

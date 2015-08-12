@@ -5,5 +5,5 @@ include
 lib
 pip-selfcheck.json
 __pycache__
-django/project/db.sqlite3
+web/project/db.sqlite3
 *.pyc
