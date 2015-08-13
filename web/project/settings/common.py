@@ -62,6 +62,3 @@ STATIC_URL = '/static/'
 BROKER_URL = 'amqp://guest@queue//'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_ROUTES = {
-    'react_chat.tasks.notify_clients': {'queue': 'notifications'}
-}

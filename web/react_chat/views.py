@@ -6,7 +6,7 @@ from functools import wraps
 import json
 from chat.models import Conversation
 from chat.forms import SendMessageForm
-from .tasks import notify_clients
+from .tasks import notify_users
 
 
 def home(request, *args, **kwargs):
@@ -47,7 +47,7 @@ def messages(request, pk):
 
             member_ids = list(conversation.members.values_list('id', flat=True))
             message_as_dict = model_to_dict(message, fields=['id', 'author', 'text'])
-            notify_clients.delay(member_ids, {
+            notify_users.delay(member_ids, {
                 'type': 'RECEIVE_MESSAGE',
                 'payload': {
                     'conversation_id': conversation.pk,
