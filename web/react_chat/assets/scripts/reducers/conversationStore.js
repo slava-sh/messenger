@@ -1,3 +1,4 @@
+import findIndex from 'lodash/array/findIndex';
 import { handleActions } from 'redux-actions';
 
 const initialState = {
@@ -43,14 +44,35 @@ const reducer = handleActions({
   },
 
   RECEIVE_MESSAGE: (state, action) => {
-    if (action.payload.conversationId !== state.currentConversationId) {
-      return state;
+    const { conversationId, message } = action.payload;
+
+    const entries = bubbleUp(state.entries, { id: conversationId });
+
+    let currentMessages;
+    if (conversationId === state.currentConversationId) {
+      currentMessages = [...state.currentMessages, message];
+    } else {
+      currentMessages = state.currentMessages;
     }
+
     return {
       ...state,
-      currentMessages: [...state.currentMessages, action.payload.message],
+      entries,
+      currentMessages,
     };
   },
 }, initialState);
 
 export default reducer;
+
+function bubbleUp(items, predicate) {
+  const index = findIndex(items, predicate);
+  if (index === -1) {
+    return items;
+  }
+  return [
+    items[index],
+    ...items.slice(0, index),
+    ...items.slice(index + 1),
+  ];
+}
