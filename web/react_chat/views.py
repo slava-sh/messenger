@@ -48,8 +48,11 @@ def messages(request, pk):
             member_ids = list(conversation.members.values_list('id', flat=True))
             message_as_dict = model_to_dict(message, fields=['id', 'author', 'text'])
             notify_clients.delay(member_ids, {
-                'conversation_id': conversation.pk,
-                'message': message_as_dict,
+                'type': 'RECEIVE_MESSAGE',
+                'payload': {
+                    'conversation_id': conversation.pk,
+                    'message': message_as_dict,
+                },
             })
             return message_as_dict
         # TODO: return HTTP 40x

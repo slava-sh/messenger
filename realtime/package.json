@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "amqp": "~0.2.4",
+    "primus": "^3.2.1",
     "sockjs": "^0.3.15"
   }
 }
