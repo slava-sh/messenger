@@ -1,6 +1,8 @@
 import { apiRequest } from 'app/utils';
 import * as ApiClient from 'app/utils/ApiClient';
 
+const TYPING_TIME = 10 * 1000;
+
 export function receiveConversations(conversations) {
   return {
     type: 'RECEIVE_CONVERSATIONS',
@@ -16,17 +18,32 @@ export function requestConversations() {
   };
 }
 
-export function receiveMessages({ conversationId, messages }) {
+export function receiveMessages({ conversationId, messages }) { // TODO: refactor
   return {
     type: 'RECEIVE_MESSAGES',
     payload: { conversationId, messages },
   };
 }
 
-export function receiveMessage({ conversationId, message }) {
+export function receiveMessage({ conversationId, message }) { // TODO: refactor
   return {
     type: 'RECEIVE_MESSAGE',
     payload: { conversationId, message },
+  };
+}
+
+export function receiveTyping(conversationId, userId) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'START_TYPING',
+      payload: { conversationId, userId },
+    });
+    setTimeout(() => {
+      dispatch({
+        type: 'STOP_TYPING',
+        payload: { conversationId, userId },
+      });
+    }, TYPING_TIME);
   };
 }
 
@@ -70,6 +87,33 @@ export function sendMessage(text) {
         'X-CSRFToken': user.csrfToken,
       },
       body: { text },
+    });
+  };
+}
+
+let shouldSendTyping = true; // TODO: reset when changing conversation
+
+export function sendTyping() { // TODO: refactor
+  return (dispatch, getState) => {
+    if (!shouldSendTyping) {
+      return;
+    }
+    shouldSendTyping = false;
+    setTimeout(() => {
+      shouldSendTyping = true;
+    }, TYPING_TIME);
+
+    const { user, conversationStore } = getState();
+    const conversationId = conversationStore.currentConversationId;
+    dispatch({
+      type: 'SEND_TYPING',
+      payload: { conversationId },
+    });
+    apiRequest(`/react/conversations/${conversationId}/typing`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': user.csrfToken,
+      },
     });
   };
 }

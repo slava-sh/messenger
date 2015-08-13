@@ -73,3 +73,18 @@ def conversation(request, pk):
     response['members'] = list(conversation.members.values('id', 'username'))
     response['messages'] = list(conversation.messages.values('id', 'author', 'text'))
     return response
+
+
+@api('POST')
+def typing(request, pk):
+    conversation = Conversation.objects.get(pk=pk)
+    # TODO: validate membership
+    member_ids = list(conversation.members.values_list('id', flat=True))
+    notify_users.delay(member_ids, {
+        'type': 'RECEIVE_TYPING',
+        'payload': {
+            'conversation_id': conversation.pk,
+            'user_id': request.user.pk,
+        },
+    })
+    return {}

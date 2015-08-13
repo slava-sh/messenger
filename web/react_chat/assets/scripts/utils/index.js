@@ -7,3 +7,12 @@ export function apiRequest(url, options) {
   }, options);
   return got(url, finalOptions).then(response => response.body);
 }
+
+export function intersperse(items, separator) {
+  if (items.length === 0) {
+    return [];
+  }
+  return items.slice(1).reduce((acc, item) => {
+    return acc.concat([separator, item]);
+  }, [items[0]]);
+}

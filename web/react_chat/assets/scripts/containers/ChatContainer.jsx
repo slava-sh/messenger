@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import pick from 'lodash/object/pick';
 import { getCurrentConversation } from 'app/utils/conversationStore';
-import { selectConversation, sendMessage } from 'app/actions/conversation';
+import { selectConversation, sendMessage, sendTyping } from 'app/actions/conversation';
 import Chat from 'app/components/Chat';
 
 const select = state => pick(state, 'user', 'conversationStore');
@@ -28,7 +28,7 @@ const ChatContainer = React.createClass({
   render() {
     const { dispatch, conversationId, conversationStore, ...other } = this.props;
     const conversation = getCurrentConversation(conversationStore);
-    const actions = bindActionCreators({ sendMessage }, dispatch);
+    const actions = bindActionCreators({ sendMessage, sendTyping }, dispatch);
     return <Chat {...other} {...actions} conversation={conversation} />;
   },
 });

@@ -4,6 +4,7 @@ const MessageForm = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
     sendMessage: PropTypes.func.isRequired,
+    sendTyping: PropTypes.func.isRequired,
   },
 
   onSubmit(event) {
@@ -22,7 +23,7 @@ const MessageForm = React.createClass({
   },
 
   render() {
-    const { user } = this.props;
+    const { user, sendTyping } = this.props;
     return (
       <div className="new-message">
         <form onSubmit={this.onSubmit}>
@@ -31,6 +32,7 @@ const MessageForm = React.createClass({
             <textarea
               ref={node => this.textarea = node}
               onKeyDown={this.onKeyDown}
+              onKeyPress={sendTyping}
             />
           </div>
           <div><input type="submit" value="Send" /></div>

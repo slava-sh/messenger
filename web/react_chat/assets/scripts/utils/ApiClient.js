@@ -34,6 +34,13 @@ export function bindActions(primusUrl, id, dispatch) {
       const { conversation_id: conversationId, message } = data.payload;
       actions.receiveMessage({ conversationId, message });
     }
+    else if (data.type === 'RECEIVE_TYPING') {
+      const {
+        conversation_id: conversationId,
+        user_id: userId
+      } = data.payload;
+      actions.receiveTyping(conversationId, userId);
+    }
   });
 
   primus.on('error', function(err) {

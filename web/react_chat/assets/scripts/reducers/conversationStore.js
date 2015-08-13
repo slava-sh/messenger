@@ -5,6 +5,7 @@ const initialState = {
   entries: null,
   currentConversationId: null,
   currentMessages: null,
+  typingUserIds: [],
 };
 
 const reducer = handleActions({
@@ -30,6 +31,7 @@ const reducer = handleActions({
     return {
       ...state,
       currentMessages: null,
+      typingUserIds: [], // TODO
     };
   },
 
@@ -60,6 +62,29 @@ const reducer = handleActions({
       entries,
       currentMessages,
     };
+  },
+
+  START_TYPING: (state, action) => {
+    if (action.payload.conversationId !== state.currentConversationId) {
+      return state;
+    }
+    return {
+      ...state,
+      typingUserIds: [action.payload.userId, ...state.typingUserIds],
+    }
+  },
+
+  STOP_TYPING: (state, action) => {
+    if (action.payload.conversationId !== state.currentConversationId) {
+      return state;
+    }
+    const typingUserIds = state.typingUserIds.filter(userId => {
+      return userId !== action.payload.userId;
+    });
+    return {
+      ...state,
+      typingUserIds,
+    }
   },
 }, initialState);
 
