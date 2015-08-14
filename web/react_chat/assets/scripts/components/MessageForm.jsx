@@ -39,7 +39,6 @@ const MessageForm = React.createClass({
               onKeyPress={sendTyping}
             />
           </div>
-          <div><input type="submit" value="Send" /></div>
         </form>
       </div>
     );
