@@ -1,5 +1,9 @@
 import React, { PropTypes } from 'react';
 
+function hasModifier(event) {
+  return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+}
+
 const MessageForm = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
@@ -17,7 +21,7 @@ const MessageForm = React.createClass({
   },
 
   onKeyDown(event) {
-    if (event.key === 'Enter' && !event.shiftKey) {
+    if (event.key === 'Enter' && !hasModifier(event)) {
       this.onSubmit(event);
     }
   },
