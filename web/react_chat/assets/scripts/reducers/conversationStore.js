@@ -1,3 +1,4 @@
+import unique from 'lodash/array/uniq';
 import findIndex from 'lodash/array/findIndex';
 import { handleActions } from 'redux-actions';
 
@@ -70,7 +71,7 @@ const reducer = handleActions({
     }
     return {
       ...state,
-      typingUserIds: [action.payload.userId, ...state.typingUserIds],
+      typingUserIds: unique([action.payload.userId, ...state.typingUserIds]),
     }
   },
 
