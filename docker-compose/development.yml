@@ -1,22 +1,23 @@
 web:
-  extends:
-    service: web
-    file: common.yml
-  volumes:
-    - ./web:/usr/src/app:ro
+  build: ../web
+  ports:
+    - "80:80"
+  links:
+    - db
+    - queue
   env_file: development.env
+  volumes:
+    - ../web:/app:ro
 realtime:
-  extends:
-    service: realtime
-    file: common.yml
+  build: ../realtime
+  ports:
+    - "3000:3000"
+  links:
+    - queue
   env_file: development.env
 db:
-  extends:
-    service: db
-    file: common.yml
+  image: postgres
   env_file: development.env
 queue:
-  extends:
-    service: queue
-    file: common.yml
+  image: rabbitmq
   env_file: development.env
