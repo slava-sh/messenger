@@ -1,0 +1,20 @@
+web:
+  extends:
+    service: web
+    file: common.yml
+  env_file: production.env
+realtime:
+  extends:
+    service: realtime
+    file: common.yml
+  env_file: production.env
+db:
+  extends:
+    service: db
+    file: common.yml
+  env_file: production.env
+queue:
+  extends:
+    service: queue
+    file: common.yml
+  env_file: production.env

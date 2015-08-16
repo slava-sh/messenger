@@ -5,8 +5,6 @@ web:
   links:
     - db
     - queue
-  volumes:
-    - ./web:/usr/src/app
 realtime:
   build: realtime
   ports:

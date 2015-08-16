@@ -1,0 +1,22 @@
+web:
+  extends:
+    service: web
+    file: common.yml
+  volumes:
+    - ./web:/usr/src/app:ro
+  env_file: development.env
+realtime:
+  extends:
+    service: realtime
+    file: common.yml
+  env_file: development.env
+db:
+  extends:
+    service: db
+    file: common.yml
+  env_file: development.env
+queue:
+  extends:
+    service: queue
+    file: common.yml
+  env_file: development.env
