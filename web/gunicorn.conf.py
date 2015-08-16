@@ -1,7 +1,7 @@
 import os
 import multiprocessing
 
-proc_name = 'gunicorn: {}'.format(os.environ['HOSTNAME'])
+proc_name = 'gunicorn: {}'.format(os.environ['WEB_HOSTNAME'])
 user      = 'www-data'
 group     = 'www-data'
 bind      = '0.0.0.0:80'
