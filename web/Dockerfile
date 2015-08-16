@@ -7,13 +7,13 @@ RUN apt-get update \
         --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /app
+WORKDIR /app
 
-COPY requirements.txt /usr/src/app/
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /usr/src/app
+COPY . /app
 
 EXPOSE 80
 CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
