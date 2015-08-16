@@ -43,7 +43,11 @@ primus.on('disconnection', function(spark) {
   console.log('sparks:', showUserSparks(userSparks));
 });
 
-var queueClient = amqp.createConnection({ host: 'queue' });
+var queueClient = amqp.createConnection({
+  host: 'queue',
+  login: process.env.QUEUE_USER,
+  password: process.env.QUEUE_PASSWORD,
+});
 queueClient.on('ready', function() {
   var queueOptions = { durable: true, autoDelete: false };
   queueClient.queue('notifications', queueOptions, function(queue) {

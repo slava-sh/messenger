@@ -73,7 +73,8 @@ DATABASES = {
 }
 
 
-BROKER_URL = 'amqp://guest@queue//'
+BROKER_URL = 'amqp://{}:{}@queue//'.format(os.environ['QUEUE_USER'],
+                                           os.environ['QUEUE_PASSWORD'])
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 
