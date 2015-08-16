@@ -62,3 +62,7 @@ STATIC_URL = '/static/'
 BROKER_URL = 'amqp://guest@queue//'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
+
+REALTIME_IP = '52.28.234.201'
+REALTIME_PORT = 3000
+REALTIME_URL = 'http://{}:{}/primus'.format(REALTIME_IP, REALTIME_PORT)

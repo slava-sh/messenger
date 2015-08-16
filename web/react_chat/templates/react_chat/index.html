@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="{% static 'react_chat/styles.css' %}">
   <script src="{% static 'react_chat/vendor.js' %}"></script>
   <script src="{% static 'react_chat/app.js' %}"></script>
-  <script src="http://192.168.99.100:3000/primus/primus.js"></script> {# TODO #}
+  <script src="{{ realtime_url }}/primus.js"></script> {# TODO #}
 </head>
 <body>
   <div class="container"></div>
@@ -20,7 +20,7 @@
         name: '{{ user|escapejs }}',
         csrfToken: '{{ csrf_token|escapejs }}',
       },
-    }, 'http://192.168.99.100:3000/primus'); {# TODO #}
+    }, '{{ realtime_url|escapejs }}');
   </script>
 </body>
 </html>
