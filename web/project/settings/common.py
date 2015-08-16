@@ -15,6 +15,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'registration',
     'chat',
     'bb_chat',
@@ -58,10 +59,6 @@ USE_TZ = False
 LANGUAGE_CODE = 'en-us'
 USE_I18N = False
 USE_L10N = False
-
-
-STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
-STATIC_URL = '/static/'
 
 
 DATABASES = {
