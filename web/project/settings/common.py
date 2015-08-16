@@ -3,6 +3,7 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -59,9 +60,23 @@ USE_L10N = False
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
 STATIC_URL = '/static/'
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'db',
+        'PORT': 5432,
+        'NAME': 'postgres',
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+    }
+}
+
+
 BROKER_URL = 'amqp://guest@queue//'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
+
 
 REALTIME_IP = '52.28.234.201'
 REALTIME_PORT = 3000
