@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
-HOSTNAME = os.environ['HOSTNAME']
+HOSTNAME = os.environ['WEB_HOSTNAME']
 ALLOWED_HOSTS = [HOSTNAME]
 
 INSTALLED_APPS = (
