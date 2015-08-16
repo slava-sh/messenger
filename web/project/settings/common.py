@@ -5,6 +5,9 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
+HOSTNAME = os.environ['HOSTNAME']
+ALLOWED_HOSTS = [HOSTNAME]
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,6 +81,5 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 
 
-REALTIME_IP = '52.28.234.201'
 REALTIME_PORT = 3000
-REALTIME_URL = 'http://{}:{}/primus'.format(REALTIME_IP, REALTIME_PORT)
+REALTIME_URL = 'http://{}:{}/primus'.format(HOSTNAME, REALTIME_PORT)
