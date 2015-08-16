@@ -8,3 +8,7 @@ docker-compose up -d
 ```sh
 docker-compose run --rm web python manage.py migrate
 ```
+
+```sh
+docker-compose run --rm web python manage.py collectstatic --noinput
+```
