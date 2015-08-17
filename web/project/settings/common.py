@@ -18,7 +18,6 @@ INSTALLED_APPS = (
     'storages',
     'registration',
     'chat',
-    'bb_chat',
     'react_chat',
 )
 
