@@ -1,9 +1,0 @@
-.vagrant
-.Python
-bin
-include
-lib
-pip-selfcheck.json
-__pycache__
-web/project/db.sqlite3
-*.pyc
