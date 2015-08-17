@@ -21,7 +21,7 @@ class Conversation(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('chat:conversation', [self.pk])
+        return ('old_chat:conversation', [self.pk])
 
 
 class Message(models.Model):

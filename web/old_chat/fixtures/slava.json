@@ -243,7 +243,7 @@
         3
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 5
   },
   {
@@ -255,7 +255,7 @@
         4
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 8
   },
   {
@@ -267,7 +267,7 @@
         5
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 9
   },
   {
@@ -279,7 +279,7 @@
         6
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 10
   },
   {
@@ -291,7 +291,7 @@
         7
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 11
   },
   {
@@ -303,7 +303,7 @@
         8
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 12
   },
   {
@@ -315,7 +315,7 @@
         9
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 13
   },
   {
@@ -327,7 +327,7 @@
         10
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 14
   },
   {
@@ -339,7 +339,7 @@
         11
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 15
   },
   {
@@ -351,7 +351,7 @@
         12
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 16
   },
   {
@@ -363,7 +363,7 @@
         13
       ]
     },
-    "model": "chat.conversation",
+    "model": "old_chat.conversation",
     "pk": 17
   }
 ]

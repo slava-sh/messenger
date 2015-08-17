@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 
-@register.inclusion_tag('chat/navigation.html', takes_context=True)
+@register.inclusion_tag('old_chat/navigation.html', takes_context=True)
 def navigation(context):
     try:
         conversations = context['conversations']

@@ -13,7 +13,7 @@ def home(request):
 
 @login_required
 def conversation_list(request):
-    return render(request, 'chat/conversation_list.html')
+    return render(request, 'old_chat/conversation_list.html')
 
 
 @login_required
@@ -30,7 +30,7 @@ def conversation(request, pk):
             return redirect(conversation)
     else:
         form = SendMessageForm()
-    return render(request, 'chat/conversation.html', {
+    return render(request, 'old_chat/conversation.html', {
         'conversation': conversation,
         'form': form,
     })
@@ -47,6 +47,6 @@ def create_conversation(request):
     else:
         form = CreateConversationForm()
     form.fields['members'].queryset = User.objects.exclude(pk=request.user.pk)
-    return render(request, 'chat/create_conversation.html', {
+    return render(request, 'old_chat/create_conversation.html', {
         'form': form,
     })

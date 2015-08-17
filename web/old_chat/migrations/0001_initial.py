@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('text', models.TextField()),
                 ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-                ('conversation', models.ForeignKey(to='chat.Conversation', related_name='messages')),
+                ('conversation', models.ForeignKey(to='old_chat.Conversation', related_name='messages')),
             ],
         ),
     ]

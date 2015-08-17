@@ -5,8 +5,8 @@ from django.forms.models import model_to_dict
 from django.conf import settings
 from functools import wraps
 import json
-from chat.models import Conversation
-from chat.forms import SendMessageForm
+from old_chat.models import Conversation
+from old_chat.forms import SendMessageForm
 from .tasks import notify_users
 
 

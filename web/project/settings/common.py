@@ -17,7 +17,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'storages',
     'registration',
-    'chat',
+    'old_chat',
     'react_chat',
 )
 

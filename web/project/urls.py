@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^react/', include('react_chat.urls', namespace='react_chat')),
-    url(r'^', include('chat.urls', namespace='chat')),
+    url(r'^', include('old_chat.urls', namespace='old_chat')),
 ]
