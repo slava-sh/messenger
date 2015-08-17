@@ -7,7 +7,7 @@ module.exports =
   entry:
     app: 'app'
   output:
-    path: path.resolve(__dirname, '../static/react_chat/')
+    path: path.resolve(__dirname, 'build')
     filename: '[name].js'
     chunkFilename: '[name].js'
   plugins: [
@@ -23,7 +23,7 @@ module.exports =
       { test: /\.jsx?$/, loader: 'babel-loader?stage=1', exclude: /node_modules/ }
     ]
   resolve:
-    root: __dirname
+    root: path.resolve(__dirname, 'src')
     alias:
       app: 'scripts'
     modulesDirectories: ['node_modules']
