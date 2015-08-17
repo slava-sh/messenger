@@ -1,3 +1,7 @@
+import os
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+
 from django.conf import settings
 from celery import Celery
 
