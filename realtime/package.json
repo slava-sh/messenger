@@ -1,9 +1,10 @@
 {
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/index.js"
   },
   "dependencies": {
     "amqp": "~0.2.4",
+    "babel": "^5.8.21",
     "primus": "^3.2.1",
     "sockjs": "^0.3.15"
   }
