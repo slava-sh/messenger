@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "amqp": "~0.2.4",
     "primus": "^3.2.1",

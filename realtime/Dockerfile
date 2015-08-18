@@ -17,4 +17,4 @@ RUN npm install
 COPY . /app
 
 EXPOSE 3000
-CMD ["node", "."]
+CMD ["npm", "run", "start"]
