@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "webpack --progress --colors",
-    "watch": "webpack --progress --colors --watch"
+    "watch": "webpack --progress --colors --watch",
+    "lint": "eslint src --ext .js,.jsx"
   },
   "dependencies": {
     "got": "^4.1.1",
