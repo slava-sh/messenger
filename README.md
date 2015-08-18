@@ -1,8 +1,8 @@
 ```sh
 cd client
 npm install
-ENVIRONMENT=development npm watch
-ENVIRONMENT=production npm build
+ENVIRONMENT=development npm run watch
+ENVIRONMENT=production npm run build
 ```
 
 ```sh
