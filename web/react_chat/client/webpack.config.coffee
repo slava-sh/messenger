@@ -2,8 +2,15 @@ path              = require 'path'
 webpack           = require 'webpack'
 SplitByPathPlugin = require 'webpack-split-by-path'
 
+DEBUG = process.env.ENVIRONMENT is 'development'
+
 module.exports =
   context: __dirname
+  resolve:
+    root: path.resolve(__dirname, 'src')
+    extensions: ['', '.js', '.jsx']
+    alias:
+      app: 'scripts'
   entry:
     app: 'app'
   output:
@@ -14,18 +21,17 @@ module.exports =
     new SplitByPathPlugin [
       { path: path.resolve(__dirname, 'node_modules/'), name: 'vendor' }
     ]
-    # new webpack.optimize.UglifyJsPlugin()
-    # new webpack.optimize.OccurenceOrderPlugin()
-    # new webpack.optimize.DedupePlugin()
-  ]
+    new webpack.DefinePlugin
+      DEBUG: JSON.stringify(DEBUG)
+      'process.env.NODE_ENV': JSON.stringify(process.env.ENVIRONMENT)
+    not DEBUG and new webpack.optimize.DedupePlugin()
+    not DEBUG and new webpack.optimize.OccurenceOrderPlugin()
+    not DEBUG and new webpack.optimize.UglifyJsPlugin
+      compress:
+        warnings: false
+  ].filter(Boolean)
   module:
     loaders: [
       { test: /\.jsx?$/, loader: 'babel-loader?stage=1', exclude: /node_modules/ }
     ]
-  resolve:
-    root: path.resolve(__dirname, 'src')
-    alias:
-      app: 'scripts'
-    modulesDirectories: ['node_modules']
-    extensions: ['', '.js', '.jsx']
-  devtool: 'inline-source-map'
+  devtool: DEBUG and 'inline-source-map'
