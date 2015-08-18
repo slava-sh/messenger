@@ -1,0 +1,5 @@
+---
+root: true
+extends: airbnb-lite
+rules:
+  no-console: 0
