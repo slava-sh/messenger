@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "build": "webpack --progress --colors",
+    "watch": "webpack --progress --colors --watch"
+  },
   "dependencies": {
     "got": "^4.1.1",
     "lodash": "^3.10.1",

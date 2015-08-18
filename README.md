@@ -1,6 +1,8 @@
 ```sh
-(cd client && npm install)
-./client/node_modules/.bin/webpack --config client/webpack.config.coffee --progress --colors
+cd client
+npm install
+ENVIRONMENT=development npm watch
+ENVIRONMENT=production npm build
 ```
 
 ```sh
