@@ -11,8 +11,8 @@ export function requestMessages(conversationId, callback) {
   // primus.write(['REQUEST_MESSAGES', conversationId]);
 }
 
-export function bindActions(primusUrl, id, dispatch) {
-  const actions = bindActionCreators(actionCreators, dispatch);
+export function initialize(primusUrl, store) {
+  const actions = bindActionCreators(actionCreators, store.dispatch);
 
   primus = Primus.connect(primusUrl, {
     reconnect: {
@@ -24,7 +24,7 @@ export function bindActions(primusUrl, id, dispatch) {
     console.log('connected');
     primus.write({
       type: 'REGISTER',
-      payload: { user_id: id },
+      payload: { user_id: store.getState().user.id },
     });
   });
 
@@ -37,7 +37,7 @@ export function bindActions(primusUrl, id, dispatch) {
     else if (data.type === 'RECEIVE_TYPING') {
       const {
         conversation_id: conversationId,
-        user_id: userId
+        user_id: userId,
       } = data.payload;
       actions.receiveTyping(conversationId, userId);
     }
@@ -47,3 +47,5 @@ export function bindActions(primusUrl, id, dispatch) {
     console.log('error', err.stack);
   });
 }
+
+export default initialize;
