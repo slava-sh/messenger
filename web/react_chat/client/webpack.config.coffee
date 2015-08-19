@@ -21,6 +21,7 @@ module.exports =
     new SplitByPathPlugin [
       { path: path.resolve(__dirname, 'node_modules/'), name: 'vendor' }
     ]
+    new webpack.NoErrorsPlugin()
     new webpack.DefinePlugin
       DEBUG: JSON.stringify(DEBUG)
       'process.env.NODE_ENV': JSON.stringify(process.env.ENVIRONMENT)
@@ -32,6 +33,6 @@ module.exports =
   ].filter(Boolean)
   module:
     loaders: [
-      { test: /\.jsx?$/, loader: 'babel-loader?stage=1', exclude: /node_modules/ }
+      { test: /\.jsx?$/, loader: 'babel?stage=1', exclude: /node_modules/ }
     ]
   devtool: DEBUG and 'inline-source-map'
