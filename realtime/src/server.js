@@ -45,11 +45,13 @@ function handleDisconnection(spark) {
 }
 
 function handleNotification({ args: [userIds, payload] }) {
-  userIds.forEach(userId => {
+  for (const userId of userIds) {
     if (userSparks[userId]) {
-      userSparks[userId].forEach(spark => spark.write(payload));
+      for (const spark of userSparks[userId]) {
+        spark.write(payload);
+      }
     }
-  });
+  }
   if (DEBUG) console.log('notified', userIds, payload);
 }
 
