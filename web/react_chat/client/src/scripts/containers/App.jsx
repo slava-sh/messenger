@@ -1,19 +1,19 @@
 import React, { PropTypes } from 'react';
 import { Router, Route } from 'react-router';
-import { history } from 'react-router/lib/BrowserHistory';
-import { reduxRouteComponent } from 'redux-react-router';
 import HomePage from 'app/pages/HomePage';
 import ConversationPage from 'app/pages/ConversationPage';
 
 const App = React.createClass({
   propTypes: {
-    store: PropTypes.object.isRequired,
+    routeComponent: PropTypes.func.isRequired, // TODO: find a better way
+    history: PropTypes.object.isRequired,
   },
 
   render() {
+    const { routeComponent, history } = this.props;
     return (
       <Router history={history}>
-        <Route component={reduxRouteComponent(this.props.store)}>
+        <Route component={routeComponent}>
           <Route path="/react/" component={HomePage} />
           <Route path="/react/c/:id/" component={ConversationPage} />
         </Route>

@@ -1,6 +1,8 @@
 import 'babel-core/polyfill';
 import React from 'react'; // eslint-disable-line
 import ReactDOM from 'react-dom';
+import { history } from 'react-router/lib/BrowserHistory';
+import { reduxRouteComponent } from 'redux-react-router';
 import configureStore from 'app/configureStore';
 import initializeApiClient from 'app/utils/ApiClient';
 import App from 'app/containers/App';
@@ -8,7 +10,9 @@ import App from 'app/containers/App';
 function initialize(state, primusUrl) {
   const store = configureStore(state);
   initializeApiClient(primusUrl, store);
-  ReactDOM.render(<App store={store} />, document.getElementById('root'));
+  const RouteComponent = reduxRouteComponent(store);
+  const app = <App routeComponent={RouteComponent} history={history} />;
+  ReactDOM.render(app, document.getElementById('root'));
 };
 
 window.initialize = initialize;
