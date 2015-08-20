@@ -1,30 +1,38 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { requestConversations } from 'app/actions/conversation';
+import { loadConversations } from 'app/actions/conversation';
 import Navigation from 'app/components/Navigation';
 
-const select = state => {
-  const { router, user, conversationStore } = state;
+function mapStateToProps(state, ownProps) {
+  const {
+    router,
+    user,
+    entities: { conversations },
+    pagination,
+  } = state;
+  const conversationPagination = pagination.conversations.default || { ids: [] };
   return {
     router,
     user,
-    conversations: conversationStore.entries,
+    conversations: conversationPagination.ids.map(id => conversations[id]),
   };
-};
+}
 
 const NavigationContainer = React.createClass({
   propTypes: {
-    dispatch: PropTypes.func.isRequired,
+    // TODO
   },
 
   componentDidMount() {
-    this.props.dispatch(requestConversations());
+    this.props.loadConversations();
   },
 
   render() {
-    const { dispatch, ...other } = this.props;
-    return <Navigation {...other} />;
+    return <Navigation {...this.props} />;
   },
 });
 
-export default connect(select)(NavigationContainer);
+export default connect(
+  mapStateToProps,
+  { loadConversations },
+)(NavigationContainer);

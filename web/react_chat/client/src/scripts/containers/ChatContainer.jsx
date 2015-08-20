@@ -1,36 +1,54 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import pick from 'lodash/object/pick';
-import { getCurrentConversation } from 'app/utils/conversationStore';
-import { selectConversation, sendMessage, sendTyping } from 'app/actions/conversation';
+//import { getCurrentConversation } from 'app/utils/conversationStore';
+import { loadConversation, loadMessages, sendMessage, sendTyping } from 'app/actions/conversation';
 import Chat from 'app/components/Chat';
 
-const select = state => pick(state, 'user', 'conversationStore');
+function mapStateToProps(state, ownProps) {
+  const { conversationId } = ownProps;
+  const {
+    user,
+    entities: { conversations },
+    pagination: { messagesByConversation },
+  } = state;
+  const messagePagination = messagesByConversation[conversationId] || { ids: [] };
+  return {
+    user,
+    conversation: conversations[conversationId],
+    messages: messagePagination.ids.map(id => messages[id]),
+  };
+}
+
+function loadData(props) {
+  props.loadConversation(props.conversationId);
+// props.loadMessages(props.conversationId);
+}
 
 const ChatContainer = React.createClass({
   propTypes: {
     conversationId: PropTypes.number.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    conversationStore: PropTypes.object,
+    conversation: PropTypes.object,
+    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+    // TODO
   },
 
   componentDidMount() {
-    const { dispatch, conversationId } = this.props;
-    dispatch(selectConversation(conversationId));
+    loadData(this.props);
   },
 
-  componentWillReceiveProps(newProps) {
-    const { dispatch } = this.props;
-    dispatch(selectConversation(newProps.conversationId));
+  componentWillReceiveProps(nextProps) {
+    if (newProps.conversationId != this.props.conversationId) {
+      loadData(this.props);
+    }
   },
 
   render() {
-    const { dispatch, conversationId, conversationStore, ...other } = this.props;
-    const conversation = getCurrentConversation(conversationStore);
-    const actions = bindActionCreators({ sendMessage, sendTyping }, dispatch);
-    return <Chat {...other} {...actions} conversation={conversation} />;
+    const { conversationId, loadConversation, ...other } = this.props;
+    return <Chat {...other} />;
   },
 });
 
-export default connect(select)(ChatContainer);
+export default connect(
+  mapStateToProps,
+  { loadConversation, loadMessages, sendMessage, sendTyping },
+)(ChatContainer);

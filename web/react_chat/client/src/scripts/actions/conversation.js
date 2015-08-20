@@ -18,6 +18,12 @@ export function requestConversations() {
   };
 }
 
+export function loadConversations() {
+  return dispatch => {
+    dispatch(requestConversations());
+  };
+}
+
 export function receiveMessages({ conversationId, messages }) { // TODO: refactor
   return {
     type: 'RECEIVE_MESSAGES',
@@ -59,16 +65,19 @@ export function requestMessages(conversationId) {
   };
 }
 
-export function selectConversation(conversationId) {
+export function loadMessages(conversationId) {
   return (dispatch, getState) => {
-    if (conversationId === getState().conversationStore.currentConversationId) {
-      return;
-    }
-    dispatch({
-      type: 'SELECT_CONVERSATION',
-      payload: { conversationId },
-    });
     dispatch(requestMessages(conversationId));
+  };
+}
+
+export function loadConversation(conversationId) {
+  return (dispatch, getState) => {
+    //dispatch({
+    //  type: 'SELECT_CONVERSATION',
+    //  payload: { conversationId },
+    //});
+    //dispatch(requestCon(conversationId));
   };
 }
 
