@@ -1,7 +1,18 @@
 import { apiRequest } from 'app/utils';
 import * as ApiClient from 'app/utils/ApiClient';
+import { Schemas, CALL_API } from 'app/api';
 
 const TYPING_TIME = 10 * 1000;
+
+export function loadConversations() {
+  return {
+    [CALL_API]: {
+      types: ['REQUEST_CONVERSATIONS', 'RECEIVE_CONVERSATIONS_SUCCESS', 'RECEIVE_CONVERSATIONS_FAILURE'],
+      endpoint: 'conversations',
+      schema: Schemas.conversations,
+    },
+  };
+}
 
 export function receiveConversations(conversations) {
   return {
@@ -15,12 +26,6 @@ export function requestConversations() {
     dispatch({ type: 'REQUEST_CONVERSATIONS' });
     apiRequest('/react/conversations')
       .then(data => dispatch(receiveConversations(data)));
-  };
-}
-
-export function loadConversations() {
-  return dispatch => {
-    dispatch(requestConversations());
   };
 }
 

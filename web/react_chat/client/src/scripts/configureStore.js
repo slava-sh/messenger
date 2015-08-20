@@ -6,6 +6,7 @@ import pagination from 'app/reducers/pagination';
 import conversationStore from 'app/reducers/conversationStore';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from 'redux-logger';
+import apiMiddleware from 'app/api';
 
 const reducer = combineReducers({
   router,
@@ -15,6 +16,7 @@ const reducer = combineReducers({
 });
 
 const createStoreWithMiddleware = applyMiddleware(...[
+  apiMiddleware,
   thunkMiddleware,
   DEBUG && loggerMiddleware,
 ].filter(Boolean))(createStore);

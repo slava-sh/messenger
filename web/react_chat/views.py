@@ -65,7 +65,12 @@ def messages(request, pk):
 @api('GET')
 def conversations(request):
     conversations = request.user.conversations.values('id', 'name')
-    return list(conversations)
+    return {
+        "data": list(conversations),
+        "links": {
+            "next": "haha",
+        },
+    }
 
 
 @api('GET')

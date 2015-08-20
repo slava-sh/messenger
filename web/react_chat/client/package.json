@@ -5,8 +5,10 @@
     "lint": "eslint src --ext .js,.jsx"
   },
   "dependencies": {
-    "got": "^4.1.1",
+    "humps": "^0.6.0",
+    "isomorphic-fetch": "^2.1.1",
     "lodash": "^3.10.1",
+    "normalizr": "^0.1.3",
     "react": "0.14.0-beta3",
     "react-document-title": "^1.0.3",
     "react-dom": "0.14.0-beta3",
