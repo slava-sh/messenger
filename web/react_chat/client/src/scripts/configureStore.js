@@ -2,7 +2,8 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import router from 'app/reducers/router';
 import user from 'app/reducers/user';
 import conversationStore from 'app/reducers/conversationStore';
-import thunk from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
+import loggerMiddleware from 'redux-logger';
 
 const reducer = combineReducers({
   router,
@@ -10,9 +11,10 @@ const reducer = combineReducers({
   conversationStore,
 });
 
-const createStoreWithMiddleware = applyMiddleware(
-  thunk,
-)(createStore);
+const createStoreWithMiddleware = applyMiddleware(...[
+  thunkMiddleware,
+  DEBUG && loggerMiddleware,
+].filter(Boolean))(createStore);
 
 export function configureStore(initialState) {
   return createStoreWithMiddleware(reducer, initialState);
