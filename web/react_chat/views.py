@@ -45,8 +45,8 @@ def messages(request, pk):
             },
         }
     else:
-        #data = json.loads(request.body.decode())
-        form = SendMessageForm(request.POST)
+        data = json.loads(request.body.decode())
+        form = SendMessageForm(data)
         if form.is_valid():
             message = form.save(commit=False)
             message.conversation = conversation

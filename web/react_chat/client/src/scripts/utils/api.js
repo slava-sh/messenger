@@ -4,13 +4,16 @@ import { normalize } from 'app/utils/normalizr';
 
 const API_ROOT = '/react/'; // TODO
 
-export function callApi(endpoint, responseSchema, requestOptions) {
+export function callApi(endpoint, responseSchema, requestOptions = {}) {
   if (!endpoint.startsWith(API_ROOT)) {
     endpoint = API_ROOT + endpoint;
   }
+  const { body } = requestOptions;
+  const serializedBody = typeof body === 'object' ? JSON.stringify(body) : body;
   return fetch(endpoint, {
     credentials: 'same-origin',
     ...requestOptions,
+    body: serializedBody,
   }).then(response => response.json().then(camelizeKeys).then(json => {
     if (!response.ok) {
       return Promise.reject(json);
