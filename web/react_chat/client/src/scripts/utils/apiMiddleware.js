@@ -1,56 +1,29 @@
-import fetch from 'isomorphic-fetch';
-import { camelizeKeys } from 'humps';
-import { normalize } from 'app/utils/normalizr';
-
-const API_ROOT = '/react/'; // TODO
-
-function callApi(endpoint, responseSchema) {
-  if (!endpoint.startsWith(API_ROOT)) {
-    endpoint = API_ROOT + endpoint;
-  }
-  return fetch(endpoint, {
-    credentials: 'same-origin',
-  }).then(response => response.json().then(camelizeKeys).then(json => {
-    if (!response.ok) {
-      return Promise.reject(json);
-    }
-    const links = json.links || {};
-    const nextPageUrl = links.next;
-    return Object.assign({},
-      normalize(json, responseSchema),
-      { nextPageUrl },
-    );
-  }));
-}
-
-export const CALL_API = Symbol('Call API');
+import callApi from 'app/utils/api';
 
 export const middleware = store => next => action => {
-  const params = action[CALL_API];
-  if (!params) {
+  if (!action.endpoint) {
     return next(action);
   }
-
-  const { endpoint, schema, types } = params;
-  const [requestType, successType, failureType] = types;
-
-  function actionWith(data) {
-    const finalAction = Object.assign({}, action, data);
-    delete finalAction[CALL_API];
-    return finalAction;
+  if (action.condition && !action.condition(store.getState())) {
+    return Promise.resolve();
   }
-
-  next(actionWith({ type: requestType }));
-
+  const { types, payload = {}, endpoint, schema } = action;
+  const [requestType, successType, failureType] = types;
+  next({
+    type: requestType,
+    payload,
+  });
   return callApi(endpoint, schema).then(
-    response => next(actionWith({
+    response => next({
       type: successType,
       response,
-    })),
-    error => next(actionWith({
+      payload,
+    }),
+    error => next({
       type: failureType,
       error: error.message,
-    }))
+      payload,
+    }),
   );
 };
 

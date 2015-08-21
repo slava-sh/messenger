@@ -1,4 +1,5 @@
 import { bindActionCreators } from 'redux';
+import { camelizeKeys } from 'humps';
 import * as actionCreators from 'app/actions/conversation';
 
 var primus;
@@ -21,7 +22,6 @@ export function initialize(primusUrl, store) {
   });
 
   primus.on('open', function() {
-    // console.log('connected');
     primus.write({
       type: 'REGISTER',
       payload: { user_id: store.getState().user.id },
@@ -29,17 +29,12 @@ export function initialize(primusUrl, store) {
   });
 
   primus.on('data', function(data) {
-    console.log('got', data);
-    if (data.type === 'RECEIVE_MESSAGE') {
-      const { conversation_id: conversationId, message } = data.payload;
-      actions.receiveMessage({ conversationId, message });
+    const { type, payload } = camelizeKeys(data);
+    if (type === 'RECEIVE_MESSAGE') {
+      actions.receiveMessage(payload);
     }
-    else if (data.type === 'RECEIVE_TYPING') {
-      const {
-        conversation_id: conversationId,
-        user_id: userId,
-      } = data.payload;
-      actions.receiveTyping(conversationId, userId);
+    else if (type === 'RECEIVE_TYPING') {
+      actions.receiveTyping(payload);
     }
   });
 

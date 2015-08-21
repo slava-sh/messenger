@@ -21,6 +21,17 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
+function mergeProps(stateProps, dispatchProps, ownProps) {
+  const { conversationId } = ownProps;
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    sendMessage: text => dispatchProps.sendMessage({ conversationId, text }),
+    sendTyping: () => dispatchProps.sendTyping(conversationId),
+  };
+}
+
 function loadData(props) {
   props.loadConversation(props.conversationId);
   props.loadMessages(props.conversationId);
@@ -53,4 +64,5 @@ const ChatContainer = React.createClass({
 export default connect(
   mapStateToProps,
   { loadConversation, loadMessages, sendMessage, sendTyping },
+  mergeProps,
 )(ChatContainer);
