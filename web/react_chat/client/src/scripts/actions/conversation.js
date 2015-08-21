@@ -1,6 +1,7 @@
 import { apiRequest } from 'app/utils';
 import * as ApiClient from 'app/utils/ApiClient';
-import { Schemas, CALL_API } from 'app/api';
+import * as Schemas from 'app/utils/apiSchemas';
+import { CALL_API } from 'app/utils/apiMiddleware';
 
 const TYPING_TIME = 10 * 1000;
 

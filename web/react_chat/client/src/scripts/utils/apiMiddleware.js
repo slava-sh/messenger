@@ -1,38 +1,26 @@
-import { Schema, paginated, normalize } from 'app/utils/normalizr';
-import { camelizeKeys } from 'humps';
 import fetch from 'isomorphic-fetch';
+import { camelizeKeys } from 'humps';
+import { normalize } from 'app/utils/normalizr';
 
 const API_ROOT = '/react/'; // TODO
 
-const conversationSchema = new Schema('conversations');
-const messageSchema = new Schema('messages');
-
-export const Schemas = {
-  conversation: conversationSchema,
-  conversations: paginated(conversationSchema),
-  message: messageSchema,
-  messages: paginated(messageSchema),
-};
-
-function callApi(endpoint, schema) {
+function callApi(endpoint, responseSchema) {
   if (!endpoint.startsWith(API_ROOT)) {
     endpoint = API_ROOT + endpoint;
   }
   return fetch(endpoint, {
     credentials: 'same-origin',
-  })
-  .then(response => response.json().then(json => ({ json: camelizeKeys(json), response })))
-  .then(({ json, response }) => {
+  }).then(response => response.json().then(camelizeKeys).then(json => {
     if (!response.ok) {
       return Promise.reject(json);
     }
     const links = json.links || {};
     const nextPageUrl = links.next;
     return Object.assign({},
-      normalize(json, schema),
+      normalize(json, responseSchema),
       { nextPageUrl },
     );
-  });
+  }));
 }
 
 export const CALL_API = Symbol('Call API');

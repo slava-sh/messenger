@@ -5,7 +5,7 @@ import entities from 'app/reducers/entities';
 import pagination from 'app/reducers/pagination';
 import conversationStore from 'app/reducers/conversationStore';
 import thunkMiddleware from 'redux-thunk';
-import apiMiddleware from 'app/api';
+import apiMiddleware from 'app/utils/apiMiddleware';
 
 const reducer = combineReducers({
   router,

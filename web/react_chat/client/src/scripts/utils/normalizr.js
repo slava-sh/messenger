@@ -166,5 +166,3 @@ export function normalize(obj, schema) {
 }
 
 export default normalize;
-
-export const paginated = schema => proxy('data', arrayOf(schema));
