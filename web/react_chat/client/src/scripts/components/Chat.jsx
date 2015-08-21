@@ -10,6 +10,7 @@ const Chat = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
     conversation: PropTypes.object,
+    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
     sendMessage: PropTypes.func.isRequired,
     sendTyping: PropTypes.func.isRequired,
   },
@@ -26,7 +27,7 @@ const Chat = React.createClass({
   },
 
   render() {
-    const { user, conversation, sendMessage, sendTyping } = this.props;
+    const { user, conversation, messages, sendMessage, sendTyping } = this.props;
     if (!conversation) {
       return <Spinner />;
     }
@@ -38,10 +39,10 @@ const Chat = React.createClass({
             <a href="#"><i className="fa fa-gear pull-right"></i></a>
           </div>
           <MessageList
-            messages={conversation.messages}
+            messages={messages}
             ref={node => this.messageList = node}
           />
-          <TypingUsers ids={conversation.typingUserIds} />
+          <TypingUsers ids={conversation.typingUserIds || []} /> {/* TODO */}
           <MessageForm
             user={user}
             sendMessage={sendMessage}

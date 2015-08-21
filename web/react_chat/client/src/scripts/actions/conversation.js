@@ -14,77 +14,99 @@ export function loadConversations() {
   };
 }
 
-export function receiveConversations(conversations) {
+export function loadConversation(conversationId) {
   return {
-    type: 'RECEIVE_CONVERSATIONS',
-    payload: { conversations },
-  };
-}
-
-export function requestConversations() {
-  return dispatch => {
-    dispatch({ type: 'REQUEST_CONVERSATIONS' });
-    apiRequest('/react/conversations')
-      .then(data => dispatch(receiveConversations(data)));
-  };
-}
-
-export function receiveMessages({ conversationId, messages }) { // TODO: refactor
-  return {
-    type: 'RECEIVE_MESSAGES',
-    payload: { conversationId, messages },
-  };
-}
-
-export function receiveMessage({ conversationId, message }) { // TODO: refactor
-  return {
-    type: 'RECEIVE_MESSAGE',
-    payload: { conversationId, message },
-  };
-}
-
-export function receiveTyping(conversationId, userId) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'START_TYPING',
-      payload: { conversationId, userId },
-    });
-    setTimeout(() => {
-      dispatch({
-        type: 'STOP_TYPING',
-        payload: { conversationId, userId },
-      });
-    }, TYPING_TIME);
-  };
-}
-
-export function requestMessages(conversationId) {
-  return dispatch => {
-    dispatch({ type: 'REQUEST_MESSAGES' });
-    ApiClient.requestMessages(conversationId, function() {console.log('got', arguments)}); // eslint-disable-line
-    apiRequest(`/react/conversations/${conversationId}/messages`)
-      .then(data => dispatch(receiveMessages({
-        conversationId,
-        messages: data,
-      })));
+    conversationId, // TODO: payload
+    [CALL_API]: {
+      types: ['REQUEST_CONVERSATION', 'RECEIVE_CONVERSATION_SUCCESS', 'RECEIVE_CONVERSATION_FAILURE'],
+      endpoint: `conversations/${conversationId}`,
+      schema: Schemas.conversation,
+    },
   };
 }
 
 export function loadMessages(conversationId) {
-  return (dispatch, getState) => {
-    dispatch(requestMessages(conversationId));
+  return {
+    conversationId, // TODO: payload
+    [CALL_API]: {
+      types: ['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE'],
+      endpoint: `conversations/${conversationId}/messages`,
+      schema: Schemas.messages,
+    },
   };
 }
 
-export function loadConversation(conversationId) {
-  return (dispatch, getState) => {
-    //dispatch({
-    //  type: 'SELECT_CONVERSATION',
-    //  payload: { conversationId },
-    //});
-    //dispatch(requestCon(conversationId));
-  };
-}
+//export function receiveConversations(conversations) {
+//  return {
+//    type: 'RECEIVE_CONVERSATIONS',
+//    payload: { conversations },
+//  };
+//}
+//
+//export function requestConversations() {
+//  return dispatch => {
+//    dispatch({ type: 'REQUEST_CONVERSATIONS' });
+//    apiRequest('/react/conversations')
+//      .then(data => dispatch(receiveConversations(data)));
+//  };
+//}
+//
+//export function receiveMessages({ conversationId, messages }) { // TODO: refactor
+//  return {
+//    type: 'RECEIVE_MESSAGES',
+//    payload: { conversationId, messages },
+//  };
+//}
+//
+//export function receiveMessage({ conversationId, message }) { // TODO: refactor
+//  return {
+//    type: 'RECEIVE_MESSAGE',
+//    payload: { conversationId, message },
+//  };
+//}
+//
+//export function receiveTyping(conversationId, userId) {
+//  return (dispatch, getState) => {
+//    dispatch({
+//      type: 'START_TYPING',
+//      payload: { conversationId, userId },
+//    });
+//    setTimeout(() => {
+//      dispatch({
+//        type: 'STOP_TYPING',
+//        payload: { conversationId, userId },
+//      });
+//    }, TYPING_TIME);
+//  };
+//}
+//
+//export function requestMessages(conversationId) {
+//  return dispatch => {
+//    dispatch({ type: 'REQUEST_MESSAGES' });
+//    ApiClient.requestMessages(conversationId, function() {console.log('got', arguments)}); // eslint-disable-line
+//    apiRequest(`/react/conversations/${conversationId}/messages`)
+//      .then(data => dispatch(receiveMessages({
+//        conversationId,
+//        messages: data,
+//      })));
+//  };
+//}
+//
+//export function loadMessages(conversationId) {
+//  return (dispatch, getState) => {
+//    dispatch(requestMessages(conversationId));
+//  };
+//}
+//
+//export function loadConversation(conversationId) {
+//  return (dispatch, getState) => {
+//    //dispatch({
+//    //  type: 'SELECT_CONVERSATION',
+//    //  payload: { conversationId },
+//    //});
+//    //dispatch(requestCon(conversationId));
+//  };
+//}
 
 export function sendMessage(text) {
   return (dispatch, getState) => {

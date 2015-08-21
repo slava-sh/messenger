@@ -11,7 +11,7 @@ const reducer = combineReducers({
     ],
   }),
   messagesByConversation: paginate({
-    mapActionToKey: action => action.conversation.id,
+    mapActionToKey: action => action.conversationId,
     types: [
       'REQUEST_MESSAGES',
       'RECEIVE_MESSAGES_SUCCESS',

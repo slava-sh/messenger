@@ -8,7 +8,7 @@ function mapStateToProps(state, ownProps) {
   const { conversationId } = ownProps;
   const {
     user,
-    entities: { conversations },
+    entities: { conversations, messages },
     pagination: { messagesByConversation },
   } = state;
   const messagePagination = messagesByConversation[conversationId] || { ids: [] };
@@ -21,7 +21,7 @@ function mapStateToProps(state, ownProps) {
 
 function loadData(props) {
   props.loadConversation(props.conversationId);
-// props.loadMessages(props.conversationId);
+  props.loadMessages(props.conversationId);
 }
 
 const ChatContainer = React.createClass({
@@ -37,7 +37,7 @@ const ChatContainer = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (newProps.conversationId != this.props.conversationId) {
+    if (nextProps.conversationId != this.props.conversationId) {
       loadData(this.props);
     }
   },

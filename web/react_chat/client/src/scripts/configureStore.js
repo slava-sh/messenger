@@ -5,7 +5,7 @@ import entities from 'app/reducers/entities';
 import pagination from 'app/reducers/pagination';
 import conversationStore from 'app/reducers/conversationStore';
 import thunkMiddleware from 'redux-thunk';
-import loggerMiddleware from 'redux-logger';
+import loggerMiddleware from 'redux-logger'; // TODO: don't import on prod
 import apiMiddleware from 'app/api';
 
 const reducer = combineReducers({

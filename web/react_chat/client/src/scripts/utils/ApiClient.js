@@ -21,7 +21,7 @@ export function initialize(primusUrl, store) {
   });
 
   primus.on('open', function() {
-    console.log('connected');
+    // console.log('connected');
     primus.write({
       type: 'REGISTER',
       payload: { user_id: store.getState().user.id },
