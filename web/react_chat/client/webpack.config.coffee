@@ -21,7 +21,6 @@ module.exports =
     new SplitByPathPlugin [
       { path: path.resolve(__dirname, 'node_modules/'), name: 'vendor' }
     ]
-    new webpack.NoErrorsPlugin()
     new webpack.DefinePlugin
       DEBUG: JSON.stringify(DEBUG)
       'process.env.NODE_ENV': JSON.stringify(process.env.ENVIRONMENT)
