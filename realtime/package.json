@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^4.0.10",
-    "eslint": "^1.1.0",
+    "eslint": "^1.2.1",
     "eslint-config-airbnb-lite": "^1.0.3"
   }
 }
