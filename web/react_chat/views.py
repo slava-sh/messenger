@@ -38,7 +38,12 @@ def messages(request, pk):
     # TODO: validate membership
     if request.method == 'GET':
         messages = conversation.messages.values('id', 'author', 'text')
-        return list(messages)
+        return {
+            "data": list(messages),
+            "links": {
+                "next": "huh",
+            },
+        }
     else:
         #data = json.loads(request.body.decode())
         form = SendMessageForm(request.POST)
@@ -80,7 +85,12 @@ def conversation(request, pk):
     response = model_to_dict(conversation, fields=['id', 'name'])
     response['members'] = list(conversation.members.values('id', 'username'))
     response['messages'] = list(conversation.messages.values('id', 'author', 'text'))
-    return response
+    return {
+        "data": response,
+        "links": {
+            "next": "nah",
+        },
+    }
 
 
 @api('POST')
