@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import { camelizeKeys } from 'humps';
-import { normalize } from 'app/utils/normalizr';
+import { normalize } from 'app/utils/normalizer';
 import cookie from 'app/utils/cookie';
 
 const API_ROOT = '/react/'; // TODO

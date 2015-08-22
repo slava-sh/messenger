@@ -1,4 +1,4 @@
-import { Schema, arrayOf, proxy } from 'app/utils/normalizr';
+import { Schema, arrayOf, proxy } from 'app/utils/normalizer';
 
 const pagesOf = schema => proxy('data', arrayOf(schema));
 
