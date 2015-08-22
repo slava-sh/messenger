@@ -4,13 +4,13 @@ export const middleware = store => next => action => {
   if (!action.endpoint) {
     return next(action);
   }
-  const { types, payload = {}, endpoint, schema } = action;
+  const { types, payload = {}, method = 'GET', endpoint, data, schema } = action;
   const [requestType, successType, failureType] = types;
   next({
     type: requestType,
     payload,
   });
-  return callApi(endpoint, schema).then(
+  return callApi(method, endpoint, data, schema).then(
     response => next({
       type: successType,
       response,

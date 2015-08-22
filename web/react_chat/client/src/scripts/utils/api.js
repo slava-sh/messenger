@@ -3,31 +3,21 @@ import { camelizeKeys } from 'humps';
 import { normalize } from 'app/utils/normalizer';
 import cookie from 'app/utils/cookie';
 
-const API_ROOT = '/react/'; // TODO
+const API_ROOT = '/react/';
 
-export function callApi(endpoint, responseSchema, requestOptions = {}) {
-  const requestUrl = endpoint.startsWith(API_ROOT) ? endpoint : API_ROOT + endpoint;
-  if (typeof requestOptions.credentials === 'undefined') {
-    requestOptions.credentials = 'same-origin';
-  }
-  if (typeof requestOptions.headers === 'undefined') {
-    requestOptions.headers = {};
-  }
-  requestOptions.headers['X-CSRFToken'] = cookie.get('csrftoken');
-  if (typeof requestOptions.body === 'object') {
-    requestOptions.body = JSON.stringify(requestOptions.body);
-  }
-  return fetch(requestUrl, requestOptions)
-  .then(response => response.json().then(camelizeKeys).then(json => {
+export function callApi(method, endpoint, data, responseSchema) {
+  return fetch(API_ROOT + endpoint, {
+    method,
+    credentials: 'same-origin',
+    headers: {
+      'X-CSRFToken': cookie.get('csrftoken'),
+    },
+    body: typeof data === 'object' ? JSON.stringify(data) : data,
+  }).then(response => response.json().then(camelizeKeys).then(json => {
     if (!response.ok) {
       return Promise.reject(json);
     }
-    const links = json.links || {};
-    const nextPageUrl = links.next;
-    return Object.assign({},
-      normalize(json, responseSchema),
-      { nextPageUrl },
-    );
+    return normalize(json, responseSchema);
   }));
 }
 

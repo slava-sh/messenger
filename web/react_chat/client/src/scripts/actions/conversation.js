@@ -47,10 +47,7 @@ export function sendMessage({ conversationId, text }) {
       type: 'SEND_MESSAGE',
       payload: { conversationId, message },
     });
-    callApi(`conversations/${conversationId}/messages`, null, {
-      method: 'POST',
-      body: { text },
-    });
+    callApi('POST', `conversations/${conversationId}/messages`, { text });
   };
 }
 
@@ -72,9 +69,7 @@ export function sendTyping(conversationId) { // TODO: refactor
       type: 'SEND_TYPING',
       payload: { conversationId },
     });
-    callApi(`conversations/${conversationId}/typing`, null, {
-      method: 'POST',
-    });
+    callApi('POST', `conversations/${conversationId}/typing`);
   };
 }
 
