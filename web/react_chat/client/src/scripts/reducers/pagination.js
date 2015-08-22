@@ -1,23 +1,20 @@
 import { combineReducers } from 'redux';
-import paginate from 'app/reducers/paginate';
+import { createKeyedReducer, createPaginationReducer } from 'app/utils/reducers';
 
 const reducer = combineReducers({
-  conversations: paginate({
-    mapActionToKey: action => 'default', // TODO
-    types: [
-      'REQUEST_CONVERSATIONS',
-      'RECEIVE_CONVERSATIONS_SUCCESS',
-      'RECEIVE_CONVERSATIONS_FAILURE',
-    ],
-  }),
-  messagesByConversation: paginate({
-    mapActionToKey: action => action.payload.conversationId,
-    types: [
+  conversations: createPaginationReducer([
+    'REQUEST_CONVERSATIONS',
+    'RECEIVE_CONVERSATIONS_SUCCESS',
+    'RECEIVE_CONVERSATIONS_FAILURE',
+  ]),
+  messagesByConversation: createKeyedReducer(
+    action => action.payload && action.payload.conversationId,
+    createPaginationReducer([
       'REQUEST_MESSAGES',
       'RECEIVE_MESSAGES_SUCCESS',
       'RECEIVE_MESSAGES_FAILURE',
-    ],
-  }),
+    ])
+  ),
 });
 
 export default reducer;

@@ -10,7 +10,7 @@ const ConversationPage = React.createClass({
   },
 
   render() {
-    const conversationId = +this.props.params.id;
+    const conversationId = this.props.params.id;
     return (
       <DefaultLayout>
         <ChatContainer conversationId={conversationId} />

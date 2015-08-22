@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import reducer from 'app/reducers';
-import conversationStore from 'app/reducers/conversationStore';
 import thunkMiddleware from 'redux-thunk';
 import apiMiddleware from 'app/utils/apiMiddleware';
 

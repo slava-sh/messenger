@@ -13,6 +13,9 @@ function initialize(state, primusUrl) {
   const RouteComponent = reduxRouteComponent(store);
   const app = <App routeComponent={RouteComponent} history={history} />;
   ReactDOM.render(app, document.getElementById('root'));
+  if (DEBUG) {
+    window.store = store;
+  }
 };
 
 window.initialize = initialize;

@@ -8,7 +8,7 @@ export function loadConversations() {
     types: ['REQUEST_CONVERSATIONS', 'RECEIVE_CONVERSATIONS_SUCCESS', 'RECEIVE_CONVERSATIONS_FAILURE'],
     endpoint: 'conversations',
     schema: Schemas.conversations,
-    condition: state => !state.pagination.conversations.default,
+    condition: state => !state.pagination.conversations,
   };
 }
 

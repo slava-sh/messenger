@@ -10,7 +10,7 @@ function mapStateToProps(state, ownProps) {
     entities: { conversations },
     pagination,
   } = state;
-  const conversationPagination = pagination.conversations.default || { ids: [] };
+  const conversationPagination = pagination.conversations || { ids: [] };
   return {
     router,
     user,
