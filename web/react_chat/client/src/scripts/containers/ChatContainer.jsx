@@ -13,7 +13,7 @@ function mapStateToProps(state, ownProps) {
   const { conversations, users } = entities;
   const conversation = conversations[conversationId];
   const messagePagination = messagesByConversation[conversationId] || { ids: [] };
-  const messages = messagePagination.ids.map(id => {
+  const messages = (messagePagination.isLoaded ? messagePagination.ids : []).map(id => {
     const message = entities.messages[id];
     return {
       ...message,
@@ -21,7 +21,7 @@ function mapStateToProps(state, ownProps) {
     };
   });
   const typingUserIds = (conversation || {}).typingUserIds || [];
-  const typingUsers = typingUserIds.map(id => users[id]);
+  const typingUsers = typingUserIds.map(id => users[id]).filter(Boolean);
   return {
     user,
     conversation,
