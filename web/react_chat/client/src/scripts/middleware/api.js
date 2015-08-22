@@ -4,9 +4,6 @@ export const middleware = store => next => action => {
   if (!action.endpoint) {
     return next(action);
   }
-  if (action.condition && !action.condition(store.getState())) {
-    return Promise.resolve();
-  }
   const { types, payload = {}, endpoint, schema } = action;
   const [requestType, successType, failureType] = types;
   next({
