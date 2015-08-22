@@ -3,7 +3,7 @@ import React from 'react'; // eslint-disable-line
 import ReactDOM from 'react-dom';
 import { history } from 'react-router/lib/BrowserHistory';
 import { reduxRouteComponent } from 'redux-react-router';
-import configureStore from 'app/configureStore';
+import configureStore from 'app/store/configureStore';
 import initializeApiClient from 'app/utils/ApiClient';
 import App from 'app/containers/App';
 
