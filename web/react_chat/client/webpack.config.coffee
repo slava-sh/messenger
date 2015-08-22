@@ -11,6 +11,8 @@ module.exports =
     extensions: ['', '.js', '.jsx']
     alias:
       app: 'scripts'
+  externals:
+    primus: 'Primus'
   entry:
     app: 'app'
   output:
