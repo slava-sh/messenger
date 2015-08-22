@@ -8,7 +8,7 @@ const Message = React.createClass({
   render() {
     return (
       <div className="message">
-        <div className="username">{this.props.message.author}</div>
+        <div className="username">{this.props.message.author.username}</div>
         <div className="text">{this.props.message.text}</div>
       </div>
     );

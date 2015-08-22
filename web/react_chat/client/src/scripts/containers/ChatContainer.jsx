@@ -12,7 +12,13 @@ function mapStateToProps(state, ownProps) {
   } = state;
   const conversation = entities.conversations[conversationId];
   const messagePagination = messagesByConversation[conversationId] || { ids: [] };
-  const messages = messagePagination.ids.map(id => entities.messages[id]);
+  const messages = messagePagination.ids.map(id => {
+    const message = entities.messages[id];
+    return {
+      ...message,
+      author: entities.users[message.author],
+    };
+  });
   return {
     user,
     conversation,
