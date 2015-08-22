@@ -10,7 +10,7 @@ const messagePagination = createPaginationReducer([
     const { message } = action.payload;
     return {
       ...state,
-      ids: [...state.ids, message.id],
+      ids: [...(state.ids || []), message.id],
     };
   },
   RECEIVE_CONVERSATION_SUCCESS: (state, action) => {
@@ -21,6 +21,7 @@ const messagePagination = createPaginationReducer([
     return {
       ...state,
       ids: conversation.messages,
+      isLoaded: true,
     };
   },
 });

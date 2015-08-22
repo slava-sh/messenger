@@ -8,7 +8,7 @@ export function loadConversations() {
     types: ['REQUEST_CONVERSATIONS', 'RECEIVE_CONVERSATIONS_SUCCESS', 'RECEIVE_CONVERSATIONS_FAILURE'],
     endpoint: 'conversations',
     schema: Schemas.conversations,
-    condition: state => !state.pagination.conversations,
+    condition: state => !state.pagination.conversations.isLoaded,
   };
 }
 
@@ -31,7 +31,10 @@ export function loadMessages(conversationId) {
     payload: { conversationId },
     endpoint: `conversations/${conversationId}/messages`,
     schema: Schemas.messages,
-    condition: state => !state.pagination.messagesByConversation[conversationId],
+    condition: ({ pagination: { messagesByConversation } }) => {
+      const messagePagination = messagesByConversation[conversationId];
+      return !messagePagination || !messagePagination.isLoaded;
+    }
   };
 }
 
