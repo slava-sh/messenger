@@ -1,4 +1,4 @@
-import callApi from 'app/utils/api';
+import callApi from 'app/utils/callApi';
 
 export const middleware = store => next => action => {
   if (!action.endpoint) {

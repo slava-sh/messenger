@@ -1,5 +1,5 @@
 import * as Schemas from 'app/utils/apiSchemas';
-import callApi from 'app/utils/api';
+import callApi from 'app/utils/callApi';
 
 const TYPING_TIME = 10 * 1000;
 
