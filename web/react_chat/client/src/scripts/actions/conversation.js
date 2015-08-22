@@ -32,6 +32,13 @@ export function loadMessages(conversationId) {
   };
 }
 
+export function receiveMessage({ conversationId, message }) {
+  return {
+    type: 'RECEIVE_MESSAGE',
+    payload: { conversationId, message },
+  };
+}
+
 export function sendMessage({ conversationId, text }) {
   return (dispatch, getState) => {
     const { user } = getState();

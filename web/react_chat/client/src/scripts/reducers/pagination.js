@@ -9,13 +9,21 @@ const reducer = combineReducers({
     'RECEIVE_CONVERSATIONS_FAILURE',
   ]),
   messagesByConversation: createKeyedReducer(
-    action => contains(['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE'], action.type)
-              && action.payload.conversationId, // TODO: refactor
+    action => contains(['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE', 'RECEIVE_MESSAGE'], action.type)
+              && String(action.payload.conversationId), // TODO: refactor
     createPaginationReducer([
       'REQUEST_MESSAGES',
       'RECEIVE_MESSAGES_SUCCESS',
       'RECEIVE_MESSAGES_FAILURE',
-    ])
+    ], {
+      RECEIVE_MESSAGE: (state, action) => {
+        const { message } = action.payload;
+        return {
+          ...state,
+          ids: [...state.ids, message.id],
+        };
+      },
+    }),
   ),
 });
 
