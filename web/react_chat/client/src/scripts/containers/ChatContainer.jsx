@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-//import { getCurrentConversation } from 'app/utils/conversationStore';
 import { loadConversation, loadMessages, sendMessage, sendTyping } from 'app/actions/conversation';
 import Chat from 'app/components/Chat';
 
@@ -42,7 +41,8 @@ const ChatContainer = React.createClass({
     conversationId: PropTypes.string.isRequired,
     conversation: PropTypes.object,
     messages: PropTypes.arrayOf(PropTypes.object).isRequired,
-    // TODO
+    loadConversation: PropTypes.func.isRequired,
+    loadMessages: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -50,13 +50,18 @@ const ChatContainer = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.conversationId != this.props.conversationId) {
+    if (nextProps.conversationId !== this.props.conversationId) {
       loadData(nextProps);
     }
   },
 
   render() {
-    const { conversationId, loadConversation, ...other } = this.props;
+    const {
+      conversationId,
+      loadConversation,
+      loadMessages,
+      ...other,
+    } = this.props;
     return <Chat {...other} />;
   },
 });

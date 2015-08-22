@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loadConversations } from 'app/actions/conversation';
 import Navigation from 'app/components/Navigation';
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   const {
     router,
     user,
@@ -20,7 +20,7 @@ function mapStateToProps(state, ownProps) {
 
 const NavigationContainer = React.createClass({
   propTypes: {
-    // TODO
+    loadConversations: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -28,7 +28,8 @@ const NavigationContainer = React.createClass({
   },
 
   render() {
-    return <Navigation {...this.props} />;
+    const { loadConversations, ...other } = this.props;
+    return <Navigation {...other} />;
   },
 });
 

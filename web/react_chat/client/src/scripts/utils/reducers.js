@@ -11,7 +11,7 @@ function handleAction(handlers, state, action) {
 export function createReducer(initialState, handlers) {
   return function reducer(state = initialState, action) {
     return handleAction(handlers, state, action);
-  }
+  };
 }
 
 export function createKeyedReducer(mapActionToKey, keyReducer) {
@@ -35,7 +35,7 @@ export function createEntityReducer(name, handlers) {
     const entities = get(action, ['response', 'entities', name]);
     const newState = entities ? merge({}, state, entities) : state;
     return handleAction(handlers, newState, action);
-  }
+  };
 }
 
 export function createPaginationReducer(types, handlers) {
@@ -46,7 +46,7 @@ export function createPaginationReducer(types, handlers) {
     // TODO: nextCursor
   };
   const updatePagination = handleAction.bind(null, {
-    [requestType]: (state, action) => {
+    [requestType]: (state) => {
       return {
         ...state,
         ...loadingState,
@@ -59,7 +59,7 @@ export function createPaginationReducer(types, handlers) {
         isLoading: false,
       };
     },
-    [failureType]: (state, action) => {
+    [failureType]: (state) => {
       return {
         ...state,
         isLoading: false,

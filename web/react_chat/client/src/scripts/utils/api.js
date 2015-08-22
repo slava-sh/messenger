@@ -6,9 +6,7 @@ import cookie from 'app/utils/cookie';
 const API_ROOT = '/react/'; // TODO
 
 export function callApi(endpoint, responseSchema, requestOptions = {}) {
-  if (!endpoint.startsWith(API_ROOT)) {
-    endpoint = API_ROOT + endpoint;
-  }
+  const requestUrl = endpoint.startsWith(API_ROOT) ? endpoint : API_ROOT + endpoint;
   if (typeof requestOptions.credentials === 'undefined') {
     requestOptions.credentials = 'same-origin';
   }
@@ -19,7 +17,7 @@ export function callApi(endpoint, responseSchema, requestOptions = {}) {
   if (typeof requestOptions.body === 'object') {
     requestOptions.body = JSON.stringify(requestOptions.body);
   }
-  return fetch(endpoint, requestOptions)
+  return fetch(requestUrl, requestOptions)
   .then(response => response.json().then(camelizeKeys).then(json => {
     if (!response.ok) {
       return Promise.reject(json);

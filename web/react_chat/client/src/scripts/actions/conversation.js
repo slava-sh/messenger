@@ -58,7 +58,7 @@ let shouldSendTyping = true; // TODO: reset when switching conversation
 let shouldSendTypingTimeout = null;
 
 export function sendTyping(conversationId) { // TODO: refactor
-  return (dispatch, getState) => {
+  return dispatch => {
     if (!shouldSendTyping) {
       return;
     }

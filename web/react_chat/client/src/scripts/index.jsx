@@ -16,6 +16,6 @@ function initialize(state, primusUrl) {
   if (DEBUG) {
     window.store = store;
   }
-};
+}
 
 window.initialize = initialize;
