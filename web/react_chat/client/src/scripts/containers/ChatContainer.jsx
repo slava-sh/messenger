@@ -10,19 +10,23 @@ function mapStateToProps(state, ownProps) {
     entities,
     pagination: { messagesByConversation },
   } = state;
-  const conversation = entities.conversations[conversationId];
+  const { conversations, users } = entities;
+  const conversation = conversations[conversationId];
   const messagePagination = messagesByConversation[conversationId] || { ids: [] };
   const messages = messagePagination.ids.map(id => {
     const message = entities.messages[id];
     return {
       ...message,
-      author: entities.users[message.author],
+      author: users[message.author],
     };
   });
+  const typingUserIds = (conversation || {}).typingUserIds || [];
+  const typingUsers = typingUserIds.map(id => users[id]);
   return {
     user,
     conversation,
     messages,
+    typingUsers,
   };
 }
 
@@ -46,6 +50,7 @@ const ChatContainer = React.createClass({
     conversationId: PropTypes.string.isRequired,
     conversation: PropTypes.object,
     messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+    typingUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
     loadConversation: PropTypes.func.isRequired,
     loadMessages: PropTypes.func.isRequired,
   },

@@ -3,21 +3,21 @@ import { intersperse } from 'app/utils';
 
 const TypingUsers = React.createClass({
   propTypes: {
-    ids: PropTypes.arrayOf(PropTypes.number).isRequired, // TODO: users instead of ids
+    users: PropTypes.arrayOf(PropTypes.object).isRequired,
   },
 
   render() {
-    const { ids } = this.props;
-    if (ids.length === 0) {
+    const { users } = this.props;
+    if (users.length === 0) {
       return null;
     }
     return (
       <div className="typing-users">
-        {intersperse(ids.map(id => (
-          <span key={id} className="username">{id}</span>
+        {intersperse(users.map(user => (
+          <span key={user.id} className="username">{user.username}</span>
         )), ', ')}
         {' '}
-        {ids.length === 1 ? 'is' : 'are'} typing…
+        {users.length === 1 ? 'is' : 'are'} typing…
       </div>
     );
   },

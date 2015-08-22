@@ -21,7 +21,7 @@ export function loadConversation(conversationId) {
     condition: state => {
       const conversation = state.entities.conversations[conversationId];
       return !conversation || !conversation.members || !conversation.messages;
-    }
+    },
   };
 }
 
