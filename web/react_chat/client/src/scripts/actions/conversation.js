@@ -18,7 +18,10 @@ export function loadConversation(conversationId) {
     payload: { conversationId },
     endpoint: `conversations/${conversationId}`,
     schema: Schemas.conversation,
-    condition: state => !state.entities.conversations[conversationId],
+    condition: state => {
+      const conversation = state.entities.conversations[conversationId];
+      return !conversation || !conversation.members || !conversation.messages;
+    }
   };
 }
 

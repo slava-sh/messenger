@@ -33,7 +33,6 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 
 function loadData(props) {
   props.loadConversation(props.conversationId);
-  props.loadMessages(props.conversationId);
 }
 
 const ChatContainer = React.createClass({

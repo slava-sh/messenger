@@ -84,13 +84,13 @@ def conversation(request, pk):
     # TODO: validate membership
     response = model_to_dict(conversation, fields=['id', 'name'])
     response['members'] = list(conversation.members.values('id', 'username'))
-    response['messages'] = list(conversation.messages.values('id', 'author', 'text'))
-    return {
-        "data": response,
+    response['messages'] = {
+        "data": list(conversation.messages.values('id', 'author', 'text')),
         "links": {
-            "next": "nah",
+            "next": "haha",
         },
     }
+    return response
 
 
 @api('POST')

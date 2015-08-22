@@ -13,10 +13,20 @@ const messagePagination = createPaginationReducer([
       ids: [...state.ids, message.id],
     };
   },
+  RECEIVE_CONVERSATION_SUCCESS: (state, action) => {
+    const { conversationId } = action.payload;
+    const { conversations } = action.response.entities;
+    const conversation = conversations[conversationId];
+    // TODO: check if we don't have these its yet
+    return {
+      ...state,
+      ids: conversation.messages,
+    };
+  },
 });
 
 const reducer = createKeyedReducer(
-  action => contains(['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE', 'RECEIVE_MESSAGE'], action.type)
+  action => contains(['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE', 'RECEIVE_MESSAGE', 'RECEIVE_CONVERSATION_SUCCESS'], action.type)
     && String(action.payload.conversationId), // TODO: refactor
   messagePagination,
 );
