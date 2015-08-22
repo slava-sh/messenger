@@ -4,10 +4,9 @@ import { camelizeKeys } from 'humps';
 import { receiveMessage, receiveTyping } from 'app/actions/conversation';
 
 export function configurePushClient(primusUrl, store) {
-
   const actions = bindActionCreators({
-    receiveMessage,
-    receiveTyping,
+    RECEIVE_MESSAGE: receiveMessage,
+    RECEIVE_TYPING: receiveTyping,
   }, store.dispatch);
 
   const primus = Primus.connect(primusUrl, {
@@ -16,21 +15,20 @@ export function configurePushClient(primusUrl, store) {
     },
   });
 
-  primus.on('open', function() {
+  primus.on('open', () => {
     primus.write({
       type: 'REGISTER',
       payload: { user_id: store.getState().user.id }, // TODO: use session cookie instead
     });
   });
 
-  primus.on('data', function(data) {
+  primus.on('data', data => {
     const { type, payload } = camelizeKeys(data);
-    if (type === 'RECEIVE_MESSAGE') {
-      actions.receiveMessage(payload);
+    const action = actions[type];
+    if (DEBUG && !action) {
+      throw Error(`unknown action type: ${type}`);
     }
-    else if (type === 'RECEIVE_TYPING') {
-      actions.receiveTyping(payload);
-    }
+    action(payload);
   });
 }
 

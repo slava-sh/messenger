@@ -1,8 +1,7 @@
 export const middleware = store => next => action => {
-  if (action.condition && !action.condition(store.getState())) {
-    return;
+  if (!action.condition || action.condition(store.getState())) {
+    return next(action);
   }
-  return next(action);
 };
 
 export default middleware;

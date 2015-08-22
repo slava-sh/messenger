@@ -8,14 +8,11 @@ import configurePushClient from 'app/utils/configurePushClient';
 import App from 'app/containers/App';
 
 function initialize(state, primusUrl) {
-  const store = configureStore(state);
-  const pushClient = configurePushClient(primusUrl, store);
+  window.store = configureStore(state);
+  window.pushClient = configurePushClient(primusUrl, store);
   const RouteComponent = reduxRouteComponent(store);
   const app = <App routeComponent={RouteComponent} history={history} />;
   ReactDOM.render(app, document.getElementById('root'));
-  if (DEBUG) {
-    window.store = store;
-  }
 }
 
 window.initialize = initialize;
