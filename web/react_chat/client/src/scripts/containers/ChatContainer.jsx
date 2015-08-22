@@ -48,9 +48,6 @@ function loadData(props) {
 const ChatContainer = React.createClass({
   propTypes: {
     conversationId: PropTypes.string.isRequired,
-    conversation: PropTypes.object,
-    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
-    typingUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
     loadConversation: PropTypes.func.isRequired,
     loadMessages: PropTypes.func.isRequired,
   },
