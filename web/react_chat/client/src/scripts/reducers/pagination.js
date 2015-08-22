@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import contains from 'lodash/collection/includes';
 import { createKeyedReducer, createPaginationReducer } from 'app/utils/reducers';
 
 const reducer = combineReducers({
@@ -8,7 +9,8 @@ const reducer = combineReducers({
     'RECEIVE_CONVERSATIONS_FAILURE',
   ]),
   messagesByConversation: createKeyedReducer(
-    action => action.payload && action.payload.conversationId,
+    action => contains(['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE'], action.type)
+              && action.payload.conversationId, // TODO: refactor
     createPaginationReducer([
       'REQUEST_MESSAGES',
       'RECEIVE_MESSAGES_SUCCESS',
