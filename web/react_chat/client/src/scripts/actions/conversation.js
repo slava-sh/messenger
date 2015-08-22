@@ -42,9 +42,6 @@ export function sendMessage({ conversationId, text }) {
     });
     callApi(`conversations/${conversationId}/messages`, null, {
       method: 'POST',
-      headers: {
-        'X-CSRFToken': user.csrfToken,
-      },
       body: { text },
     });
   };
@@ -68,12 +65,8 @@ export function sendTyping(conversationId) { // TODO: refactor
       type: 'SEND_TYPING',
       payload: { conversationId },
     });
-    const { user } = getState();
     callApi(`conversations/${conversationId}/typing`, null, {
       method: 'POST',
-      headers: {
-        'X-CSRFToken': user.csrfToken,
-      },
     });
   };
 }

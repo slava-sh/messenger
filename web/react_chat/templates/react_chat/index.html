@@ -18,7 +18,6 @@
       user: {
         id: '{{ user.pk|escapejs }}',
         name: '{{ user|escapejs }}',
-        csrfToken: '{{ csrf_token|escapejs }}',
       },
     }, '{{ realtime_url|escapejs }}');
   </script>
