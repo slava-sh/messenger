@@ -5,7 +5,7 @@ import cookie from 'app/utils/cookie';
 
 const API_ROOT = '/api/';
 
-export function callApi(method, endpoint, data, responseSchema) {
+export function executeApiCall([method, endpoint, responseSchema, data]) { // TODO: make this private
   return fetch(API_ROOT + endpoint, {
     method,
     credentials: 'same-origin',
@@ -21,4 +21,4 @@ export function callApi(method, endpoint, data, responseSchema) {
   }));
 }
 
-export default callApi;
+export default executeApiCall;

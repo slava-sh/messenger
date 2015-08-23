@@ -1,14 +1,13 @@
 import contains from 'lodash/collection/contains';
-import * as Schemas from 'app/utils/apiSchemas';
-import callApi from 'app/utils/callApi';
+import * as api from 'app/utils/apiCallCreators';
+import execute from 'app/utils/executeApiCall';
 
 const TYPING_TIME = 10 * 1000;
 
 export function loadConversations() {
   return {
     types: ['REQUEST_CONVERSATIONS', 'RECEIVE_CONVERSATIONS_SUCCESS', 'RECEIVE_CONVERSATIONS_FAILURE'],
-    endpoint: 'conversations',
-    schema: Schemas.conversations,
+    callApi: api.getConversations(),
     condition: state => !state.pagination.conversations.isLoaded,
   };
 }
@@ -17,8 +16,7 @@ export function loadConversation(conversationId) {
   return {
     types: ['REQUEST_CONVERSATION', 'RECEIVE_CONVERSATION_SUCCESS', 'RECEIVE_CONVERSATION_FAILURE'],
     payload: { conversationId },
-    endpoint: `conversations/${conversationId}`,
-    schema: Schemas.conversation,
+    callApi: api.getConversation(conversationId),
     condition: state => {
       const conversation = state.entities.conversations[conversationId];
       return !conversation || !conversation.members || !conversation.messages;
@@ -30,8 +28,7 @@ export function loadMessages(conversationId) {
   return {
     types: ['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE'],
     payload: { conversationId },
-    endpoint: `conversations/${conversationId}/messages`,
-    schema: Schemas.messages,
+    callApi: api.getMessages(conversationId),
     condition: ({ pagination: { messagesByConversation } }) => {
       const messagePagination = messagesByConversation[conversationId];
       return !messagePagination || !messagePagination.isLoaded;
@@ -50,7 +47,7 @@ export function sendTyping(conversationId) { // TODO: refactor
       type: 'SEND_TYPING',
       payload: { conversationId },
     });
-    callApi('POST', `conversations/${conversationId}/typing`);
+    execute(api.sendTyping(conversationId));
   };
 }
 
@@ -87,7 +84,7 @@ export function sendMessage({ conversationId, text }) {
       type: 'SEND_MESSAGE',
       payload: { conversationId, text },
     });
-    callApi('POST', `conversations/${conversationId}/messages`, { text });
+    execute(api.sendMessage({ conversationId, text }));
   };
 }
 

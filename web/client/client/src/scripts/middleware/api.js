@@ -1,22 +1,19 @@
-import callApi from 'app/utils/callApi';
+import execute from 'app/utils/executeApiCall';
 
 export const middleware = () => next => action => {
-  if (!action.endpoint) {
+  if (!action.callApi) {
     return next(action);
   }
   const {
     types: [REQUEST, SUCCESS, FAILURE],
     payload = {},
-    method = 'GET',
-    endpoint,
-    data,
-    schema,
+    callApi: call,
   } = action;
   next({
     type: REQUEST,
     payload,
   });
-  return callApi(method, endpoint, data, schema).then(
+  return execute(call).then(
     response => next({
       type: SUCCESS,
       response,
