@@ -13,7 +13,7 @@ const ConversationList = React.createClass({
       <div className="conversations">
         {conversations.map(conversation => (
           <div key={conversation.id} className="conversation">
-            <Link to={`/react/c/${conversation.id}/`} router={router}>
+            <Link to={`/c/${conversation.id}/`} router={router}>
               {conversation.name}
             </Link>
           </div>

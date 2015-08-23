@@ -19,7 +19,7 @@ const Navigation = React.createClass({
       <div className="navigation">
         <div className="header">
           <span className="username">{user.name}</span>
-          <Link to="/react/c/new" router={router}><i className="fa fa-plus pull-left" /></Link>
+          <Link to="/c/new" router={router}><i className="fa fa-plus pull-left" /></Link>
           <a href="/accounts/logout"><i className="fa fa-sign-out pull-right" /></a>
         </div>
         <ConversationList conversations={conversations} router={router} />

@@ -3,7 +3,7 @@ import { camelizeKeys } from 'humps';
 import { normalize } from 'app/utils/normalizer';
 import cookie from 'app/utils/cookie';
 
-const API_ROOT = '/react/';
+const API_ROOT = '/';
 
 export function callApi(method, endpoint, data, responseSchema) {
   return fetch(API_ROOT + endpoint, {

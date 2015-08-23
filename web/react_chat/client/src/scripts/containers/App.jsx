@@ -14,8 +14,8 @@ const App = React.createClass({
     return (
       <Router history={history}>
         <Route component={routeComponent}>
-          <Route path="/react/" component={HomePage} />
-          <Route path="/react/c/:id/" component={ConversationPage} />
+          <Route path="/" component={HomePage} />
+          <Route path="/c/:id/" component={ConversationPage} />
         </Route>
       </Router>
     );
