@@ -34,7 +34,7 @@ export function loadMessages(conversationId) {
     condition: ({ pagination: { messagesByConversation } }) => {
       const messagePagination = messagesByConversation[conversationId];
       return !messagePagination || !messagePagination.isLoaded;
-    }
+    },
   };
 }
 
@@ -81,18 +81,27 @@ export function sendTyping(conversationId) { // TODO: refactor
 
 let stopTypingTimeout = null;
 
+function stopTyping({ conversationId, userId }) {
+  clearTimeout(stopTypingTimeout);
+  return {
+    type: 'STOP_TYPING',
+    payload: { conversationId, userId },
+  };
+}
+
+function startTyping({ conversationId, userId }) {
+  clearTimeout(stopTypingTimeout);
+  return {
+    type: 'START_TYPING',
+    payload: { conversationId, userId },
+  };
+}
+
 export function receiveTyping({ conversationId, userId }) {
   return dispatch => {
-    dispatch({
-      type: 'START_TYPING',
-      payload: { conversationId, userId },
-    });
-    clearTimeout(stopTypingTimeout);
+    dispatch(startTyping({ conversationId, userId }));
     stopTypingTimeout = setTimeout(() => {
-      dispatch({
-        type: 'STOP_TYPING',
-        payload: { conversationId, userId },
-      });
+      dispatch(stopTyping({ conversationId, userId }));
     }, TYPING_TIME);
   };
 }
