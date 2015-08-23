@@ -4,20 +4,26 @@ export const middleware = () => next => action => {
   if (!action.endpoint) {
     return next(action);
   }
-  const { types, payload = {}, method = 'GET', endpoint, data, schema } = action;
-  const [requestType, successType, failureType] = types;
+  const {
+    types: [REQUEST, SUCCESS, FAILURE],
+    payload = {},
+    method = 'GET',
+    endpoint,
+    data,
+    schema,
+  } = action;
   next({
-    type: requestType,
+    type: REQUEST,
     payload,
   });
   return callApi(method, endpoint, data, schema).then(
     response => next({
-      type: successType,
+      type: SUCCESS,
       response,
       payload,
     }),
     error => next({
-      type: failureType,
+      type: FAILURE,
       error: error.message,
       payload,
     }),
