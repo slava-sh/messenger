@@ -18,7 +18,8 @@ INSTALLED_APPS = (
     'storages',
     'registration',
     'old_chat',
-    'react_chat',
+    'api',
+    'client',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -2,18 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.forms.models import model_to_dict
-from django.conf import settings
 from functools import wraps
 import json
 from old_chat.models import Conversation
 from old_chat.forms import SendMessageForm
 from .tasks import notify_users
-
-
-def home(request, *args, **kwargs):
-    return render(request, 'react_chat/index.html', {
-        'realtime_url': settings.REALTIME_URL,
-    })
 
 
 def api(request_method_list):
