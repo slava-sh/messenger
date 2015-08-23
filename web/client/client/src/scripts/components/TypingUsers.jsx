@@ -17,7 +17,12 @@ const TypingUsers = React.createClass({
           <span key={user.id} className="username">{user.username}</span>
         )), ', ')}
         {' '}
-        {users.length === 1 ? 'is' : 'are'} typing…
+        {users.length === 1 ? 'is' : 'are'} typing
+        <span className="typing-users__dots">
+          <span>.</span>
+          <span>.</span>
+          <span>.</span>
+        </span>
       </div>
     );
   },
