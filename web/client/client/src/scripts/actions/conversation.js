@@ -1,3 +1,4 @@
+import contains from 'lodash/collection/contains';
 import * as Schemas from 'app/utils/apiSchemas';
 import callApi from 'app/utils/callApi';
 
@@ -38,39 +39,13 @@ export function loadMessages(conversationId) {
   };
 }
 
-export function receiveMessage({ conversationId, message }) {
-  return {
-    type: 'RECEIVE_MESSAGE',
-    payload: { conversationId, message },
-  };
-}
-
-export function sendMessage({ conversationId, text }) {
-  return (dispatch, getState) => {
-    const { user } = getState();
-    const message = { author: user.name, text };
-    dispatch({
-      type: 'SEND_MESSAGE',
-      payload: { conversationId, message },
-    });
-    callApi('POST', `conversations/${conversationId}/messages`, { text });
-  };
-}
-
-let shouldSendTyping = true; // TODO: reset when switching conversation
-let shouldSendTypingTimeout = null;
-
 export function sendTyping(conversationId) { // TODO: refactor
-  return dispatch => {
-    if (!shouldSendTyping) {
+  return (dispatch, getState) => {
+    const { user, entities: { conversations } } = getState();
+    const conversation = conversations[conversationId];
+    if (contains(conversation.typingUserIds, user.id)) {
       return;
     }
-    shouldSendTyping = false;
-    clearTimeout(shouldSendTypingTimeout);
-    shouldSendTypingTimeout = setTimeout(() => {
-      shouldSendTyping = true;
-    }, TYPING_TIME);
-
     dispatch({
       type: 'SEND_TYPING',
       payload: { conversationId },
@@ -103,5 +78,27 @@ export function receiveTyping({ conversationId, userId }) {
     stopTypingTimeout = setTimeout(() => {
       dispatch(stopTyping({ conversationId, userId }));
     }, TYPING_TIME);
+  };
+}
+
+export function sendMessage({ conversationId, text }) {
+  return (dispatch, getState) => {
+    const { user: { id: userId } } = getState();
+    dispatch(stopTyping({ conversationId, userId }));
+    dispatch({
+      type: 'SEND_MESSAGE',
+      payload: { conversationId, text },
+    });
+    callApi('POST', `conversations/${conversationId}/messages`, { text });
+  };
+}
+
+export function receiveMessage({ conversationId, message }) {
+  return dispatch => {
+    dispatch(stopTyping({ conversationId, userId: message.author }));
+    dispatch({
+      type: 'RECEIVE_MESSAGE',
+      payload: { conversationId, message },
+    });
   };
 }

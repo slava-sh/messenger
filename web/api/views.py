@@ -8,6 +8,7 @@ from old_chat.models import Conversation
 from old_chat.forms import SendMessageForm
 from .tasks import notify_users
 
+# TODO: convert all ids to strings
 
 def api(request_method_list):
     if not isinstance(request_method_list, list):
@@ -51,7 +52,7 @@ def messages(request, pk):
             notify_users.delay(member_ids, {
                 'type': 'RECEIVE_MESSAGE',
                 'payload': {
-                    'conversation_id': conversation.pk,
+                    'conversation_id': str(conversation.pk),
                     'message': message_as_dict,
                 },
             })
@@ -94,8 +95,8 @@ def typing(request, pk):
     notify_users.delay(member_ids, {
         'type': 'RECEIVE_TYPING',
         'payload': {
-            'conversation_id': conversation.pk,
-            'user_id': request.user.pk,
+            'conversation_id': str(conversation.pk),
+            'user_id': str(request.user.pk),
         },
     })
     return {}
