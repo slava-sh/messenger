@@ -54,10 +54,7 @@ export function sendTyping(conversationId) { // TODO: refactor
   };
 }
 
-let stopTypingTimeout = null;
-
 function stopTyping({ conversationId, userId }) {
-  clearTimeout(stopTypingTimeout);
   return {
     type: 'STOP_TYPING',
     payload: { conversationId, userId },
@@ -65,7 +62,6 @@ function stopTyping({ conversationId, userId }) {
 }
 
 function startTyping({ conversationId, userId }) {
-  clearTimeout(stopTypingTimeout);
   return {
     type: 'START_TYPING',
     payload: { conversationId, userId },
@@ -75,7 +71,9 @@ function startTyping({ conversationId, userId }) {
 export function receiveTyping({ conversationId, userId }) {
   return dispatch => {
     dispatch(startTyping({ conversationId, userId }));
-    stopTypingTimeout = setTimeout(() => {
+    setTimeout(() => {
+      // We would like to clear this timeout in `stopTyping`, but then we
+      // would have to manage a (conversationId, userId) -> timeout collection.
       dispatch(stopTyping({ conversationId, userId }));
     }, TYPING_TIME);
   };
