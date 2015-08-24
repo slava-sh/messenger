@@ -1,6 +1,6 @@
 import execute from 'app/utils/executeApiCall';
 
-export const middleware = () => next => action => {
+export const middleware = store => next => action => {
   if (!action.callApi) {
     return next(action);
   }
@@ -9,17 +9,17 @@ export const middleware = () => next => action => {
     payload = {},
     callApi: call,
   } = action;
-  next({
+  store.dispatch({
     type: REQUEST,
     payload,
   });
   return execute(call).then(
-    response => next({
+    response => store.dispatch({
       type: SUCCESS,
       response,
       payload,
     }),
-    error => next({
+    error => store.dispatch({
       type: FAILURE,
       error: error.message,
       payload,
