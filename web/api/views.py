@@ -37,11 +37,6 @@ class ConversationViewSet(viewsets.ViewSet):
         return Response(None, status=status.HTTP_202_ACCEPTED)
 
 
-class MessagePagination(pagination.CursorPagination):
-    ordering = '-time'
-    page_size = 3
-
-
 class MessageViewSet(viewsets.ViewSet):
 
     def list(self, request, pk):
@@ -49,7 +44,7 @@ class MessageViewSet(viewsets.ViewSet):
         # TODO: validate membership
         queryset = conversation.messages
 
-        paginator = MessagePagination()
+        paginator = MessageSerializer.Pagination()
         page = paginator.paginate_queryset(queryset, self.request)
         serializer = MessageSerializer(page, many=True)
         return paginator.get_paginated_response(serializer.data)

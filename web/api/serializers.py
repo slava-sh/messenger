@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, pagination
 from django.contrib.auth.models import User, Group
 from old_chat.models import Conversation, Message
 
@@ -12,6 +12,10 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = ['id', 'text', 'time', 'author']
         read_only_fields = ['time']
+
+    class Pagination(pagination.CursorPagination):
+        ordering = '-time'
+        page_size = 3
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -28,8 +32,19 @@ class ConversationSerializer(serializers.ModelSerializer):
 
 class ConversationVerboseSerializer(serializers.ModelSerializer):
     members = UserSerializer(many=True)
-    messages = MessageSerializer(many=True)
+    messages = serializers.SerializerMethodField('page_of_messages')
 
     class Meta:
         model = Conversation
         fields = ['id', 'name', 'members', 'messages']
+
+    def page_of_messages(self, obj):
+        queryset = obj.messages.all()
+        page = queryset[:MessageSerializer.Pagination.page_size]
+        serializer = MessageSerializer(page, many=True)
+        return {
+            # TODO: make request-independent CursorPagination, use it here
+            # 'next': None,
+            # 'previous': None,
+            'results': serializer.data,
+        }
