@@ -15,6 +15,7 @@ const App = React.createClass({
       <Router history={history}>
         <Route component={routeComponent}>
           <Route path="/" component={HomePage} />
+          <Route path="/c/" component={HomePage} />
           <Route path="/c/:id/" component={ConversationPage} />
         </Route>
       </Router>
