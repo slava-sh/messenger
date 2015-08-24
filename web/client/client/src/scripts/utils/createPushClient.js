@@ -3,7 +3,7 @@ import Primus from 'primus';
 import { camelizeKeys } from 'humps';
 import { receiveMessage, receiveTyping } from 'app/actions/conversation';
 
-export function configurePushClient(primusUrl, store) {
+export function createPushClient(primusUrl, store) {
   const actions = bindActionCreators({
     RECEIVE_MESSAGE: receiveMessage,
     RECEIVE_TYPING: receiveTyping,
@@ -30,6 +30,10 @@ export function configurePushClient(primusUrl, store) {
     }
     action(payload);
   });
+
+  return {
+    destroy: () => primus.destroy(),
+  };
 }
 
-export default configurePushClient;
+export default createPushClient;
