@@ -1,30 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
-from django.forms.models import model_to_dict
-from functools import wraps
-import json
-from old_chat.models import Conversation
-from old_chat.forms import SendMessageForm
-from .tasks import notify_users
-
-def typing(request, pk):
-    conversation = Conversation.objects.get(pk=pk)
-    # TODO: validate membership
-    member_ids = list(conversation.members.values_list('id', flat=True))
-    notify_users.delay(member_ids, {
-        'type': 'RECEIVE_TYPING',
-        'payload': {
-            'conversation_id': str(conversation.pk),
-            'user_id': str(request.user.pk),
-        },
-    })
-    return {}
-
-
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
-from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer
 from rest_framework.response import Response
+from old_chat.models import Conversation
+from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer
+from .tasks import notify_users
 
 
 
@@ -40,6 +19,22 @@ class ConversationViewSet(viewsets.ViewSet):
         # TODO: validate membership
         serializer = ConversationVerboseSerializer(conversation)
         return Response(serializer.data)
+
+    def typing(self, request, pk): # TODO: come up with a better name
+        conversation = get_object_or_404(Conversation, pk=pk)
+        # TODO: validate membership
+
+        # TODO: extract this
+        member_ids = list(conversation.members.values_list('id', flat=True))
+        notify_users.delay(member_ids, {
+            'type': 'RECEIVE_TYPING',
+            'payload': {
+                'conversation_id': str(conversation.pk),
+                'user_id': str(request.user.pk),
+            },
+        })
+
+        return Response(None, status=status.HTTP_202_ACCEPTED)
 
 
 class MessageViewSet(viewsets.ViewSet):
