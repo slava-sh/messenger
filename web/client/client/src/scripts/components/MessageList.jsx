@@ -5,15 +5,20 @@ import Spinner from 'app/components/Spinner';
 const MessageList = React.createClass({
   propTypes: {
     messages: PropTypes.arrayOf(PropTypes.object),
+    loadMore: PropTypes.func.isRequired,
   },
 
   render() {
-    if (!this.props.messages) {
+    const { messages, loadMore } = this.props;
+    if (!messages) {
       return <Spinner />;
     }
     return (
       <div className="messages">
-        {this.props.messages.map(message => (
+        <div className="message">
+          <button onClick={loadMore}>+</button>
+        </div>
+        {messages.map(message => (
           <Message key={message.id} message={message} />
         ))}
       </div>

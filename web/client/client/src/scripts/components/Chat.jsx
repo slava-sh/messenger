@@ -14,6 +14,7 @@ const Chat = React.createClass({
     typingUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
     sendMessage: PropTypes.func.isRequired,
     sendTyping: PropTypes.func.isRequired,
+    loadMessages: PropTypes.func.isRequired,
   },
 
   componentDidUpdate() {
@@ -35,6 +36,7 @@ const Chat = React.createClass({
       typingUsers,
       sendMessage,
       sendTyping,
+      loadMessages,
     } = this.props;
     if (!conversation) {
       return <Spinner />;
@@ -48,6 +50,7 @@ const Chat = React.createClass({
           </div>
           <MessageList
             messages={messages}
+            loadMore={loadMessages}
             ref={node => this.messageList = node}
           />
           <TypingUsers users={typingUsers} />

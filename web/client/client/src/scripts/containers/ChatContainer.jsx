@@ -38,11 +38,13 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     sendMessage: text => dispatchProps.sendMessage({ conversationId, text }),
     sendTyping: () => dispatchProps.sendTyping(conversationId),
+    loadConversation: () => dispatchProps.loadConversation(conversationId),
+    loadMessages: () => dispatchProps.loadMessages(conversationId),
   };
 }
 
 function loadData(props) {
-  props.loadConversation(props.conversationId);
+  props.loadConversation();
 }
 
 const ChatContainer = React.createClass({
@@ -66,7 +68,6 @@ const ChatContainer = React.createClass({
     const {
       conversationId,
       loadConversation,
-      loadMessages,
       ...other,
     } = this.props;
     return <Chat {...other} />;
