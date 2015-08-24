@@ -8,10 +8,11 @@ const Navigation = React.createClass({
     user: PropTypes.object.isRequired,
     conversations: PropTypes.arrayOf(PropTypes.object),
     router: PropTypes.object.isRequired,
+    loadConversations: PropTypes.func.isRequired,
   },
 
   render() {
-    const { user, conversations, router } = this.props;
+    const { user, conversations, router, loadConversations } = this.props;
     if (!conversations) {
       return <Spinner />;
     }
@@ -22,7 +23,11 @@ const Navigation = React.createClass({
           <Link to="/c/new" router={router}><i className="fa fa-plus pull-left" /></Link>
           <a href="/accounts/logout"><i className="fa fa-sign-out pull-right" /></a>
         </div>
-        <ConversationList conversations={conversations} router={router} />
+        <ConversationList
+          conversations={conversations}
+          router={router}
+          loadMore={loadConversations}
+        />
       </div>
     );
   },

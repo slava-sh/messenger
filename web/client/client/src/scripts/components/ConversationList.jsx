@@ -5,10 +5,11 @@ const ConversationList = React.createClass({
   propTypes: {
     conversations: PropTypes.arrayOf(PropTypes.object).isRequired,
     router: PropTypes.object.isRequired,
+    loadMore: PropTypes.func.isRequired,
   },
 
   render() {
-    const { conversations, router } = this.props;
+    const { conversations, router, loadMore } = this.props;
     return (
       <div className="conversations">
         {conversations.map(conversation => (
@@ -18,6 +19,9 @@ const ConversationList = React.createClass({
             </Link>
           </div>
         ))}
+        <div className="conversation">
+          <button onClick={loadMore}>+</button>
+        </div>
       </div>
     );
   },

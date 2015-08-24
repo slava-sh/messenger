@@ -27,8 +27,7 @@ const NavigationContainer = React.createClass({
   },
 
   render() {
-    const { loadConversations, ...other } = this.props;
-    return <Navigation {...other} />;
+    return <Navigation {...this.props} />;
   },
 });
 
