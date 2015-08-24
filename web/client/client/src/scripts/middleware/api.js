@@ -12,7 +12,7 @@ export const middleware = store => next => action => {
   } = action;
   if (getPagination) {
     const pagination = getPagination(store.getState());
-    if (pagination && pagination.nextCursor) {
+    if (pagination && pagination.nextCursor && pagination.nextCursor !== 'FIXME') { // TODO: remove the FIXME case
       call[1] += '?cursor=' + pagination.nextCursor; // TODO: refactor
     }
   }

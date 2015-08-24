@@ -1,6 +1,6 @@
 import { Schema, arrayOf, proxy } from 'app/utils/normalizer';
 
-const pagesOf = schema => proxy('results', arrayOf(schema));
+const pagesOf = schema => ({ results: arrayOf(schema) });
 
 const user = new Schema('users');
 const conversation = new Schema('conversations');

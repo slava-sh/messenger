@@ -1,5 +1,6 @@
 import get from 'lodash/object/get';
 import merge from 'lodash/object/merge';
+import * as pagination from 'app/utils/apiPagination';
 
 function handleAction(handlers, state, action) {
   if (handlers && handlers.hasOwnProperty(action.type)) {
@@ -50,8 +51,8 @@ export function createPaginationReducer(types, handlers) {
     [SUCCESS]: (state, action) => {
       return {
         ...state,
-        ids: [...state.ids, ...action.response.result],
-        nextCursor: action.response.nextCursor,
+        ids: [...state.ids, ...pagination.getCollection(action.response.result)],
+        nextCursor: pagination.getCursor(action.response.result),
         isLoaded: true,
         isLoading: false,
       };
