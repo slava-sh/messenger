@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, pagination
 from rest_framework.response import Response
 from old_chat.models import Conversation
 from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer
@@ -37,14 +37,23 @@ class ConversationViewSet(viewsets.ViewSet):
         return Response(None, status=status.HTTP_202_ACCEPTED)
 
 
+class MessagePagination(pagination.CursorPagination):
+    ordering = '-time'
+    page_size = 3
+
+
 class MessageViewSet(viewsets.ViewSet):
 
     def list(self, request, pk):
         conversation = get_object_or_404(Conversation, pk=pk)
         # TODO: validate membership
         queryset = conversation.messages
-        serializer = MessageSerializer(queryset, many=True)
-        return Response(serializer.data)
+
+        paginator = MessagePagination()
+        page = paginator.paginate_queryset(queryset, self.request)
+        serializer = MessageSerializer(page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
 
     def create(self, request, pk):
         conversation = get_object_or_404(Conversation, pk=pk)
