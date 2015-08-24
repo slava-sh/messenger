@@ -39,7 +39,7 @@ class ConversationViewSet(viewsets.ViewSet):
             },
         })
 
-        return Response(None, status=status.HTTP_202_ACCEPTED)
+        return Response({}, status=status.HTTP_202_ACCEPTED)
 
 
 class MessageViewSet(viewsets.ViewSet):
