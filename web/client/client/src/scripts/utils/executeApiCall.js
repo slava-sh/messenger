@@ -19,7 +19,10 @@ export function executeApiCall([method, endpoint, responseSchema, data]) { // TO
     if (!response.ok) {
       return Promise.reject(json);
     }
-    return normalize(json, responseSchema);
+    return {
+      ...normalize(json, responseSchema),
+      nextUrl: json.next,
+    };
   }));
 }
 

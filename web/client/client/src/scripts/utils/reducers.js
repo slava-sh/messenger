@@ -51,6 +51,7 @@ export function createPaginationReducer(types, handlers) {
       return {
         ...state,
         ids: [...state.ids, ...action.response.result],
+        nextUrl: action.response.nextUrl,
         isLoaded: true,
         isLoading: false,
       };
@@ -64,9 +65,9 @@ export function createPaginationReducer(types, handlers) {
   });
   const initialState = {
     ids: [],
+    nextUrl: null,
     isLoaded: false,
     isLoading: false,
-    // TODO: nextCursor
   };
   return function reducer(state = initialState, action) {
     const newState = updatePagination(state, action);
