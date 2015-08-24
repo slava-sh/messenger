@@ -39,15 +39,15 @@ export function createEntityReducer(name, handlers) {
 }
 
 export function createPaginationReducer(types, handlers) {
-  const [requestType, successType, failureType] = types;
+  const [REQUEST, SUCCESS, FAILURE] = types;
   const updatePagination = handleAction.bind(null, {
-    [requestType]: (state) => {
+    [REQUEST]: (state) => {
       return {
         ...state,
         isLoading: true,
       };
     },
-    [successType]: (state, action) => {
+    [SUCCESS]: (state, action) => {
       return {
         ...state,
         ids: [...state.ids, ...action.response.result],
@@ -56,7 +56,7 @@ export function createPaginationReducer(types, handlers) {
         isLoading: false,
       };
     },
-    [failureType]: (state) => {
+    [FAILURE]: (state) => {
       return {
         ...state,
         isLoading: false,
