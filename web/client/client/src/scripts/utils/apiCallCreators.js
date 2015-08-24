@@ -1,6 +1,6 @@
 import { Schema, arrayOf, proxy } from 'app/utils/normalizer';
 
-const pagesOf = schema => proxy('data', arrayOf(schema));
+const pagesOf = schema => proxy('results', arrayOf(schema));
 
 const user = new Schema('users');
 const conversation = new Schema('conversations');
@@ -30,5 +30,5 @@ export function sendTyping(conversationId) {
 }
 
 export function sendMessage({ conversationId, text }) {
-  return ['POST', `conversations/${conversationId}/messages`, null, { text }];
+  return ['POST', `conversations/${conversationId}/messages`, null, { text }]; // TODO: parse response
 }

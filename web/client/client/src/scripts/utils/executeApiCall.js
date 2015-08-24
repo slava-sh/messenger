@@ -11,6 +11,8 @@ export function executeApiCall([method, endpoint, responseSchema, data]) { // TO
     credentials: 'same-origin',
     headers: {
       'X-CSRFToken': cookie.get('csrftoken'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: typeof data === 'object' ? JSON.stringify(data) : data,
   }).then(response => response.json().then(camelizeKeys).then(json => {
