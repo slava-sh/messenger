@@ -8,42 +8,6 @@ from old_chat.models import Conversation
 from old_chat.forms import SendMessageForm
 from .tasks import notify_users
 
-def api(request_method_list):
-    pass
-
-
-@api(['GET', 'POST'])
-def messages(request, pk):
-    #import time
-    #from random import randint
-    #time.sleep(randint(0, 7) / 10.0)
-    conversation = get_object_or_404(Conversation, pk=pk)
-    # TODO: validate membership
-    if request.method == 'GET':
-    else:
-        data = json.loads(request.body.decode())
-        form = SendMessageForm(data)
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.conversation = conversation
-            message.author = request.user
-            message.save()
-
-            member_ids = list(conversation.members.values_list('id', flat=True))
-            message_as_dict = model_to_dict(message, fields=['id', 'author', 'text'])
-            notify_users.delay(member_ids, {
-                'type': 'RECEIVE_MESSAGE',
-                'payload': {
-                    'conversation_id': str(conversation.pk),
-                    'message': message_as_dict,
-                },
-            })
-            return message_as_dict
-        # TODO: return HTTP 40x
-        return {'errors': form.errors}
-
-
-@api('POST')
 def typing(request, pk):
     conversation = Conversation.objects.get(pk=pk)
     # TODO: validate membership
@@ -58,7 +22,7 @@ def typing(request, pk):
     return {}
 
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer
 from rest_framework.response import Response
 
@@ -86,3 +50,23 @@ class MessageViewSet(viewsets.ViewSet):
         queryset = conversation.messages
         serializer = MessageSerializer(queryset, many=True)
         return Response(serializer.data)
+
+    def create(self, request, pk):
+        conversation = get_object_or_404(Conversation, pk=pk)
+        ## TODO: validate membership
+        serializer = MessageSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(conversation=conversation, author=request.user)
+
+        # TODO: extract this
+        member_ids = list(conversation.members.values_list('id', flat=True))
+        notify_users.delay(member_ids, {
+            'type': 'RECEIVE_MESSAGE',
+            'payload': {
+                'conversation_id': str(conversation.pk),
+                'message': serializer.data,
+            },
+        })
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # TODO: add Location header

@@ -15,6 +15,7 @@ typing = ConversationViewSet.as_view({
 
 messages = MessageViewSet.as_view({
     'get': 'list',
+    'post': 'create',
 })
 
 urlpatterns = [

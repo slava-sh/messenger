@@ -6,9 +6,12 @@ from old_chat.models import Conversation, Message
 
 class MessageSerializer(serializers.ModelSerializer):
     # TODO: pagination
+    author = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Message
         fields = ['id', 'text', 'time', 'author']
+        read_only_fields = ['time']
 
 
 class UserSerializer(serializers.ModelSerializer):
