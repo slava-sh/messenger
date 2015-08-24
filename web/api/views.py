@@ -8,19 +8,8 @@ from old_chat.models import Conversation
 from old_chat.forms import SendMessageForm
 from .tasks import notify_users
 
-# TODO: convert all ids to strings
-
 def api(request_method_list):
-    if not isinstance(request_method_list, list):
-        request_method_list = [request_method_list]
-    def decorator(view):
-        @require_http_methods(request_method_list)
-        @wraps(view)
-        def wrapper(*args, **kwargs):
-            response = view(*args, **kwargs)
-            return JsonResponse(response, safe=False)
-        return wrapper
-    return decorator
+    pass
 
 
 @api(['GET', 'POST'])
@@ -31,13 +20,6 @@ def messages(request, pk):
     conversation = get_object_or_404(Conversation, pk=pk)
     # TODO: validate membership
     if request.method == 'GET':
-        messages = conversation.messages.values('id', 'author', 'text')
-        return {
-            "data": list(messages),
-            "links": {
-                "next": "huh",
-            },
-        }
     else:
         data = json.loads(request.body.decode())
         form = SendMessageForm(data)
@@ -59,32 +41,6 @@ def messages(request, pk):
             return message_as_dict
         # TODO: return HTTP 40x
         return {'errors': form.errors}
-
-
-@api('GET')
-def conversations(request):
-    conversations = request.user.conversations.values('id', 'name')
-    return {
-        "data": list(conversations),
-        "links": {
-            "next": "haha",
-        },
-    }
-
-
-@api('GET')
-def conversation(request, pk):
-    conversation = Conversation.objects.get(pk=pk)
-    # TODO: validate membership
-    response = model_to_dict(conversation, fields=['id', 'name'])
-    response['members'] = list(conversation.members.values('id', 'username'))
-    response['messages'] = {
-        "data": list(conversation.messages.values('id', 'author', 'text')),
-        "links": {
-            "next": "haha",
-        },
-    }
-    return response
 
 
 @api('POST')
@@ -117,6 +73,7 @@ class ConversationViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk):
         conversation = get_object_or_404(Conversation, pk=pk)
+        # TODO: validate membership
         serializer = ConversationVerboseSerializer(conversation)
         return Response(serializer.data)
 
@@ -125,6 +82,7 @@ class MessageViewSet(viewsets.ViewSet):
 
     def list(self, request, pk):
         conversation = get_object_or_404(Conversation, pk=pk)
+        # TODO: validate membership
         queryset = conversation.messages
         serializer = MessageSerializer(queryset, many=True)
         return Response(serializer.data)
