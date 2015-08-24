@@ -100,3 +100,20 @@ def typing(request, pk):
         },
     })
     return {}
+
+
+from rest_framework import viewsets
+from .serializers import ConversationSerializer, MessageSerializer
+from rest_framework.response import Response
+
+
+class ConversationViewSet(viewsets.ModelViewSet):
+    queryset = Conversation.objects.all()
+    serializer_class = ConversationSerializer
+
+
+class MessageViewSet(viewsets.ViewSet):
+    def list(self, request, pk):
+        conversation = get_object_or_404(Conversation, pk=pk)
+        serializer = MessageSerializer(conversation.messages, many=True)
+        return Response(serializer.data)

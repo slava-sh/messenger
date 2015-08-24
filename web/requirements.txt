@@ -5,3 +5,4 @@ celery
 gunicorn
 django-storages-redux
 boto
+djangorestframework

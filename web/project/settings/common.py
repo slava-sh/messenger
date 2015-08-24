@@ -17,6 +17,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'storages',
+    'rest_framework',
     'registration',
     'old_chat',
     'api',
