@@ -8,7 +8,14 @@ export const middleware = store => next => action => {
     types: [REQUEST, SUCCESS, FAILURE],
     payload = {},
     callApi: call,
+    getPagination,
   } = action;
+  if (getPagination) {
+    const pagination = getPagination(store.getState());
+    if (pagination && pagination.nextCursor) {
+      call[1] += '?cursor=' + pagination.nextCursor; // TODO: refactor
+    }
+  }
   store.dispatch({
     type: REQUEST,
     payload,

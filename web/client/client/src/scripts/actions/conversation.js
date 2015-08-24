@@ -8,7 +8,8 @@ export function loadConversations() {
   return {
     types: ['REQUEST_CONVERSATIONS', 'RECEIVE_CONVERSATIONS_SUCCESS', 'RECEIVE_CONVERSATIONS_FAILURE'],
     callApi: api.getConversations(),
-    condition: state => !state.pagination.conversations.isLoaded,
+    getPagination: state => state.pagination.conversations,
+    condition: state => !state.pagination.conversations.isLoaded || state.pagination.conversations.nextCursor,
   };
 }
 
@@ -29,9 +30,10 @@ export function loadMessages(conversationId) {
     types: ['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE'],
     payload: { conversationId },
     callApi: api.getMessages(conversationId),
+    getPagination: state => state.pagination.messagesByConversation[conversationId],
     condition: ({ pagination: { messagesByConversation } }) => {
       const messagePagination = messagesByConversation[conversationId];
-      return !messagePagination || !messagePagination.isLoaded;
+      return !messagePagination || !messagePagination.isLoaded || messagePagination.nextCursor;
     },
   };
 }
