@@ -4,6 +4,11 @@ from old_chat.models import Conversation, Message
 
 # TODO: convert all ids to strings
 
+class BasePagination(pagination.CursorPagination):
+    page_size = 3
+    ordering = None
+
+
 class MessageSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(read_only=True)
 
@@ -12,9 +17,8 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = ['id', 'text', 'time', 'author']
         read_only_fields = ['time']
 
-    class Pagination(pagination.CursorPagination):
+    class Pagination(BasePagination):
         ordering = 'pk' # Equivalent to paginating by creation time
-        page_size = 3
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,6 +31,9 @@ class ConversationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversation
         fields = ['id', 'name']
+
+    class Pagination(BasePagination):
+        ordering = '-updated_at'
 
 
 class ConversationVerboseSerializer(serializers.ModelSerializer):

@@ -6,13 +6,18 @@ from .serializers import ConversationSerializer, ConversationVerboseSerializer, 
 from .tasks import notify_users
 
 
+def paginated_response(queryset, serializer, request):
+    paginator = serializer.Pagination()
+    page = paginator.paginate_queryset(queryset, request)
+    serializer = serializer(page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
 
 class ConversationViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = request.user.conversations
-        serializer = ConversationSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return paginated_response(queryset, ConversationSerializer, self.request)
 
     def retrieve(self, request, pk):
         conversation = get_object_or_404(Conversation, pk=pk)
@@ -43,11 +48,7 @@ class MessageViewSet(viewsets.ViewSet):
         conversation = get_object_or_404(Conversation, pk=pk)
         # TODO: validate membership
         queryset = conversation.messages
-
-        paginator = MessageSerializer.Pagination()
-        page = paginator.paginate_queryset(queryset, self.request)
-        serializer = MessageSerializer(page, many=True)
-        return paginator.get_paginated_response(serializer.data)
+        return paginated_response(queryset, MessageSerializer, self.request)
 
 
     def create(self, request, pk):
