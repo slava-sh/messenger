@@ -19,9 +19,10 @@ export function executeApiCall([method, endpoint, responseSchema, data]) { // TO
     if (!response.ok) {
       return Promise.reject(json);
     }
+    const nextCursor = json.next ? /cursor=(.+)$/.exec(json.next)[1] : null;
     return {
       ...normalize(json, responseSchema),
-      nextUrl: json.next,
+      nextCursor,
     };
   }));
 }
