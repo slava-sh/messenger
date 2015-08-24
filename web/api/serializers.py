@@ -16,6 +16,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ConversationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Conversation
+        fields = ['id', 'name']
+
+
+class ConversationVerboseSerializer(serializers.ModelSerializer):
     members = UserSerializer(many=True)
     messages = MessageSerializer(many=True)
 

@@ -103,17 +103,28 @@ def typing(request, pk):
 
 
 from rest_framework import viewsets
-from .serializers import ConversationSerializer, MessageSerializer
+from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer
 from rest_framework.response import Response
 
 
-class ConversationViewSet(viewsets.ModelViewSet):
-    queryset = Conversation.objects.all()
-    serializer_class = ConversationSerializer
+
+class ConversationViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        queryset = request.user.conversations
+        serializer = ConversationSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk):
+        conversation = get_object_or_404(Conversation, pk=pk)
+        serializer = ConversationVerboseSerializer(conversation)
+        return Response(serializer.data)
 
 
 class MessageViewSet(viewsets.ViewSet):
+
     def list(self, request, pk):
         conversation = get_object_or_404(Conversation, pk=pk)
-        serializer = MessageSerializer(conversation.messages, many=True)
+        queryset = conversation.messages
+        serializer = MessageSerializer(queryset, many=True)
         return Response(serializer.data)
