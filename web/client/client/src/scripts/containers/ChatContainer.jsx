@@ -20,6 +20,7 @@ function mapStateToProps(state, ownProps) {
       author: users[message.author],
     };
   });
+  messages.reverse();
   const typingUserIds = (conversation || {}).typingUserIds || [];
   const typingUsers = typingUserIds.map(id => users[id]).filter(Boolean);
   return {
