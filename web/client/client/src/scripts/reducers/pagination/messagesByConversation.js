@@ -1,11 +1,12 @@
 import contains from 'lodash/collection/includes';
 import { createKeyedReducer, createPaginationReducer } from 'app/utils/reducers';
 import { stripPagination, getCursor } from 'app/utils/apiPagination';
+import * as ActionTypes from 'app/ActionTypes';
 
 const messagePagination = createPaginationReducer([
-  'REQUEST_MESSAGES',
-  'RECEIVE_MESSAGES_SUCCESS',
-  'RECEIVE_MESSAGES_FAILURE',
+  ActionTypes.REQUEST_MESSAGES,
+  ActionTypes.RECEIVE_MESSAGES_SUCCESS,
+  ActionTypes.RECEIVE_MESSAGES_FAILURE,
 ], {
   RECEIVE_MESSAGE: (state, action) => {
     const { message } = action.payload;
@@ -29,7 +30,7 @@ const messagePagination = createPaginationReducer([
 });
 
 const reducer = createKeyedReducer(
-  action => contains(['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE', 'RECEIVE_MESSAGE', 'RECEIVE_CONVERSATION_SUCCESS'], action.type)
+  action => contains([ActionTypes.REQUEST_MESSAGES, ActionTypes.RECEIVE_MESSAGES_SUCCESS, ActionTypes.RECEIVE_MESSAGES_FAILURE, ActionTypes.RECEIVE_MESSAGE, ActionTypes.RECEIVE_CONVERSATION_SUCCESS], action.type)
     && String(action.payload.conversationId), // TODO: refactor
   messagePagination,
 );

@@ -2,11 +2,12 @@ import { bindActionCreators } from 'redux';
 import Primus from 'primus';
 import { camelizeKeys } from 'humps';
 import { receiveMessage, receiveTyping } from 'app/actions/conversation';
+import * as ActionTypes from 'app/ActionTypes';
 
 export function createPushClient(primusUrl, store) {
   const actions = bindActionCreators({
-    RECEIVE_MESSAGE: receiveMessage,
-    RECEIVE_TYPING: receiveTyping,
+    [ActionTypes.RECEIVE_MESSAGE]: receiveMessage,
+    [ActionTypes.RECEIVE_TYPING]: receiveTyping,
   }, store.dispatch);
 
   const primus = Primus.connect(primusUrl, {
@@ -17,7 +18,7 @@ export function createPushClient(primusUrl, store) {
 
   primus.on('open', () => {
     primus.write({
-      type: 'REGISTER',
+      type: ActionTypes.REGISTER,
       payload: { user_id: store.getState().user.id }, // TODO: use session cookie instead
     });
   });

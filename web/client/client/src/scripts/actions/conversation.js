@@ -1,12 +1,13 @@
 import contains from 'lodash/collection/contains';
 import * as api from 'app/utils/apiCallCreators';
 import execute from 'app/utils/executeApiCall';
+import * as ActionTypes from 'app/ActionTypes';
 
 const TYPING_TIME = 10 * 1000;
 
 export function loadConversations() {
   return {
-    types: ['REQUEST_CONVERSATIONS', 'RECEIVE_CONVERSATIONS_SUCCESS', 'RECEIVE_CONVERSATIONS_FAILURE'],
+    types: [ActionTypes.REQUEST_CONVERSATIONS, ActionTypes.RECEIVE_CONVERSATIONS_SUCCESS, ActionTypes.RECEIVE_CONVERSATIONS_FAILURE],
     callApi: api.getConversations(),
     getPagination: state => state.pagination.conversations,
     condition: state => !state.pagination.conversations.isLoaded || state.pagination.conversations.nextCursor,
@@ -15,7 +16,7 @@ export function loadConversations() {
 
 export function loadConversation(conversationId) {
   return {
-    types: ['REQUEST_CONVERSATION', 'RECEIVE_CONVERSATION_SUCCESS', 'RECEIVE_CONVERSATION_FAILURE'],
+    types: [ActionTypes.REQUEST_CONVERSATION, ActionTypes.RECEIVE_CONVERSATION_SUCCESS, ActionTypes.RECEIVE_CONVERSATION_FAILURE],
     payload: { conversationId },
     callApi: api.getConversation(conversationId),
     condition: state => {
@@ -27,7 +28,7 @@ export function loadConversation(conversationId) {
 
 export function loadMessages(conversationId) {
   return {
-    types: ['REQUEST_MESSAGES', 'RECEIVE_MESSAGES_SUCCESS', 'RECEIVE_MESSAGES_FAILURE'],
+    types: [ActionTypes.REQUEST_MESSAGES, ActionTypes.RECEIVE_MESSAGES_SUCCESS, ActionTypes.RECEIVE_MESSAGES_FAILURE],
     payload: { conversationId },
     callApi: api.getMessages(conversationId),
     getPagination: state => state.pagination.messagesByConversation[conversationId],
@@ -46,7 +47,7 @@ export function sendTyping(conversationId) { // TODO: refactor
       return;
     }
     dispatch({
-      type: 'SEND_TYPING',
+      type: ActionTypes.SEND_TYPING,
       payload: { conversationId },
     });
     execute(api.sendTyping(conversationId));
@@ -55,14 +56,14 @@ export function sendTyping(conversationId) { // TODO: refactor
 
 function stopTyping({ conversationId, userId }) {
   return {
-    type: 'STOP_TYPING',
+    type: ActionTypes.STOP_TYPING,
     payload: { conversationId, userId },
   };
 }
 
 function startTyping({ conversationId, userId }) {
   return {
-    type: 'START_TYPING',
+    type: ActionTypes.START_TYPING,
     payload: { conversationId, userId },
   };
 }
@@ -83,7 +84,7 @@ export function sendMessage({ conversationId, text }) {
     const { user: { id: userId } } = getState();
     dispatch(stopTyping({ conversationId, userId }));
     dispatch({
-      type: 'SEND_MESSAGE',
+      type: ActionTypes.SEND_MESSAGE,
       payload: { conversationId, text },
     });
     execute(api.sendMessage({ conversationId, text }));
@@ -94,7 +95,7 @@ export function receiveMessage({ conversationId, message }) {
   return dispatch => {
     dispatch(stopTyping({ conversationId, userId: message.author }));
     dispatch({
-      type: 'RECEIVE_MESSAGE',
+      type: ActionTypes.RECEIVE_MESSAGE,
       payload: { conversationId, message },
     });
   };

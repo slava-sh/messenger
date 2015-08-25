@@ -1,8 +1,9 @@
 import { createEntityReducer } from 'app/utils/reducers';
+import * as ActionTypes from 'app/ActionTypes';
 
 const reducer = createEntityReducer('messages', {
 
-  RECEIVE_MESSAGE: (state, action) => {
+  [ActionTypes.RECEIVE_MESSAGE]: (state, action) => {
     const { message } = action.payload;
     return {
       ...state,

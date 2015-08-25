@@ -1,10 +1,11 @@
 import { moveItemToFront } from 'app/utils';
 import { createPaginationReducer } from 'app/utils/reducers';
+import * as ActionTypes from 'app/ActionTypes';
 
 const reducer = createPaginationReducer([
-  'REQUEST_CONVERSATIONS',
-  'RECEIVE_CONVERSATIONS_SUCCESS',
-  'RECEIVE_CONVERSATIONS_FAILURE',
+  ActionTypes.REQUEST_CONVERSATIONS,
+  ActionTypes.RECEIVE_CONVERSATIONS_SUCCESS,
+  ActionTypes.RECEIVE_CONVERSATIONS_FAILURE,
 ], {
   RECEIVE_MESSAGE: (state, action) => {
     const { conversationId } = action.payload;
