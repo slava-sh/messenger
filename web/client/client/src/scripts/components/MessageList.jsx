@@ -1,34 +1,30 @@
 import React, { PropTypes } from 'react';
+import { collectionShape } from 'app/utils/Collection';
 import Message from 'app/components/Message';
 import InfiniteList from 'app/mixins/InfiniteList';
 import Spinner from 'app/components/Spinner';
 
 const MessageList = React.createClass({
   propTypes: {
-    messages: PropTypes.arrayOf(PropTypes.object),
-    loadMore: PropTypes.func.isRequired,
+    messages: collectionShape.isRequired,
   },
   mixins: [InfiniteList({ upward: true })],
 
   loadMore() {
-    const { pagination, loadMore } = this.props;
-    if (pagination.isLoading || !pagination.nextCursor) {
-      return;
-    }
-    loadMore();
+    this.props.messages.loadMore();
   },
 
   render() {
-    const { messages, loadMore, pagination } = this.props;
-    if (!messages) {
+    const { messages } = this.props;
+    if (!messages.isLoaded()) {
       return <Spinner smooth />;
     }
     return (
       <div className="messages" onScroll={this.handleScroll}>
-        {pagination.isLoading && <Spinner />}
+        {messages.isLoading() && <Spinner />}
         {messages.map(message => (
           <Message key={message.id} message={message} />
-        ))}
+        )).reverse()}
       </div>
     );
   },

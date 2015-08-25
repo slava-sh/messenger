@@ -17,6 +17,9 @@ const ConversationList = React.createClass({
 
   render() {
     const { conversations, router } = this.props;
+    if (!conversations.isLoaded()) {
+      return <Spinner smooth />;
+    }
     return (
       <div className="conversations" onScroll={this.handleScroll}>
         {conversations.map(conversation => (

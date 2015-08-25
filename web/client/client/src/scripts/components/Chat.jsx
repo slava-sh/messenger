@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import DocumentTitle from 'react-document-title';
+import { collectionShape } from 'app/utils/Collection';
 import MessageList from 'app/components/MessageList';
 import TypingUsers from 'app/components/TypingUsers';
 import MessageForm from 'app/components/MessageForm';
@@ -10,11 +11,10 @@ const Chat = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
     conversation: PropTypes.object,
-    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+    messages: collectionShape.isRequired,
     typingUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
     sendMessage: PropTypes.func.isRequired,
     sendTyping: PropTypes.func.isRequired,
-    loadMessages: PropTypes.func.isRequired,
   },
 
   componentDidUpdate() {
@@ -36,8 +36,6 @@ const Chat = React.createClass({
       typingUsers,
       sendMessage,
       sendTyping,
-      loadMessages,
-      pagination,
     } = this.props;
     if (!conversation) {
       return <Spinner smooth />;
@@ -51,8 +49,6 @@ const Chat = React.createClass({
           </div>
           <MessageList
             messages={messages}
-            loadMore={loadMessages}
-            pagination={pagination}
             ref={node => this.messageList = node}
           />
           <TypingUsers users={typingUsers} />
