@@ -1,6 +1,10 @@
 import Primus from 'primus';
 import amqp from 'amqp';
 
+const ActionTypes = {
+  REGISTER: 'REGISTER',
+};
+
 const DEBUG = process.env.ENVIRONMENT === 'development';
 
 const userSparks = {};
@@ -17,7 +21,7 @@ function showUserSparks(sparks) {
 
 function handleMessage(spark, data) {
   if (DEBUG) console.log(showSpark(spark), data);
-  if (data.type === 'REGISTER') {
+  if (data.type === ActionTypes.REGISTER) {
     const { user_id: userId } = data.payload;
     spark.userId = userId;
     if (userSparks[userId]) {
