@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { loadConversations } from 'app/actions/conversation';
+import Collection from 'app/utils/Collection';
 import Navigation from 'app/components/Navigation';
 
 function mapStateToProps(state) {
@@ -8,31 +9,31 @@ function mapStateToProps(state) {
     router,
     user,
     entities: { conversations },
-    pagination,
+    pagination: { conversations: conversationPagination },
   } = state;
   return {
     router,
     user,
-    conversations: pagination.conversations.ids.map(id => conversations[id]),
-    pagination: pagination.conversations,
+    conversations,
+    conversationPagination,
   };
 }
 
-const NavigationContainer = React.createClass({
-  propTypes: {
-    loadConversations: PropTypes.func.isRequired,
-  },
-
-  componentDidMount() {
-    this.props.loadConversations();
-  },
-
-  render() {
-    return <Navigation {...this.props} />;
-  },
-});
+function mergeProps(stateProps, dispatchProps, ownProps) {
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    conversations: new Collection(
+      stateProps.conversationPagination,
+      stateProps.conversations,
+      dispatchProps.loadConversations,
+    ),
+  };
+}
 
 export default connect(
   mapStateToProps,
   { loadConversations },
-)(NavigationContainer);
+  mergeProps,
+)(Navigation);

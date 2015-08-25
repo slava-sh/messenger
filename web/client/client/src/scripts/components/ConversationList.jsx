@@ -1,26 +1,22 @@
 import React, { PropTypes } from 'react';
+import { collectionShape } from 'app/utils/Collection';
 import InfiniteList from 'app/mixins/InfiniteList';
 import Link from 'app/components/Link';
 import Spinner from 'app/components/Spinner';
 
 const ConversationList = React.createClass({
   propTypes: {
-    conversations: PropTypes.arrayOf(PropTypes.object).isRequired,
+    conversations: collectionShape.isRequired,
     router: PropTypes.object.isRequired,
-    loadMore: PropTypes.func.isRequired,
   },
   mixins: [InfiniteList()],
 
   loadMore() {
-    const { pagination, loadMore } = this.props;
-    if (pagination.isLoading || !pagination.nextCursor) {
-      return;
-    }
-    loadMore();
+    this.props.conversations.loadMore();
   },
 
   render() {
-    const { conversations, router, loadMore, pagination } = this.props;
+    const { conversations, router } = this.props;
     return (
       <div className="conversations" onScroll={this.handleScroll}>
         {conversations.map(conversation => (
@@ -30,7 +26,7 @@ const ConversationList = React.createClass({
             </Link>
           </div>
         ))}
-        {pagination.isLoading && <Spinner />}
+        {conversations.isLoading() && <Spinner />}
       </div>
     );
   },

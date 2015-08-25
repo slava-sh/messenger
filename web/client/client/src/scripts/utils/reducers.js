@@ -39,6 +39,13 @@ export function createEntityReducer(name, handlers) {
   };
 }
 
+export const initialPaginationState = {
+  ids: [],
+  nextCursor: null,
+  isLoaded: false,
+  isLoading: false,
+};
+
 export function createPaginationReducer(types, handlers) {
   const [REQUEST, SUCCESS, FAILURE] = types;
   const updatePagination = handleAction.bind(null, {
@@ -64,13 +71,7 @@ export function createPaginationReducer(types, handlers) {
       };
     },
   });
-  const initialState = {
-    ids: [],
-    nextCursor: null,
-    isLoaded: false,
-    isLoading: false,
-  };
-  return function reducer(state = initialState, action) {
+  return function reducer(state = initialPaginationState, action) {
     const newState = updatePagination(state, action);
     return handleAction(handlers, newState, action);
   };

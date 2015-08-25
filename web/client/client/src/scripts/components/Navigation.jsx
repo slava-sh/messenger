@@ -1,21 +1,24 @@
 import React, { PropTypes } from 'react';
+import { collectionShape } from 'app/utils/Collection';
 import Link from 'app/components/Link';
 import ConversationList from 'app/components/ConversationList';
-import Spinner from 'app/components/Spinner';
 
 const Navigation = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
-    conversations: PropTypes.arrayOf(PropTypes.object),
+    conversations: collectionShape.isRequired,
     router: PropTypes.object.isRequired,
-    loadConversations: PropTypes.func.isRequired,
+  },
+
+  componentDidMount() {
+    const { conversations } = this.props;
+    if (!conversations.isLoaded()) {
+      conversations.loadMore();
+    }
   },
 
   render() {
-    const { user, conversations, router, loadConversations, pagination } = this.props;
-    if (!conversations) {
-      return <Spinner smooth />;
-    }
+    const { user, conversations, router } = this.props;
     return (
       <div className="navigation">
         <div className="header">
@@ -26,8 +29,6 @@ const Navigation = React.createClass({
         <ConversationList
           conversations={conversations}
           router={router}
-          loadMore={loadConversations}
-          pagination={pagination}
         />
       </div>
     );
