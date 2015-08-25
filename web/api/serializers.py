@@ -2,6 +2,7 @@ from rest_framework import serializers, pagination
 from django.contrib.auth.models import User
 from old_chat.models import Conversation, Message
 from django.utils import timezone
+from .fields import StringIntegerField, StringPrimaryKeyRelatedField
 
 # TODO: convert all ids to strings
 
@@ -23,8 +24,18 @@ class BasePagination(pagination.CursorPagination):
     ordering = None
 
 
-class MessageSerializer(serializers.ModelSerializer):
-    author = serializers.PrimaryKeyRelatedField(read_only=True)
+class BaseModelSerializer(serializers.ModelSerializer):
+    serializer_related_field = StringPrimaryKeyRelatedField
+
+    def build_standard_field(self, field_name, model_field):
+        field_class, field_kwargs = super().build_standard_field(field_name, model_field)
+        if field_name == 'id':
+            field_class = StringIntegerField
+        return field_class, field_kwargs
+
+
+class MessageSerializer(BaseModelSerializer):
+    author = StringPrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Message
@@ -35,13 +46,13 @@ class MessageSerializer(serializers.ModelSerializer):
         ordering = '-pk' # Equivalent to paginating by creation time
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(BaseModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username']
 
 
-class ConversationSerializer(serializers.ModelSerializer):
+class ConversationSerializer(BaseModelSerializer):
     class Meta:
         model = Conversation
         fields = ['id', 'name']
@@ -50,13 +61,13 @@ class ConversationSerializer(serializers.ModelSerializer):
         ordering = '-updated_at'
 
 
-class CreateConversationSerializer(serializers.ModelSerializer):
+class CreateConversationSerializer(BaseModelSerializer):
     class Meta:
         model = Conversation
         fields = ['id', 'name', 'members']
 
 
-class ConversationVerboseSerializer(serializers.ModelSerializer):
+class ConversationVerboseSerializer(BaseModelSerializer):
     members = UserSerializer(many=True)
     messages = serializers.SerializerMethodField('page_of_messages')
 
