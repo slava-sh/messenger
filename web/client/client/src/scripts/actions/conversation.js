@@ -1,7 +1,9 @@
 import contains from 'lodash/collection/contains';
+import { camelizeKeys } from 'humps';
 import * as api from 'app/utils/apiCallCreators';
 import execute from 'app/utils/executeApiCall';
 import * as ActionTypes from 'app/ActionTypes';
+import { normalize } from 'app/utils/normalizer';
 
 const TYPING_TIME = 10 * 1000;
 
@@ -108,7 +110,10 @@ export function receiveMessage({ conversationId, message }) {
     dispatch(stopTyping({ conversationId, userId: message.author }));
     dispatch({
       type: ActionTypes.RECEIVE_MESSAGE,
-      payload: { conversationId, message },
+      payload: { conversationId },
+      // TODO: normalize somewhere else
+      // TODO: better name
+      response: normalize(camelizeKeys(message), api.message),
     });
   };
 }

@@ -6,8 +6,8 @@ import * as ActionTypes from 'app/ActionTypes';
 
 export function createPushClient(primusUrl, store) {
   const actions = bindActionCreators({
-    [ActionTypes.RECEIVE_MESSAGE]: receiveMessage,
     [ActionTypes.RECEIVE_TYPING]: receiveTyping,
+    [ActionTypes.RECEIVE_MESSAGE]: receiveMessage,
   }, store.dispatch);
 
   const primus = Primus.connect(primusUrl, {

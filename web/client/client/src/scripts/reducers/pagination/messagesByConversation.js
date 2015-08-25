@@ -8,16 +8,20 @@ const messagePagination = createPaginationReducer([
   ActionTypes.RECEIVE_MESSAGES,
   ActionTypes.FAILURE_MESSAGES,
 ], {
+
   RECEIVE_MESSAGE: (state, action) => {
-    const { message } = action.payload;
+    const { result: messageId } = action.response;
     return {
       ...state,
-      ids: [message.id, ...(state.ids || [])],
+      ids: [messageId, ...(state.ids || [])],
     };
   },
+
   RECEIVE_CONVERSATION: (state, action) => {
-    const { conversationId } = action.payload;
-    const { conversations } = action.response.entities;
+    const {
+      result: conversationId,
+      entities: { conversations },
+    } = action.response;
     const conversation = conversations[conversationId];
     // TODO: check if we don't have these yet
     return {
