@@ -127,7 +127,6 @@ class Normalizer {
   visitEntity(entity, entitySchema) {
     const entityKey = entitySchema.getKey();
     const idAttribute = entitySchema.getIdAttribute();
-    entity[idAttribute] = String(entity[idAttribute]); // TODO: return string ids on the server
     const id = entity[idAttribute];
     if (!this.bag[entityKey]) {
       this.bag[entityKey] = {};
