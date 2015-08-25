@@ -21,7 +21,7 @@ const MessageList = React.createClass({
   render() {
     const { messages, loadMore, pagination } = this.props;
     if (!messages) {
-      return <Spinner />;
+      return <Spinner smooth />;
     }
     return (
       <div className="messages" onScroll={this.handleScroll}>

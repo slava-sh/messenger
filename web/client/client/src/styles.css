@@ -137,7 +137,10 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fade-in 1s, fa-zoom-in 0.5s;
+}
+
+.spinner--smooth {
+  animation: fade-in 1s, fa-zoom-in 0.75s;
 }
 
 .spinner > i {

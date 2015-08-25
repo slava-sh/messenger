@@ -41,7 +41,7 @@ const Chat = React.createClass({
       pagination,
     } = this.props;
     if (!conversation) {
-      return <Spinner />;
+      return <Spinner smooth />;
     }
     return (
       <DocumentTitle title={conversation.name}>
