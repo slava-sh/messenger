@@ -52,7 +52,9 @@ export function loadMessages(conversationId) {
     getPagination: state => state.pagination.messagesByConversation[conversationId],
     condition: ({ pagination: { messagesByConversation } }) => {
       const messagePagination = messagesByConversation[conversationId];
-      return !messagePagination || !messagePagination.isLoaded || messagePagination.nextCursor;
+      return !messagePagination
+              || (!messagePagination.isLoading
+                && (!messagePagination.isLoaded || messagePagination.nextCursor));
     },
   };
 }

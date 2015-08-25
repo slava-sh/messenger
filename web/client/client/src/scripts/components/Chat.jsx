@@ -18,14 +18,16 @@ const Chat = React.createClass({
   },
 
   componentDidUpdate() {
+    // TODO: only scroll when already at the bottom and a new message has arrived
     this.scrollToBottom();
   },
 
   scrollToBottom() {
     const messageList = findDOMNode(this.messageList);
-    if (messageList) {
-      messageList.scrollTop = messageList.scrollHeight;
+    if (!messageList) {
+      return;
     }
+    messageList.scrollTop = messageList.scrollHeight;
   },
 
   render() {
@@ -37,6 +39,7 @@ const Chat = React.createClass({
       sendMessage,
       sendTyping,
       loadMessages,
+      pagination,
     } = this.props;
     if (!conversation) {
       return <Spinner />;
@@ -51,6 +54,7 @@ const Chat = React.createClass({
           <MessageList
             messages={messages}
             loadMore={loadMessages}
+            pagination={pagination}
             ref={node => this.messageList = node}
           />
           <TypingUsers users={typingUsers} />

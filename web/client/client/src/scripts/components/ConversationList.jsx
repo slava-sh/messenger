@@ -13,11 +13,11 @@ const ConversationList = React.createClass({
     const { conversations, router, loadMore, pagination } = this.props;
     return (
       <InfiniteScroll
-          className="conversations"
-          pagination={pagination}
-          loadMore={loadMore}
-          hasMore={true}
-          loader={<div className="loader">Loading ...</div>}>
+        className="conversations"
+        pagination={pagination}
+        loadMore={loadMore}
+        hasMore={true}
+        loader={<div className="loader">Loading ...</div>}>
         {conversations.map(conversation => (
           <div key={conversation.id} className="conversation">
             <Link to={`/c/${conversation.id}/`} router={router}>

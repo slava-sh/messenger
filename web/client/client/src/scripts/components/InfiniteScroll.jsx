@@ -5,13 +5,11 @@ import Spinner from 'app/components/Spinner';
 
 const InfiniteScroll = React.createClass({
 
-  loadMore() {
-    const { pagination, loadMore } = this.props;
-    if (pagination.isLoading || !pagination.nextCursor) {
-      return;
-    }
-    console.log('loadMore', pagination);
-    loadMore();
+  getDefaultProps() {
+    return {
+      upward: false,
+      threshold: 100,
+    };
   },
 
   componentDidMount() {
@@ -23,19 +21,30 @@ const InfiniteScroll = React.createClass({
   },
 
   handleScroll() {
-    const container = findDOMNode(this);
-    const pixelsToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
-    if (pixelsToBottom < 100) {
+    const { upward, threshold } = this.props;
+    const { scrollTop, scrollHeight, clientHeight } = findDOMNode(this);
+    const margin = upward ? scrollTop : scrollHeight - scrollTop - clientHeight;
+    if (margin < threshold) {
       this.loadMore();
     }
   },
 
+  loadMore() {
+    const { pagination, loadMore } = this.props;
+    if (pagination.isLoading || !pagination.nextCursor) {
+      return;
+    }
+    console.log('loadMore', pagination);
+    loadMore();
+  },
+
   render() {
-    var { children, hasMore, loader: spinner, pagination, ...other } = this.props;
+    const { children, upward, threshold, pagination, ...other } = this.props;
     return (
       <div {...other} onScroll={this.handleScroll}>
+        {upward && pagination.isLoading && <Spinner />}
         {children}
-        {pagination.isLoading && (<Spinner />)}
+        {!upward && pagination.isLoading && <Spinner />}
       </div>
     );
   },

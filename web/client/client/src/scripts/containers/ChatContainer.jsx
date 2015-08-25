@@ -28,6 +28,7 @@ function mapStateToProps(state, ownProps) {
     conversation,
     messages,
     typingUsers,
+    pagination: messagePagination,
   };
 }
 
