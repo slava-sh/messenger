@@ -9,24 +9,39 @@ const InfiniteScroll = React.createClass({
     return {
       upward: false,
       threshold: 100,
+      spinner: null,
     };
   },
 
   componentDidMount() {
+    this.lastScrollPosition = 0; // Not in the state to avoid re-rendering
     this.handleScroll();
   },
 
   componentDidUpdate() {
+    this.restoreScrollPosition();
     this.handleScroll();
   },
 
   handleScroll() {
     const { upward, threshold } = this.props;
     const { scrollTop, scrollHeight, clientHeight } = findDOMNode(this);
-    const margin = upward ? scrollTop : scrollHeight - scrollTop - clientHeight;
+
+    const scrollBottom = scrollHeight - scrollTop - clientHeight;
+    this.lastScrollPosition = upward ? scrollBottom : scrollTop;
+
+    const margin = upward ? scrollTop : scrollBottom;
     if (margin < threshold) {
       this.loadMore();
     }
+  },
+
+  restoreScrollPosition() {
+    const { upward } = this.props;
+    const node = findDOMNode(this);
+    node.scrollTop = upward
+      ? node.scrollHeight - this.lastScrollPosition - node.clientHeight
+      : this.lastScrollPosition;
   },
 
   loadMore() {
@@ -34,17 +49,16 @@ const InfiniteScroll = React.createClass({
     if (pagination.isLoading || !pagination.nextCursor) {
       return;
     }
-    console.log('loadMore', pagination);
     loadMore();
   },
 
   render() {
-    const { children, upward, threshold, pagination, ...other } = this.props;
+    const { children, upward, threshold, pagination, spinner, ...other } = this.props;
     return (
       <div {...other} onScroll={this.handleScroll}>
-        {upward && pagination.isLoading && <Spinner />}
+        {upward && pagination.isLoading && spinner}
         {children}
-        {!upward && pagination.isLoading && <Spinner />}
+        {!upward && pagination.isLoading && spinner}
       </div>
     );
   },
