@@ -1,6 +1,7 @@
 from rest_framework import serializers, pagination
 from django.contrib.auth.models import User, Group
 from old_chat.models import Conversation, Message
+from django.utils import timezone
 
 # TODO: convert all ids to strings
 
@@ -59,4 +60,5 @@ class ConversationVerboseSerializer(serializers.ModelSerializer):
 
     def page_of_messages(self, obj):
         queryset = obj.messages.all()
+        queryset = queryset.filter(time__gt=timezone.now()) # queryset empty TODO: delete this
         return first_page(queryset, MessageSerializer)
