@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status, pagination
 from rest_framework.response import Response
 from old_chat.models import Conversation
-from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer
+from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer, CreateConversationSerializer
 from .tasks import notify_users
 
 
@@ -18,6 +18,13 @@ class ConversationViewSet(viewsets.ViewSet):
     def list(self, request):
         queryset = request.user.conversations
         return paginated_response(queryset, ConversationSerializer, self.request)
+
+    def create(self, request):
+        serializer = CreateConversationSerializer(data=request.data)
+        # TODO: require that the user is a member of the new conversation
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, pk):
         conversation = get_object_or_404(Conversation, pk=pk)
@@ -49,7 +56,6 @@ class MessageViewSet(viewsets.ViewSet):
         # TODO: validate membership
         queryset = conversation.messages
         return paginated_response(queryset, MessageSerializer, self.request)
-
 
     def create(self, request, pk):
         conversation = get_object_or_404(Conversation, pk=pk)

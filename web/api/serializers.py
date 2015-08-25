@@ -1,5 +1,5 @@
 from rest_framework import serializers, pagination
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from old_chat.models import Conversation, Message
 from django.utils import timezone
 
@@ -48,6 +48,12 @@ class ConversationSerializer(serializers.ModelSerializer):
 
     class Pagination(BasePagination):
         ordering = '-updated_at'
+
+
+class CreateConversationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Conversation
+        fields = ['id', 'name', 'members']
 
 
 class ConversationVerboseSerializer(serializers.ModelSerializer):

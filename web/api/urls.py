@@ -3,6 +3,7 @@ from .views import ConversationViewSet, MessageViewSet
 
 conversations = ConversationViewSet.as_view({
     'get': 'list',
+    'post': 'create',
 })
 
 conversation = ConversationViewSet.as_view({
