@@ -4,8 +4,8 @@ import * as ActionTypes from 'app/ActionTypes';
 
 const reducer = createPaginationReducer([
   ActionTypes.REQUEST_CONVERSATIONS,
-  ActionTypes.RECEIVE_CONVERSATIONS_SUCCESS,
-  ActionTypes.RECEIVE_CONVERSATIONS_FAILURE,
+  ActionTypes.RECEIVE_CONVERSATIONS,
+  ActionTypes.FAILURE_CONVERSATIONS,
 ], {
   RECEIVE_MESSAGE: (state, action) => {
     const { conversationId } = action.payload;

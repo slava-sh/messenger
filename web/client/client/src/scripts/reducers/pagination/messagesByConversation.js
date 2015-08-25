@@ -5,8 +5,8 @@ import * as ActionTypes from 'app/ActionTypes';
 
 const messagePagination = createPaginationReducer([
   ActionTypes.REQUEST_MESSAGES,
-  ActionTypes.RECEIVE_MESSAGES_SUCCESS,
-  ActionTypes.RECEIVE_MESSAGES_FAILURE,
+  ActionTypes.RECEIVE_MESSAGES,
+  ActionTypes.FAILURE_MESSAGES,
 ], {
   RECEIVE_MESSAGE: (state, action) => {
     const { message } = action.payload;
@@ -15,7 +15,7 @@ const messagePagination = createPaginationReducer([
       ids: [message.id, ...(state.ids || [])],
     };
   },
-  RECEIVE_CONVERSATION_SUCCESS: (state, action) => {
+  RECEIVE_CONVERSATION: (state, action) => {
     const { conversationId } = action.payload;
     const { conversations } = action.response.entities;
     const conversation = conversations[conversationId];
@@ -30,8 +30,13 @@ const messagePagination = createPaginationReducer([
 });
 
 const reducer = createKeyedReducer(
-  action => contains([ActionTypes.REQUEST_MESSAGES, ActionTypes.RECEIVE_MESSAGES_SUCCESS, ActionTypes.RECEIVE_MESSAGES_FAILURE, ActionTypes.RECEIVE_MESSAGE, ActionTypes.RECEIVE_CONVERSATION_SUCCESS], action.type)
-    && String(action.payload.conversationId), // TODO: refactor
+  action => contains([
+    ActionTypes.REQUEST_MESSAGES,
+    ActionTypes.RECEIVE_MESSAGES,
+    ActionTypes.FAILURE_MESSAGES,
+    ActionTypes.RECEIVE_MESSAGE,
+    ActionTypes.RECEIVE_CONVERSATION,
+  ], action.type) && String(action.payload.conversationId), // TODO: refactor
   messagePagination,
 );
 

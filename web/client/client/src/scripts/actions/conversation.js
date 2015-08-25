@@ -7,7 +7,11 @@ const TYPING_TIME = 10 * 1000;
 
 export function loadConversations() {
   return {
-    types: [ActionTypes.REQUEST_CONVERSATIONS, ActionTypes.RECEIVE_CONVERSATIONS_SUCCESS, ActionTypes.RECEIVE_CONVERSATIONS_FAILURE],
+    types: [
+      ActionTypes.REQUEST_CONVERSATIONS,
+      ActionTypes.RECEIVE_CONVERSATIONS,
+      ActionTypes.FAILURE_CONVERSATIONS,
+    ],
     callApi: api.getConversations(),
     getPagination: state => state.pagination.conversations,
     condition: state => !state.pagination.conversations.isLoaded || state.pagination.conversations.nextCursor,
@@ -16,7 +20,11 @@ export function loadConversations() {
 
 export function loadConversation(conversationId) {
   return {
-    types: [ActionTypes.REQUEST_CONVERSATION, ActionTypes.RECEIVE_CONVERSATION_SUCCESS, ActionTypes.RECEIVE_CONVERSATION_FAILURE],
+    types: [
+      ActionTypes.REQUEST_CONVERSATION,
+      ActionTypes.RECEIVE_CONVERSATION,
+      ActionTypes.FAILURE_CONVERSATION,
+    ],
     payload: { conversationId },
     callApi: api.getConversation(conversationId),
     condition: state => {
@@ -28,7 +36,11 @@ export function loadConversation(conversationId) {
 
 export function loadMessages(conversationId) {
   return {
-    types: [ActionTypes.REQUEST_MESSAGES, ActionTypes.RECEIVE_MESSAGES_SUCCESS, ActionTypes.RECEIVE_MESSAGES_FAILURE],
+    types: [
+      ActionTypes.REQUEST_MESSAGES,
+      ActionTypes.RECEIVE_MESSAGES,
+      ActionTypes.FAILURE_MESSAGES,
+    ],
     payload: { conversationId },
     callApi: api.getMessages(conversationId),
     getPagination: state => state.pagination.messagesByConversation[conversationId],
