@@ -25,6 +25,7 @@ const MessageList = React.createClass({
     }
     return (
       <div className="messages" onScroll={this.handleScroll}>
+        {pagination.isLoading && <Spinner />}
         {messages.map(message => (
           <Message key={message.id} message={message} />
         ))}

@@ -19,8 +19,7 @@ const Chat = React.createClass({
 
   componentDidUpdate() {
     // TODO: only scroll when already at the bottom and a new message has arrived
-    this.scrollToBottom();
-    window.scrollToBottom = this.scrollToBottom;
+    // this.scrollToBottom();
   },
 
   scrollToBottom() {

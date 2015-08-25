@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-import Link from 'app/components/Link';
 import InfiniteList from 'app/mixins/InfiniteList';
+import Link from 'app/components/Link';
+import Spinner from 'app/components/Spinner';
 
 const ConversationList = React.createClass({
   propTypes: {
@@ -29,6 +30,7 @@ const ConversationList = React.createClass({
             </Link>
           </div>
         ))}
+        {pagination.isLoading && <Spinner />}
       </div>
     );
   },
