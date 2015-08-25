@@ -8,16 +8,20 @@ const ConversationList = React.createClass({
     router: PropTypes.object.isRequired,
     loadMore: PropTypes.func.isRequired,
   },
+  mixins: [InfiniteScroll()],
+
+  loadMore() {
+    const { pagination, loadMore } = this.props;
+    if (pagination.isLoading || !pagination.nextCursor) {
+      return;
+    }
+    loadMore();
+  },
 
   render() {
     const { conversations, router, loadMore, pagination } = this.props;
     return (
-      <InfiniteScroll
-        className="conversations"
-        pagination={pagination}
-        loadMore={loadMore}
-        hasMore={true}
-        loader={<div className="loader">Loading ...</div>}>
+      <div className="conversations" onScroll={this.handleScroll}>
         {conversations.map(conversation => (
           <div key={conversation.id} className="conversation">
             <Link to={`/c/${conversation.id}/`} router={router}>
@@ -25,7 +29,7 @@ const ConversationList = React.createClass({
             </Link>
           </div>
         ))}
-      </InfiniteScroll>
+      </div>
     );
   },
 });

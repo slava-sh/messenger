@@ -8,6 +8,15 @@ const MessageList = React.createClass({
     messages: PropTypes.arrayOf(PropTypes.object),
     loadMore: PropTypes.func.isRequired,
   },
+  mixins: [InfiniteScroll({ upward: true })],
+
+  loadMore() {
+    const { pagination, loadMore } = this.props;
+    if (pagination.isLoading || !pagination.nextCursor) {
+      return;
+    }
+    loadMore();
+  },
 
   render() {
     const { messages, loadMore, pagination } = this.props;
@@ -15,15 +24,11 @@ const MessageList = React.createClass({
       return <Spinner />;
     }
     return (
-      <InfiniteScroll
-        className="messages"
-        pagination={pagination}
-        loadMore={loadMore}
-        upward={true}>
+      <div className="messages" onScroll={this.handleScroll}>
         {messages.map(message => (
           <Message key={message.id} message={message} />
         ))}
-      </InfiniteScroll>
+      </div>
     );
   },
 });
