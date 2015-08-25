@@ -14,19 +14,22 @@ export const collectionShape = PropTypes.shape({
   _requestMore: PropTypes.func.isRequired,
 });
 
+const identity = x => x;
+
 export class Collection {
 
-  constructor(pagination = initialPaginationState, entities = {}, requestMore) {
+  constructor(pagination = initialPaginationState, entities = {}, requestMore, mapItem = identity) {
     this.pagination = pagination;
     this.entities = entities;
     this._requestMore = requestMore;
+    this._mapItem = mapItem;
   }
 
   map(fn) {
     if (!this.pagination.ids) {
       return [];
     }
-    return this.pagination.ids.map(id => fn(this.entities[id]));
+    return this.pagination.ids.map(id => fn(this._mapItem(this.entities[id])));
   }
 
   isLoading() {

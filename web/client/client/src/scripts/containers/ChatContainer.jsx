@@ -13,18 +13,13 @@ function mapStateToProps(state, ownProps) {
   const { conversationId } = ownProps;
   const { conversations, users } = entities;
   const conversation = conversations[conversationId];
-//    const message = entities.messages[id];
-//    return {
-//      ...message,
-//      author: users[message.author],
-//    };
-//  messages.reverse();
   const typingUserIds = (conversation || {}).typingUserIds || [];
   const typingUsers = typingUserIds.map(id => users[id]).filter(Boolean);
   return {
     user,
     conversation,
     typingUsers,
+    users,
     messages: entities.messages,
     messagePagination: messagesByConversation[conversationId],
   };
@@ -32,7 +27,7 @@ function mapStateToProps(state, ownProps) {
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
   const { conversationId } = ownProps;
-  const { messagePagination, messages, ...other } = stateProps;
+  const { messagePagination, messages, users, ...other } = stateProps;
   return {
     ...ownProps,
     ...other,
@@ -41,6 +36,10 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
       messagePagination,
       messages,
       () => dispatchProps.loadMessages(conversationId),
+      message => ({
+        ...message,
+        author: users[message.author],
+      }),
     ),
     sendMessage: text => dispatchProps.sendMessage({ conversationId, text }),
     sendTyping: () => dispatchProps.sendTyping(conversationId),
