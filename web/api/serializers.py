@@ -44,6 +44,7 @@ class MessageSerializer(BaseModelSerializer):
 
     class Pagination(BasePagination):
         ordering = '-pk' # Equivalent to paginating by creation time
+        page_size = 25
 
 
 class UserSerializer(BaseModelSerializer):
