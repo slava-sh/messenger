@@ -14,6 +14,7 @@ function mapStateToProps(state) {
     router,
     user,
     conversations: pagination.conversations.ids.map(id => conversations[id]),
+    pagination: pagination.conversations,
   };
 }
 

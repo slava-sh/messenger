@@ -20,7 +20,7 @@ def first_page(queryset, serializer):
 
 
 class BasePagination(pagination.CursorPagination):
-    page_size = 3
+    page_size = 10
     ordering = None
 
 

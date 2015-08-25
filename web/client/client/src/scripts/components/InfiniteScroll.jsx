@@ -1,68 +1,41 @@
 import React, { PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import debounce from 'lodash/function/debounce';
-
-function topPosition(domElt) {
-  if (!domElt) {
-    return 0;
-  }
-  return domElt.offsetTop + topPosition(domElt.offsetParent);
-}
+import Spinner from 'app/components/Spinner';
 
 const InfiniteScroll = React.createClass({
-  getDefaultProps() {
-    return {
-      hasMore: false,
-      threshold: 250,
-    };
+
+  loadMore() {
+    const { pagination, loadMore } = this.props;
+    if (pagination.isLoading || !pagination.nextCursor) {
+      return;
+    }
+    console.log('loadMore', pagination);
+    loadMore();
   },
 
   componentDidMount() {
-    this.loadMore = debounce(this.loadMore, 900);
-    this.attachScrollListener();
-  },
-
-  componentWillUnmount() {
-    this.detachScrollListener();
+    this.handleScroll();
   },
 
   componentDidUpdate() {
-    this.attachScrollListener();
+    this.handleScroll();
   },
 
-  loadMore() {
-    this.props.loadMore();
-  },
-
-  scrollListener() {
-    var el = findDOMNode(this);
-    var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-    if (topPosition(el) + el.offsetHeight - scrollTop - window.innerHeight < Number(this.props.threshold)) {
-      this.detachScrollListener();
+  handleScroll() {
+    const container = findDOMNode(this);
+    const pixelsToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+    if (pixelsToBottom < 100) {
       this.loadMore();
     }
   },
 
-  attachScrollListener() {
-    if (!this.props.hasMore) {
-      return;
-    }
-    window.addEventListener('scroll', this.scrollListener);
-    window.addEventListener('resize', this.scrollListener);
-    this.scrollListener();
-  },
-
-  detachScrollListener() {
-    window.removeEventListener('scroll', this.scrollListener);
-    window.removeEventListener('resize', this.scrollListener);
-  },
-
   render() {
-    var { children, hasMore, loader: spinner } = this.props;
+    var { children, hasMore, loader: spinner, pagination, ...other } = this.props;
     return (
-      <div>
+      <div {...other} onScroll={this.handleScroll}>
         {children}
-        {hasMore && spinner}
+        {pagination.isLoading && (<Spinner />)}
       </div>
     );
   },

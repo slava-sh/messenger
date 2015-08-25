@@ -12,7 +12,7 @@ const Navigation = React.createClass({
   },
 
   render() {
-    const { user, conversations, router, loadConversations } = this.props;
+    const { user, conversations, router, loadConversations, pagination } = this.props;
     if (!conversations) {
       return <Spinner />;
     }
@@ -27,6 +27,7 @@ const Navigation = React.createClass({
           conversations={conversations}
           router={router}
           loadMore={loadConversations}
+          pagination={pagination}
         />
       </div>
     );

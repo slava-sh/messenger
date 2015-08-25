@@ -16,7 +16,11 @@ export function loadConversations() {
     ],
     callApi: api.getConversations(),
     getPagination: state => state.pagination.conversations,
-    condition: state => !state.pagination.conversations.isLoaded || state.pagination.conversations.nextCursor,
+    condition: state => {
+      return !state.pagination.conversations.isLoading
+              && (!state.pagination.conversations.isLoaded
+                || state.pagination.conversations.nextCursor);
+    },
   };
 }
 
