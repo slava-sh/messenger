@@ -1,6 +1,6 @@
 import get from 'lodash/object/get';
 import merge from 'lodash/object/merge';
-import * as pagination from 'app/utils/apiPagination';
+import { stripPagination, getCursor } from 'app/utils/apiPagination';
 
 function handleAction(handlers, state, action) {
   if (handlers && handlers.hasOwnProperty(action.type)) {
@@ -33,7 +33,7 @@ export function createKeyedReducer(mapActionToKey, keyReducer) {
 
 export function createEntityReducer(name, handlers) {
   return function reducer(state = {}, action) {
-    const entities = get(action, ['response', 'entities', name]);
+    const entities = stripPagination(get(action, ['response', 'entities', name]));
     const newState = entities ? merge({}, state, entities) : state;
     return handleAction(handlers, newState, action);
   };
@@ -51,8 +51,8 @@ export function createPaginationReducer(types, handlers) {
     [SUCCESS]: (state, action) => {
       return {
         ...state,
-        ids: [...state.ids, ...pagination.getCollection(action.response.result)],
-        nextCursor: pagination.getCursor(action.response.result),
+        ids: [...state.ids, ...stripPagination(action.response.result)],
+        nextCursor: getCursor(action.response.result),
         isLoaded: true,
         isLoading: false,
       };

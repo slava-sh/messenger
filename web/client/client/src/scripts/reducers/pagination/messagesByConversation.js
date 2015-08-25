@@ -1,6 +1,6 @@
 import contains from 'lodash/collection/includes';
 import { createKeyedReducer, createPaginationReducer } from 'app/utils/reducers';
-import * as pagination from 'app/utils/apiPagination';
+import { stripPagination, getCursor } from 'app/utils/apiPagination';
 
 const messagePagination = createPaginationReducer([
   'REQUEST_MESSAGES',
@@ -21,8 +21,8 @@ const messagePagination = createPaginationReducer([
     // TODO: check if we don't have these yet
     return {
       ...state,
-      ids: pagination.getCollection(conversation.messages),
-      nextCursor: pagination.getCursor(conversation.messages),
+      ids: stripPagination(conversation.messages),
+      nextCursor: getCursor(conversation.messages),
       isLoaded: true,
     };
   },

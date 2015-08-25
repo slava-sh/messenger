@@ -1,6 +1,5 @@
-import { Schema, arrayOf, proxy } from 'app/utils/normalizer';
-
-const pagesOf = schema => ({ results: arrayOf(schema) });
+import { Schema, arrayOf } from 'app/utils/normalizer';
+import { pagesOf } from 'app/utils/apiPagination';
 
 const user = new Schema('users');
 const conversation = new Schema('conversations');

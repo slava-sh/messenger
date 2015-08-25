@@ -151,6 +151,9 @@ class Normalizer {
     } else if (schema instanceof ProxySchema) {
       return this.visitProxy(obj, schema);
     }
+    else if (schema instanceof Function) {
+      return this.visit(...schema(obj));
+    }
     return this.visitObject(obj, schema);
   }
 }
