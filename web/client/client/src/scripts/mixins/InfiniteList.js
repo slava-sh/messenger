@@ -1,6 +1,6 @@
 import { findDOMNode } from 'react-dom';
 
-export const InfiniteScroll = ({ upward = false, threshold = 100 } = {}) => ({
+const InfiniteList = ({ upward = false, threshold = 100 } = {}) => ({
   // TODO: PropTypes
 
   componentDidMount() {
@@ -46,4 +46,4 @@ export const InfiniteScroll = ({ upward = false, threshold = 100 } = {}) => ({
   },
 });
 
-export default InfiniteScroll;
+export default InfiniteList;

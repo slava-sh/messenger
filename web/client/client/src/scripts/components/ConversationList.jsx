@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Link from 'app/components/Link';
-import InfiniteScroll from 'app/components/InfiniteScroll';
+import InfiniteList from 'app/mixins/InfiniteList';
 
 const ConversationList = React.createClass({
   propTypes: {
@@ -8,7 +8,7 @@ const ConversationList = React.createClass({
     router: PropTypes.object.isRequired,
     loadMore: PropTypes.func.isRequired,
   },
-  mixins: [InfiniteScroll()],
+  mixins: [InfiniteList()],
 
   loadMore() {
     const { pagination, loadMore } = this.props;

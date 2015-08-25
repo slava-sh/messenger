@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Message from 'app/components/Message';
-import InfiniteScroll from 'app/components/InfiniteScroll';
+import InfiniteList from 'app/mixins/InfiniteList';
 import Spinner from 'app/components/Spinner';
 
 const MessageList = React.createClass({
@@ -8,7 +8,7 @@ const MessageList = React.createClass({
     messages: PropTypes.arrayOf(PropTypes.object),
     loadMore: PropTypes.func.isRequired,
   },
-  mixins: [InfiniteScroll({ upward: true })],
+  mixins: [InfiniteList({ upward: true })],
 
   loadMore() {
     const { pagination, loadMore } = this.props;
