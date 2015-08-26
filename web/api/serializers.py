@@ -20,7 +20,7 @@ def first_page(queryset, serializer):
 
 
 class BasePagination(pagination.CursorPagination):
-    page_size = 10
+    page_size = 25
     ordering = None
 
 
@@ -44,7 +44,6 @@ class MessageSerializer(BaseModelSerializer):
 
     class Pagination(BasePagination):
         ordering = '-pk' # Equivalent to paginating by creation time
-        page_size = 25
 
 
 class UserSerializer(BaseModelSerializer):
