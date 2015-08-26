@@ -60,9 +60,17 @@ class User(PermissionsMixin, models.Model):
     def get_short_name(self):
         raise NotImplementedError()
 
-    def get_session_auth_hash(self):
-        key_salt = 'django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash'
-        return salted_hmac(key_salt, self.password).hexdigest()
-
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+    def set_password(self, raw_password):
+        pass
+
+    def check_password(self, raw_password):
+        return False
+
+    def set_unusable_password(self):
+        pass
+
+    def has_usable_password(self):
+        return False
