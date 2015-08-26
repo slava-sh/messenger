@@ -24,7 +24,8 @@ class User(PermissionsMixin, models.Model):
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
+        help_text=_('Designates whether the user can log in to the admin '
+                    'site.'),
     )
     is_active = models.BooleanField(
         _('active'),
@@ -46,6 +47,9 @@ class User(PermissionsMixin, models.Model):
         db_table = 'auth_user'
 
     def __str__(self):
+        return self.username
+
+    def get_username(self):
         return self.username
 
     def is_anonymous(self):
