@@ -7,7 +7,7 @@ web:
     - queue
   env_file: development.env
   volumes:
-    - ../web:/app:ro
+    - ../web:/app
   command: python manage.py runserver 0.0.0.0:80
 realtime:
   build: ../realtime

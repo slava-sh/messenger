@@ -36,7 +36,6 @@ class User(PermissionsMixin, models.Model):
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     last_login = models.DateTimeField(_('last login'), blank=True, null=True)
-    test = models.DateTimeField(_('last login'), blank=True, null=True)
 
     objects = UserManager()
 
