@@ -19,6 +19,7 @@ INSTALLED_APPS = (
     'storages',
     'rest_framework',
     'nopassword',
+    'accounts',
     'old_chat',
     'api',
     'client',
@@ -36,6 +37,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = ['nopassword.backends.email.EmailBackend']
+
+AUTH_USER_MODEL = 'accounts.User'
 
 ROOT_URLCONF = 'project.urls'
 
