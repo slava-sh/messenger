@@ -55,10 +55,10 @@ class User(PermissionsMixin, models.Model):
         return True
 
     def get_full_name(self):
-        raise NotImplementedError()
+        return '{} {}'.format(self.first_name, self.last_name).strip()
 
     def get_short_name(self):
-        raise NotImplementedError()
+        return self.first_name
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
