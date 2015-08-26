@@ -1,10 +1,8 @@
 from rest_framework import serializers, pagination
-from django.contrib.auth.models import User
 from old_chat.models import Conversation, Message
 from django.utils import timezone
+from accounts.models import User
 from .fields import StringIntegerField, StringPrimaryKeyRelatedField
-
-# TODO: convert all ids to strings
 
 
 def first_page(queryset, serializer):
