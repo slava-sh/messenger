@@ -18,7 +18,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'storages',
     'rest_framework',
-    'registration',
+    'nopassword',
     'old_chat',
     'api',
     'client',
@@ -34,6 +34,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
+
+AUTHENTICATION_BACKENDS = ['nopassword.backends.email.EmailBackend']
 
 ROOT_URLCONF = 'project.urls'
 

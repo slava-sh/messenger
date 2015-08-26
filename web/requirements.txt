@@ -1,8 +1,8 @@
 Django
 psycopg2
-django-registration-redux
+django-nopassword
 celery
 gunicorn
+djangorestframework
 django-storages-redux
 boto
-djangorestframework
