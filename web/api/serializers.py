@@ -3,6 +3,7 @@ from old_chat.models import Conversation, Message
 from django.utils import timezone
 from accounts.models import User
 from .fields import StringIntegerField, StringPrimaryKeyRelatedField
+from .utils import gravatar_url
 
 
 def first_page(queryset, serializer):
@@ -43,11 +44,15 @@ class MessageSerializer(BaseModelSerializer):
     class Pagination(BasePagination):
         ordering = '-pk' # Equivalent to paginating by creation time
 
-
 class UserSerializer(BaseModelSerializer):
+    avatar_url = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id', 'username']
+        fields = ['id', 'username', 'avatar_url']
+
+    def get_avatar_url(self, obj):
+        return gravatar_url(obj.email)
 
 
 class ConversationSerializer(BaseModelSerializer):

@@ -19,6 +19,7 @@ class User(PermissionsMixin, models.Model):
     )
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
+    # TODO: have lowercase emails
     email = models.EmailField(_('email address'), max_length=63,
                               unique=True, db_index=True)
     is_staff = models.BooleanField(
