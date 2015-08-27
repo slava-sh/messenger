@@ -1,4 +1,6 @@
 import gulp from 'gulp';
+import gulpif from 'gulp-if';
+import minifycss from 'gulp-minify-css';
 import path from 'path';
 import webpack from 'webpack';
 import SplitByPathPlugin from 'webpack-split-by-path';
@@ -85,13 +87,14 @@ gulp.task('watch:scripts', scriptsTask(true));
 
 gulp.task('build:styles', () => {
   return gulp.src(paths.styles)
-    .pipe(sourcemaps.init())
+    .pipe(gulpif(DEBUG, sourcemaps.init()))
     .pipe(postcss([
       autoprefixer({
         browsers: ['last 2 versions'],
       }),
     ]))
-    .pipe(sourcemaps.write())
+    .pipe(gulpif(!DEBUG, minifycss()))
+    .pipe(gulpif(DEBUG, sourcemaps.write()))
     .pipe(gulp.dest(paths.build));
 });
 
