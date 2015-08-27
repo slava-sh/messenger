@@ -9,7 +9,7 @@ const TypingUsers = React.createClass({
   render() {
     const { users } = this.props;
     if (users.length === 0) {
-      return null;
+      return <div className="typing-users">&nbsp;</div>;
     }
     return (
       <div className="typing-users">

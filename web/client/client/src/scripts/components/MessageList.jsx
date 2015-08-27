@@ -1,12 +1,14 @@
 import React, { PropTypes } from 'react';
 import { collectionShape } from 'app/utils/Collection';
 import Message from 'app/components/Message';
+import TypingUsers from 'app/components/TypingUsers';
 import InfiniteList from 'app/mixins/InfiniteList';
 import Spinner from 'app/components/Spinner';
 
 const MessageList = React.createClass({
   propTypes: {
     messages: collectionShape.isRequired,
+    typingUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   },
   mixins: [InfiniteList({ upward: true })],
 
@@ -15,7 +17,7 @@ const MessageList = React.createClass({
   },
 
   render() {
-    const { messages } = this.props;
+    const { messages, typingUsers } = this.props;
     if (!messages.isLoaded()) {
       return <Spinner smooth />;
     }
@@ -36,6 +38,7 @@ const MessageList = React.createClass({
           },
           [null, []],
         )[1]}
+        <TypingUsers users={typingUsers} />
       </div>
     );
   },

@@ -3,7 +3,6 @@ import { findDOMNode } from 'react-dom';
 import DocumentTitle from 'react-document-title';
 import { collectionShape } from 'app/utils/Collection';
 import MessageList from 'app/components/MessageList';
-import TypingUsers from 'app/components/TypingUsers';
 import MessageForm from 'app/components/MessageForm';
 import Spinner from 'app/components/Spinner';
 
@@ -49,9 +48,9 @@ const Chat = React.createClass({
           </div>
           <MessageList
             messages={messages}
+            typingUsers={typingUsers}
             ref={node => this.messageList = node}
           />
-          <TypingUsers users={typingUsers} />
           <MessageForm
             user={user}
             sendMessage={sendMessage}
