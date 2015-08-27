@@ -38,7 +38,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
       () => dispatchProps.loadMessages(conversationId),
       message => ({
         ...message,
-        author: users[message.author],
+        author: users[message.author] || {},
       }),
     ),
     sendMessage: text => dispatchProps.sendMessage({ conversationId, text }),
