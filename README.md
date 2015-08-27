@@ -1,8 +1,8 @@
 ```sh
 cd client
 npm install
-ENVIRONMENT=development npm run watch
-ENVIRONMENT=production npm run build
+ENVIRONMENT=development gulp watch
+ENVIRONMENT=production gulp
 ```
 
 ```sh

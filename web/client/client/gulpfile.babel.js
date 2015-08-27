@@ -100,4 +100,5 @@ gulp.task('watch:styles', () => {
 });
 
 gulp.task('watch', ['watch:scripts', 'watch:styles']);
-gulp.task('default', ['scripts', 'styles']);
+gulp.task('build', ['scripts', 'styles']);
+gulp.task('default', ['clean', 'build']);
