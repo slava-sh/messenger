@@ -80,10 +80,10 @@ function scriptsTask(watch) {
     .pipe(gulp.dest(paths.build));
 }
 
-gulp.task('scripts', scriptsTask(false));
+gulp.task('build:scripts', scriptsTask(false));
 gulp.task('watch:scripts', scriptsTask(true));
 
-gulp.task('styles', () => {
+gulp.task('build:styles', () => {
   return gulp.src(paths.styles)
     .pipe(sourcemaps.init())
     .pipe(postcss([
@@ -96,9 +96,9 @@ gulp.task('styles', () => {
 });
 
 gulp.task('watch:styles', () => {
-  gulp.watch(paths.styles, ['styles']);
+  gulp.watch(paths.styles, ['build:styles']);
 });
 
+gulp.task('build', ['build:scripts', 'build:styles']);
 gulp.task('watch', ['watch:scripts', 'watch:styles']);
-gulp.task('build', ['scripts', 'styles']);
 gulp.task('default', ['clean', 'build']);
