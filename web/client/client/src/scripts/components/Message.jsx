@@ -6,10 +6,18 @@ const Message = React.createClass({
   },
 
   render() {
+    const { message } = this.props;
     return (
       <div className="message">
-        <div className="username">{this.props.message.author.username}</div>
-        <div className="text">{this.props.message.text}</div>
+        <div className="message__avatar">
+          <img src={message.author.avatarUrl} />
+        </div>
+        <div className="message__body">
+          <div className="message__author">
+            <span className="username">{message.author.username}</span>
+          </div>
+          <div className="message__text">{message.text}</div>
+        </div>
       </div>
     );
   },

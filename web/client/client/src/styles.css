@@ -11,6 +11,10 @@ body {
   background: #ddd;
 }
 
+img {
+  display: block;
+}
+
 #root {
   height: 100%;
   max-width: 800px;
@@ -97,16 +101,6 @@ body {
   left: 0;
 }
 
-.message {
-  max-width: 28em;
-  margin: 0.75em 1em;
-  padding-left: 2em;
-}
-
-.message .text {
-  white-space: pre-wrap;
-}
-
 .new-message {
   flex: none;
   padding: 0.75em 1em 0.75em 3em;
@@ -187,4 +181,30 @@ textarea {
   100% {
     opacity: 0;
   }
+}
+
+.message {
+  max-width: 28em;
+  margin: 0.75em 1em;
+  padding-left: 2em;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.message__avatar {
+  flex: none;
+  padding-right: 0.75em;
+}
+
+.message__avatar img {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.message__body {
+  flex: auto;
+}
+
+.message__text {
+  white-space: pre-wrap;
 }
