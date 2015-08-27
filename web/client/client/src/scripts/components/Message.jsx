@@ -1,14 +1,20 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 
 const Message = React.createClass({
   propTypes: {
     message: PropTypes.object.isRequired,
+    sequential: PropTypes.bool.isRequired,
   },
 
   render() {
-    const { message } = this.props;
+    const { message, sequential } = this.props;
+    const classes = classNames({
+      'message': true,
+      'message--sequential': sequential,
+    });
     return (
-      <div className="message">
+      <div className={classes}>
         <div className="message__avatar">
           <img src={message.author.avatarUrl} />
         </div>

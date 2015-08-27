@@ -185,7 +185,7 @@ textarea {
 
 .message {
   max-width: 28em;
-  margin: 0.75em 1em;
+  margin: 0.5em 1em;
   padding-left: 2em;
   display: flex;
   flex-flow: row nowrap;
@@ -199,12 +199,27 @@ textarea {
 .message__avatar img {
   width: 40px;
   border-radius: 50%;
+  margin-bottom: -30%;
 }
 
 .message__body {
   flex: auto;
 }
 
+.message__author {
+  margin-bottom: 0.25em;
+}
+
 .message__text {
   white-space: pre-wrap;
+}
+
+.message--sequential .message__avatar img {
+  visibility: hidden;
+  height: 0;
+}
+
+.message--sequential .message__author {
+  visibility: hidden;
+  height: 0;
 }

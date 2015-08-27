@@ -22,9 +22,20 @@ const MessageList = React.createClass({
     return (
       <div className="messages" onScroll={this.handleScroll}>
         {messages.isLoading() && <Spinner />}
-        {messages.map(message => (
-          <Message key={message.id} message={message} />
-        )).reverse()}
+        {messages.map(x => x).reverse().reduce( // map to obtain a copy, which is mutated by reverse
+          ([previousAuthorId, result], message) => {
+            const sequential = message.author.id === previousAuthorId;
+            result.push(
+              <Message
+                key={message.id}
+                message={message}
+                sequential={sequential}
+              />
+            );
+            return [message.author.id, result]
+          },
+          [null, []],
+        )[1]}
       </div>
     );
   },
