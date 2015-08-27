@@ -18,7 +18,7 @@ export function loadConversations() {
     getPagination: state => state.pagination.conversations,
     condition: state => {
       return !state.pagination.conversations.isLoading
-              && (!state.pagination.conversations.isLoaded
+              && (!state.pagination.conversations.ids
                 || state.pagination.conversations.nextCursor);
     },
   };
@@ -54,7 +54,7 @@ export function loadMessages(conversationId) {
       const messagePagination = messagesByConversation[conversationId];
       return !messagePagination
               || (!messagePagination.isLoading
-                && (!messagePagination.isLoaded || messagePagination.nextCursor));
+                && (!messagePagination.ids || messagePagination.nextCursor));
     },
   };
 }

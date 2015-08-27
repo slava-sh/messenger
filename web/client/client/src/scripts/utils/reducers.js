@@ -40,9 +40,8 @@ export function createEntityReducer(name, handlers) {
 }
 
 export const initialPaginationState = {
-  ids: [],
+  ids: null,
   nextCursor: null,
-  isLoaded: false,
   isLoading: false,
 };
 
@@ -58,9 +57,8 @@ export function createPaginationReducer(types, handlers) {
     [SUCCESS]: (state, action) => {
       return {
         ...state,
-        ids: [...state.ids, ...stripPagination(action.response.result)],
+        ids: [...(state.ids || []), ...stripPagination(action.response.result)],
         nextCursor: getCursor(action.response.result),
-        isLoaded: true,
         isLoading: false,
       };
     },

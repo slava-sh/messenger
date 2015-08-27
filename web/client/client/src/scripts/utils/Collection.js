@@ -2,9 +2,8 @@ import { PropTypes } from 'react';
 import { initialPaginationState } from 'app/utils/reducers';
 
 const paginationShape = PropTypes.shape({
-  ids: PropTypes.array.isRequired,
+  ids: PropTypes.array,
   nextCursor: PropTypes.string,
-  isLoaded: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
 });
 
@@ -37,7 +36,7 @@ export class Collection {
   }
 
   isLoaded() {
-    return this.pagination.isLoaded; // TODO: use ids !== null instead
+    return Boolean(this.pagination.ids);
   }
 
   hasMore() {

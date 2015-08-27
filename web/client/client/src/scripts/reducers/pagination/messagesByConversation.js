@@ -28,7 +28,6 @@ const messagePagination = createPaginationReducer([
       ...state,
       ids: stripPagination(conversation.messages),
       nextCursor: getCursor(conversation.messages),
-      isLoaded: true,
     };
   },
 });

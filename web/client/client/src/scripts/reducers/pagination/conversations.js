@@ -7,11 +7,12 @@ const reducer = createPaginationReducer([
   ActionTypes.RECEIVE_CONVERSATIONS,
   ActionTypes.FAILURE_CONVERSATIONS,
 ], {
+
   RECEIVE_MESSAGE: (state, action) => {
     const { conversationId } = action.payload;
     return {
       ...state,
-      ids: moveItemToFront(state.ids, id => id === conversationId),
+      ids: moveItemToFront(state.ids || [], id => id === conversationId),
     };
   },
 });
