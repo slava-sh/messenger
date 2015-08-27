@@ -6,9 +6,14 @@ var SplitByPathPlugin = require('webpack-split-by-path');
 var postcss = require('gulp-postcss');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('autoprefixer-core');
+var del = require('del');
 
 var DEBUG = process.env.ENVIRONMENT === 'development';
 var BUILD_DIR = path.resolve(__dirname, 'build');
+
+gulp.task('clean', function() {
+  del(BUILD_DIR, { force: true });
+});
 
 gulp.task('scripts', function(cb) {
   webpack({
@@ -61,16 +66,17 @@ gulp.task('scripts', function(cb) {
     },
     devtool: DEBUG && 'inline-source-map'
   }, function(err, stats) {
-    if(err) throw new gutil.PluginError('webpack', err);
+    if(err) throw new gutil.PluginError('scripts', err);
     gutil.log('[webpack]', stats.toString({
-      // output options
+      colors: true,
+      chunks: false,
     }));
     cb();
   });
 });
 
 gulp.task('styles', function () {
-  return gulp.src('./src/*.css')
+  return gulp.src('src/*.css')
     .pipe(sourcemaps.init())
     .pipe(postcss([
       autoprefixer({
