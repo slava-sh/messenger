@@ -1,7 +1,12 @@
 import { findDOMNode } from 'react-dom';
 
+/*
+ * Usage:
+ * 1. Add the mixin.
+ * 2. Set onScoll={this.handleScroll} on the root element of the component.
+ * 3. Implement loadMore().
+ */
 const InfiniteList = ({ upward = false, threshold = 100 } = {}) => ({
-  // TODO: PropTypes
 
   componentDidMount() {
     this.lastScrollPosition = 0; // Not in the state to avoid re-rendering
