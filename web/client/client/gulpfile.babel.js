@@ -98,7 +98,7 @@ gulp.task('build:styles', () => {
     .pipe(gulp.dest(paths.build));
 });
 
-gulp.task('watch:styles', () => {
+gulp.task('watch:styles', ['build:styles'], () => {
   gulp.watch(paths.styles, ['build:styles']);
 });
 
