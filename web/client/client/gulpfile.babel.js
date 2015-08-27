@@ -1,5 +1,4 @@
 import gulp from 'gulp';
-import gutil from 'gulp-util';
 import path from 'path';
 import webpack from 'webpack';
 import SplitByPathPlugin from 'webpack-split-by-path';
@@ -10,7 +9,11 @@ import autoprefixer from 'autoprefixer-core';
 import del from 'del';
 
 const DEBUG = process.env.ENVIRONMENT === 'development';
-const BUILD_DIR = path.resolve(__dirname, 'build');
+
+const paths = {
+  styles: 'src/*.css',
+  build: path.resolve(__dirname, 'build'),
+};
 
 const webpackConfig = {
   context: __dirname,
@@ -19,7 +22,7 @@ const webpackConfig = {
     extensions: ['', '.js', '.jsx'],
     alias: {
       app: 'scripts',
-    }
+    },
   },
   externals: {
     primus: 'Primus',
@@ -37,7 +40,7 @@ const webpackConfig = {
       {
         path: path.resolve(__dirname, 'node_modules/'),
         name: 'vendor',
-      }
+      },
     ]),
     new webpack.DefinePlugin({
       DEBUG: JSON.stringify(DEBUG),
@@ -48,8 +51,8 @@ const webpackConfig = {
     !DEBUG && new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
-      }
-    })
+      },
+    }),
   ].filter(Boolean),
   module: {
     loaders: [
@@ -57,28 +60,31 @@ const webpackConfig = {
         test: /\.jsx?$/,
         loader: 'babel?stage=1',
         exclude: /node_modules/,
-      }
-    ]
+      },
+    ],
   },
   devtool: DEBUG && 'inline-source-map',
 };
 
 gulp.task('clean', cb => {
-  del(BUILD_DIR, cb);
+  del(paths.build, cb);
 });
 
-gulp.task('scripts', () => {
-  return gulp.src('src/scripts/index.jsx')
+function scriptsTask(watch) {
+  return () => gulp.src([])
     .pipe(webpackStream({
       ...webpackConfig,
       colors: true,
-      watch: true,
+      watch: watch,
     }))
-    .pipe(gulp.dest(BUILD_DIR));
-});
+    .pipe(gulp.dest(paths.build));
+}
+
+gulp.task('scripts', scriptsTask(false));
+gulp.task('watch:scripts', scriptsTask(true));
 
 gulp.task('styles', () => {
-  return gulp.src('src/*.css')
+  return gulp.src(paths.styles)
     .pipe(sourcemaps.init())
     .pipe(postcss([
       autoprefixer({
@@ -86,7 +92,12 @@ gulp.task('styles', () => {
       }),
     ]))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(BUILD_DIR));
+    .pipe(gulp.dest(paths.build));
 });
 
+gulp.task('watch:styles', () => {
+  gulp.watch(paths.styles, ['styles']);
+});
+
+gulp.task('watch', ['watch:scripts', 'watch:styles']);
 gulp.task('default', ['scripts', 'styles']);
