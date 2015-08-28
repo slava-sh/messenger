@@ -44,12 +44,19 @@ class MessageSerializer(BaseModelSerializer):
     class Pagination(BasePagination):
         ordering = '-pk' # Equivalent to paginating by creation time
 
+
 class UserSerializer(BaseModelSerializer):
     avatar_url = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = ['id', 'username', 'avatar_url']
+
+    def build_standard_field(self, field_name, model_field):
+        field_class, field_kwargs = super().build_standard_field(field_name, model_field)
+        if field_name == 'username':
+            field_kwargs['allow_null'] = False
+        return field_class, field_kwargs
 
     def get_avatar_url(self, obj):
         return gravatar_url(obj.email)

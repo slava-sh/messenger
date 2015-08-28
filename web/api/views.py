@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status, pagination
 from rest_framework.response import Response
 from old_chat.models import Conversation
-from accounts.models import LoginCode
-from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer, CreateConversationSerializer, CreateLoginCodeSerializer
+from accounts.models import User, LoginCode
+from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer, CreateConversationSerializer, CreateLoginCodeSerializer, UserSerializer
 from .tasks import notify_users
 
 
@@ -77,6 +77,16 @@ class MessageViewSet(viewsets.ViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         # TODO: add Location header
+
+
+class UserViewSet(viewsets.ViewSet):
+
+    def partial_update(self, request, pk):
+        instance = get_object_or_404(User, pk=pk)
+        serializer = UserSerializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 
 class SessionViewSet(viewsets.ViewSet):

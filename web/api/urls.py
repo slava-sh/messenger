@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from .views import ConversationViewSet, MessageViewSet, SessionViewSet
+from .views import ConversationViewSet, MessageViewSet, UserViewSet, SessionViewSet
 
 conversations = ConversationViewSet.as_view({
     'get': 'list',
@@ -19,6 +19,10 @@ messages = MessageViewSet.as_view({
     'post': 'create',
 })
 
+users = UserViewSet.as_view({
+    'patch': 'partial_update',
+})
+
 sessions = SessionViewSet.as_view({
     'post': 'send_code',
 })
@@ -28,5 +32,6 @@ urlpatterns = [
     url(r'^conversations/(?P<pk>[0-9]+)$', conversation, name='conversation'),
     url(r'^conversations/(?P<pk>[0-9]+)/typing$', typing, name='typing'), # TODO: replace with PUT or PATCH to conversation
     url(r'^conversations/(?P<pk>[0-9]+)/messages$', messages, name='messages'),
+    url(r'^users/(?P<pk>[0-9]+)$', users, name='users'),
     url(r'^sessions$', sessions, name='sessions'),
 ]
