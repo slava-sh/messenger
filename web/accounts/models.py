@@ -15,6 +15,7 @@ class User(PermissionsMixin, models.Model):
         _('username'),
         max_length=30,
         unique=True,
+        null=True,
         validators=[
             validators.RegexValidator(r'^[a-zA-Z0-9_-]+$'),
         ],
@@ -50,7 +51,7 @@ class User(PermissionsMixin, models.Model):
         db_table = 'auth_user'
 
     def __str__(self):
-        return self.username
+        return '@{}'.format(self.username or self.pk)
 
     def get_username(self):
         return self.username
