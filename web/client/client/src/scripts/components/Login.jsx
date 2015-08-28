@@ -25,6 +25,7 @@ const Login = React.createClass({
     return (
       <form onSubmit={this.onSubmit}>
         <label htmlFor="email">Email:</label>
+        {' '}
         <input
           id="email"
           type="email"
@@ -32,6 +33,8 @@ const Login = React.createClass({
           autofocus
           ref={node => this.email = node}
         />
+        {' '}
+        <input type="submit" value="OK" />
       </form>
     );
   },
@@ -40,8 +43,8 @@ const Login = React.createClass({
     const { email } = this.state;
     return (
       <div>
-        Check your email.
-        We have sent you a login link.
+        <h1>Check your email.</h1>
+        <p>We have sent you a login link.</p>
       </div>
     );
   },

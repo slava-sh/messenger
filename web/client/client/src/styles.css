@@ -17,16 +17,14 @@ img {
 
 #root {
   height: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  background: #fff;
-  border: 4px solid #000;
-  display: flex;
-  flex-flow: column nowrap;
 }
 
 .content {
   height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border: 4px solid #000;
   display: flex;
   flex-flow: row nowrap;
 }
@@ -229,4 +227,18 @@ textarea {
 
 .message--sequential .message__author {
   display: none;
+}
+
+.content--modal {
+  height: initial;
+  background: initial;
+  border: none;
+}
+
+.content--modal > main {
+  background: #fff;
+  border: 4px solid #000;
+  max-width: 20em;
+  margin: 10em auto 2em;
+  padding: 1em;
 }

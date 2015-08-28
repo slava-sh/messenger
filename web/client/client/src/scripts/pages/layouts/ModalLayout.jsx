@@ -7,7 +7,7 @@ const ModalLayout = React.createClass({
 
   render() {
     return (
-      <div className="content">
+      <div className="content content--modal">
         <main>{this.props.children}</main>
       </div>
     );
