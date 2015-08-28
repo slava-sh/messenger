@@ -14,13 +14,14 @@ const DEBUG = process.env.ENVIRONMENT === 'development';
 
 const paths = {
   styles: 'src/*.css',
+  src: path.resolve(__dirname, 'src'),
   build: path.resolve(__dirname, 'build'),
+  node_modules: path.resolve(__dirname, 'node_modules'),
 };
 
 const webpackConfig = {
-  context: __dirname,
   resolve: {
-    root: path.resolve(__dirname, 'src'),
+    root: paths.src,
     extensions: ['', '.js', '.jsx'],
     alias: {
       app: 'scripts',
@@ -33,14 +34,14 @@ const webpackConfig = {
     app: 'app',
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: paths.build,
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
   plugins: [
     new SplitByPathPlugin([
       {
-        path: path.resolve(__dirname, 'node_modules/'),
+        path: paths.node_modules,
         name: 'vendor',
       },
     ]),
@@ -61,7 +62,7 @@ const webpackConfig = {
       {
         test: /\.jsx?$/,
         loader: 'babel?stage=1',
-        exclude: /node_modules/,
+        include: paths.src,
       },
     ],
   },
