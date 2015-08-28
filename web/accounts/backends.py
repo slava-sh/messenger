@@ -22,8 +22,10 @@ class EmailBackend(ModelBackend):
             return None
         code.delete()
         try:
-            user = User.objects.get(email=code.email, is_active=True)
+            user = User.objects.get(email=code.email)
         except User.DoesNotExist:
+            user = User.objects.create(email=code.email)
+        if not user.is_active:
             return None
         return user
 
