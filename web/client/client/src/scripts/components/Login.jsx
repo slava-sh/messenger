@@ -7,30 +7,50 @@ const Login = React.createClass({
 
   getInitialState() {
     return {
-      emailSent: false,
+      codeSent: false,
     };
   },
 
   onSubmit(event) {
     event.preventDefault();
-    this.props.sendCode(this.email.value);
-    this.setState({ emailSent: true });
+    const email = this.email.value;
+    this.props.sendCode(email);
+    this.setState({
+      codeSent: true,
+      email,
+    });
+  },
+
+  renderForm() {
+    return (
+      <form onSubmit={this.onSubmit}>
+        <label htmlFor="email">Email:</label>
+        <input
+          id="email"
+          type="email"
+          required
+          autofocus
+          ref={node => this.email = node}
+        />
+      </form>
+    );
+  },
+
+  renderSent() {
+    const { email } = this.state;
+    return (
+      <div>
+        Check your email.
+        We have sent you a login link.
+      </div>
+    );
   },
 
   render() {
-    const { emailSent } = this.state;
+    const { codeSent } = this.state;
     return (
       <div className="login">
-        <form onSubmit={this.onSubmit}>
-          Email:
-          <input
-            type="email"
-            disabled={emailSent}
-            required
-            autofocus
-            ref={node => this.email = node}
-          />
-        </form>
+        {codeSent ? this.renderSent() : this.renderForm()}
       </div>
     );
   },
