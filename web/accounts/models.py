@@ -3,6 +3,7 @@ from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.core import validators
 from django.core.exceptions import ImproperlyConfigured
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 from django.utils.crypto import get_random_string
@@ -89,16 +90,19 @@ class LoginCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "%s %s" % (self.email, self.created_at)
+        return self.code
 
     @classmethod
     def generate_code(cls):
         return get_random_string(cls._meta.get_field('code').max_length)
 
-    def send(self):
+    def get_absolute_url(self):
+        return reverse('accounts:login', args=[self.code])
+
+    def send(self, **kwargs):
         for backend in get_backends():
             if hasattr(backend, 'send_login_code'):
-                backend.send_login_code(self)
+                backend.send_login_code(self, **kwargs)
                 break
         else:
             raise ImproperlyConfigured(

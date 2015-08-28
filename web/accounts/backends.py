@@ -27,9 +27,10 @@ class EmailBackend(ModelBackend):
             return None
         return user
 
-    def send_login_code(self, login_code):
+    def send_login_code(self, login_code, build_absolute_uri):
         subject = _('Login Code')
         message = render_to_string('accounts/email/login_code.txt', {
             'code': login_code.code,
+            'url': build_absolute_uri(login_code.get_absolute_url()),
         })
         send_mail(subject, message, None, [login_code.email])

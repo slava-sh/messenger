@@ -85,5 +85,5 @@ class SessionViewSet(viewsets.ViewSet):
         serializer = CreateLoginCodeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         code = serializer.save()
-        code.send()
+        code.send(build_absolute_uri=request.build_absolute_uri)
         return Response({}, status=status.HTTP_201_CREATED)
