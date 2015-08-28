@@ -15,10 +15,12 @@
   <div id="root"></div>
   <script>
     initialize({
-      user: {
-        id: '{{ user.pk|escapejs }}',
-        name: '{{ user|escapejs }}',
-      },
+      {% if user.is_authenticated %}
+        user: {
+          id: '{{ user.pk|escapejs }}',
+          name: '{{ user|escapejs }}',
+        },
+      {% endif %}
     }, '{{ realtime_url|escapejs }}');
   </script>
 </body>
