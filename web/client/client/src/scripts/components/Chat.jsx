@@ -39,24 +39,23 @@ const Chat = React.createClass({
       return <Spinner smooth />;
     }
     return (
-      <DocumentTitle title={conversation.name}>
-        <div className="chat">
-          <div className="header">
-            <span className="username">{conversation.name}</span>
-            <a href="#"><i className="fa fa-gear pull-right"></i></a>
-          </div>
-          <MessageList
-            messages={messages}
-            typingUsers={typingUsers}
-            ref={node => this.messageList = node}
-          />
-          <MessageForm
-            user={user}
-            sendMessage={sendMessage}
-            sendTyping={sendTyping}
-          />
+      <div className="chat">
+        <DocumentTitle title={conversation.name} />
+        <div className="header">
+          <span className="username">{conversation.name}</span>
+          <a href="#"><i className="fa fa-gear pull-right"></i></a>
         </div>
-      </DocumentTitle>
+        <MessageList
+          messages={messages}
+          typingUsers={typingUsers}
+          ref={node => this.messageList = node}
+        />
+        <MessageForm
+          user={user}
+          sendMessage={sendMessage}
+          sendTyping={sendTyping}
+        />
+      </div>
     );
   },
 });
