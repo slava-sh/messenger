@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import DefaultLayout from 'app/pages/DefaultLayout';
+import DefaultLayout from 'app/pages/layouts/DefaultLayout';
 import ChatContainer from 'app/containers/ChatContainer';
 
 const ConversationPage = React.createClass({

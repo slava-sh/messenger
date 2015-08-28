@@ -1,6 +1,6 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
-import ModalLayout from 'app/pages/ModalLayout';
+import ModalLayout from 'app/pages/layouts/ModalLayout';
 
 const LoginPage = React.createClass({
   render() {
