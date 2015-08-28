@@ -1,4 +1,5 @@
 import os
+import datetime
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -18,7 +19,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'storages',
     'rest_framework',
-    'nopassword',
     'accounts',
     'old_chat',
     'api',
@@ -30,13 +30,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware', # TODO: delete because we don't have session_auth_hash
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
 
-AUTHENTICATION_BACKENDS = ['nopassword.backends.email.EmailBackend']
+AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -88,3 +88,6 @@ CELERY_ACCEPT_CONTENT = ['json']
 
 REALTIME_PORT = 3000
 REALTIME_URL = 'http://{}:{}/primus'.format(HOSTNAME, REALTIME_PORT)
+
+
+LOGIN_CODE_EXPIRES = datetime.timedelta(days=1)

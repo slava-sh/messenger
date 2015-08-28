@@ -3,6 +3,7 @@ from django.core import validators
 from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
+from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -77,3 +78,17 @@ class User(PermissionsMixin, models.Model):
 
     def has_usable_password(self):
         return False
+
+
+class LoginCode(models.Model):
+    code = models.CharField(_('code'), max_length=20, unique=True,
+                            default=lambda: LoginCode.generate_code())
+    email = models.EmailField(_('email address'), max_length=63)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "%s %s" % (self.email, self.created_at)
+
+    @classmethod
+    def generate_code(cls):
+        return get_random_string(cls._meta.get_field('code').max_length)
