@@ -35,3 +35,7 @@ export function sendMessage({ conversationId, text }) {
 export function sendCode(email) {
   return ['POST', `sessions`, null, { email }];
 }
+
+export function updateProfile({ userId, data }) {
+  return ['PATCH', `users/${userId}`, user, data];
+}

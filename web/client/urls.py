@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^c/$', views.home),
     url(r'^c/(?P<pk>[0-9]+)/$', views.home),
     url(r'^login/$', views.home),
+    url(r'^register/$', views.home),
 ]

@@ -3,12 +3,17 @@ import { Router, Route } from 'react-router';
 import HomePage from 'app/pages/HomePage';
 import ConversationPage from 'app/pages/ConversationPage';
 import LoginPage from 'app/pages/LoginPage';
+import RegistrationPage from 'app/pages/RegistrationPage';
 
 export function createAuthHandler(store) {
   return (nextState, transition) => {
     const { user } = store.getState();
-    if (!user.id) {
-      transition.to('/login/');
+    if (!user.username) {
+      if (!user.id) {
+        transition.to('/login/');
+      } else {
+        transition.to('/register/');
+      }
     }
   };
 }
@@ -35,6 +40,7 @@ const App = React.createClass({
             <Route path="/c/:id/" component={ConversationPage} />
           </Route>
           <Route path="/login/" component={LoginPage} />
+          <Route path="/register/" component={RegistrationPage} />
         </Route>
       </Router>
     );

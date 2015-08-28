@@ -11,3 +11,14 @@ export function sendCode(email) {
     callApi: api.sendCode(email),
   };
 }
+
+export function updateProfile({ userId, data }) {
+  return {
+    types: [
+      ActionTypes.UPDATE_PROFILE,
+      ActionTypes.UPDATE_PROFILE_SUCCESS,
+      ActionTypes.UPDATE_PROFILE_FAILURE,
+    ],
+    callApi: api.updateProfile({ userId, data }),
+  };
+}
