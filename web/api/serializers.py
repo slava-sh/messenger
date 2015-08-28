@@ -1,7 +1,7 @@
 from rest_framework import serializers, pagination
 from old_chat.models import Conversation, Message
 from django.utils import timezone
-from accounts.models import User
+from accounts.models import User, LoginCode
 from .fields import StringIntegerField, StringPrimaryKeyRelatedField
 from .utils import gravatar_url
 
@@ -82,3 +82,8 @@ class ConversationVerboseSerializer(BaseModelSerializer):
         queryset = obj.messages.all()
         queryset = queryset.filter(time__gt=timezone.now()) # queryset empty TODO: delete this
         return first_page(queryset, MessageSerializer)
+
+class CreateLoginCodeSerializer(BaseModelSerializer):
+    class Meta:
+        model = LoginCode
+        fields = ['email']
