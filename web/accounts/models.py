@@ -11,7 +11,6 @@ class User(PermissionsMixin, models.Model):
         _('username'),
         max_length=30,
         unique=True,
-        db_index=True,
         validators=[
             validators.RegexValidator(r'^[a-zA-Z0-9_-]+$'),
         ],
@@ -20,8 +19,7 @@ class User(PermissionsMixin, models.Model):
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     # TODO: have lowercase emails
-    email = models.EmailField(_('email address'), max_length=63,
-                              unique=True, db_index=True)
+    email = models.EmailField(_('email address'), max_length=63, unique=True)
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
