@@ -1,8 +1,23 @@
 import React, { PropTypes } from 'react';
 
+function triggerComplete(props) {
+  const { user, onComplete } = props;
+  if (user.username) {
+    onComplete();
+  }
+}
+
 const Registration = React.createClass({
   propTypes: {
     updateProfile: PropTypes.func.isRequired,
+  },
+
+  componentWillMount() {
+    triggerComplete(this.props);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    triggerComplete(nextProps);
   },
 
   onSubmit(event) {

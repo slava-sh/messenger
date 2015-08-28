@@ -18,7 +18,7 @@
       {% if user.is_authenticated %}
         user: {
           id: '{{ user.pk|escapejs }}',
-          name: '{{ user.username|default:""|escapejs }}',
+          username: '{{ user.username|default:""|escapejs }}',
         },
       {% endif %}
     }, '{{ realtime_url|escapejs }}');

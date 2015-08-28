@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { transitionTo } from 'redux-react-router';
 import { updateProfile } from 'app/actions/auth';
 import Registration from 'app/components/Registration';
 
@@ -16,11 +17,12 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     updateProfile: data => dispatchProps.updateProfile({ userId, data }),
+    onComplete: () => dispatchProps.transitionTo('/'),
   };
 }
 
 export default connect(
   mapStateToProps,
-  { updateProfile },
+  { updateProfile, transitionTo },
   mergeProps,
 )(Registration);

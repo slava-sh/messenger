@@ -31,7 +31,7 @@ const MessageForm = React.createClass({
     return (
       <div className="new-message">
         <form onSubmit={this.onSubmit}>
-          <div className="username">{user.name}</div>
+          <div className="username">{user.username}</div>
           <div className="text">
             <textarea
               ref={node => this.textarea = node}

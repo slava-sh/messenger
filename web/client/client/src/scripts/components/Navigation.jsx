@@ -22,7 +22,7 @@ const Navigation = React.createClass({
     return (
       <div className="navigation">
         <div className="header">
-          <span className="username">{user.name}</span>
+          <span className="username">{user.username}</span>
           <Link to="/c/new/" router={router}><i className="fa fa-plus pull-left" /></Link>
           <a href="/accounts/logout/"><i className="fa fa-sign-out pull-right" /></a>
         </div>

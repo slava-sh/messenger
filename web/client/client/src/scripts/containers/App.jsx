@@ -8,12 +8,10 @@ import RegistrationPage from 'app/pages/RegistrationPage';
 export function createAuthHandler(store) {
   return (nextState, transition) => {
     const { user } = store.getState();
-    if (!user.username) {
-      if (!user.id) {
+    if (!user.id) {
         transition.to('/login/');
-      } else {
-        transition.to('/register/');
-      }
+    } else if (!user.username) {
+      transition.to('/register/');
     }
   };
 }
