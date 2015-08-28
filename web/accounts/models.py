@@ -83,18 +83,18 @@ class User(PermissionsMixin, models.Model):
         return False
 
 
+def generate_code():
+    return get_random_string(LoginCode._meta.get_field('code').max_length)
+
+
 class LoginCode(models.Model):
     code = models.CharField(_('code'), max_length=20, unique=True,
-                            default=lambda: LoginCode.generate_code())
+                            default=generate_code)
     email = models.EmailField(_('email address'), max_length=63)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.code
-
-    @classmethod
-    def generate_code(cls):
-        return get_random_string(cls._meta.get_field('code').max_length)
 
     def get_absolute_url(self):
         return reverse('accounts:login', args=[self.code])
