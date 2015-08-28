@@ -1,5 +1,7 @@
+from django.contrib.auth import get_backends
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.core import validators
+from django.core.exceptions import ImproperlyConfigured
 from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
@@ -92,3 +94,14 @@ class LoginCode(models.Model):
     @classmethod
     def generate_code(cls):
         return get_random_string(cls._meta.get_field('code').max_length)
+
+    def send(self):
+        for backend in get_backends():
+            if hasattr(backend, 'send_login_code'):
+                backend.send_login_code(self)
+                break
+        else:
+            raise ImproperlyConfigured(
+                'No authentication backends capable of sending login codes'
+                'found.'
+            )

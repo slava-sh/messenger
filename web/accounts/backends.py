@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 from django.core.exceptions import FieldError
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -26,11 +27,9 @@ class EmailBackend(ModelBackend):
             return None
         return user
 
-    def send_code(self, email):
-        code = LoginCode(email=email)
+    def send_login_code(self, login_code):
         subject = _('Login Code')
         message = render_to_string('accounts/email/login_code.txt', {
-            'code': code.code,
+            'code': login_code.code,
         })
-        send_mail(subject, message, None, [email])
-        return code
+        send_mail(subject, message, None, [login_code.email])
