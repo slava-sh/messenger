@@ -19,7 +19,7 @@ export function createPushClient(primusUrl, store) {
   primus.on('open', () => {
     primus.write({
       type: ActionTypes.REGISTER,
-      payload: { user_id: store.getState().user.id }, // TODO: use session cookie instead
+      payload: { user_id: store.getState().userId }, // TODO: use session token instead
     });
   });
 

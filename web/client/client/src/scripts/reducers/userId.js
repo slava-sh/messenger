@@ -1,6 +1,6 @@
 import { createReducer } from 'app/utils/reducers';
 
-const initialState = {};
+const initialState = null;
 
 const reducer = createReducer(initialState);
 

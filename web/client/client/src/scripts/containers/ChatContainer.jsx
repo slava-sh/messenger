@@ -6,7 +6,7 @@ import Chat from 'app/components/Chat';
 
 function mapStateToProps(state, ownProps) {
   const {
-    user,
+    userId,
     entities,
     pagination: { messagesByConversation },
   } = state;
@@ -16,7 +16,7 @@ function mapStateToProps(state, ownProps) {
   const typingUserIds = (conversation || {}).typingUserIds || [];
   const typingUsers = typingUserIds.map(id => users[id]).filter(Boolean);
   return {
-    user,
+    user: entities.users[userId],
     conversation,
     typingUsers,
     users,
