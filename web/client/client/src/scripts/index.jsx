@@ -1,5 +1,5 @@
 import 'babel-core/polyfill';
-import React from 'react'; // eslint-disable-line
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { history } from 'react-router/lib/BrowserHistory';
 import { reduxRouteComponent } from 'redux-react-router';

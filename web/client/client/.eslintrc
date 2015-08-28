@@ -3,3 +3,4 @@ root: true
 extends: airbnb
 rules:
   no-shadow: 0
+  new-cap: 0

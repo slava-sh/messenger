@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
 import DocumentTitle from 'react-document-title';
 import { collectionShape } from 'app/utils/Collection';
 import MessageList from 'app/components/MessageList';

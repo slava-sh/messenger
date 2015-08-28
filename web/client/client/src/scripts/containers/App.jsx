@@ -4,7 +4,7 @@ import HomePage from 'app/pages/HomePage';
 import ConversationPage from 'app/pages/ConversationPage';
 import LoginPage from 'app/pages/LoginPage';
 
-export function createAuthHandler(state) {
+export function createAuthHandler(store) {
   return (nextState, transition) => {
     const { user } = store.getState();
     if (!user.id) {

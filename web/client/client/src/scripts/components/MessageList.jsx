@@ -34,7 +34,7 @@ const MessageList = React.createClass({
                 sequential={sequential}
               />
             );
-            return [message.author.id, result]
+            return [message.author.id, result];
           },
           [null, []],
         )[1]}
