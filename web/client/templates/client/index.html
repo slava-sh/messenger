@@ -14,7 +14,7 @@
 <body>
   <div id="root"></div>
   <script>
-    initialize({
+    window.app = initialize({
       {% if user.is_authenticated %}
         user: {
           id: '{{ user.pk|escapejs }}',

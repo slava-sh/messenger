@@ -8,8 +8,8 @@ import createPushClient from 'app/utils/createPushClient';
 import App, { createAuthHandler } from 'app/containers/App';
 
 function initialize(state, primusUrl) {
-  window.store = createStore(state);
-  window.pushClient = createPushClient(primusUrl, store);
+  const store = createStore(state);
+  const pushClient = createPushClient(primusUrl, store);
   const ReduxRouteComponent = reduxRouteComponent(store);
   const requireAuth = createAuthHandler(store);
   const app = (
@@ -20,6 +20,10 @@ function initialize(state, primusUrl) {
     />
   );
   ReactDOM.render(app, document.getElementById('root'));
+  return {
+    store,
+    pushClient,
+  };
 }
 
 window.initialize = initialize;
