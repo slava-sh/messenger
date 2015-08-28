@@ -19,3 +19,7 @@ export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const REGISTER = 'REGISTER';
 export const RECEIVE_TYPING = 'RECEIVE_TYPING';
 export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
+
+export const SEND_CODE = 'SEND_CODE';
+export const SEND_CODE_SUCCESS = 'SEND_CODE_SUCCESS';
+export const SEND_CODE_FAILURE = 'SEND_CODE_FAILURE';

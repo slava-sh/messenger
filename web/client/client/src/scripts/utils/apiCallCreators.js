@@ -31,3 +31,7 @@ export function sendTyping(conversationId) {
 export function sendMessage({ conversationId, text }) {
   return ['POST', `conversations/${conversationId}/messages`, message, { text }];
 }
+
+export function sendCode(email) {
+  return ['POST', `sessions`, null, { email }];
+}
