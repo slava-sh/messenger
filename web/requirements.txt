@@ -1,6 +1,5 @@
 Django
 psycopg2
-django-nopassword
 celery
 gunicorn
 djangorestframework
