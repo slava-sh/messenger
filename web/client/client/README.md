@@ -4,7 +4,7 @@ npm install
 gulp watch
 ```
 
-### Production build
+### Production
 ```sh
 ENVIRONMENT=production gulp
 ```
