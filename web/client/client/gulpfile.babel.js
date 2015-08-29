@@ -1,5 +1,6 @@
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
+import runSequence from 'run-sequence';
 import minifycss from 'gulp-minify-css';
 import path from 'path';
 import webpack from 'webpack';
@@ -105,4 +106,4 @@ gulp.task('watch:styles', ['build:styles'], () => {
 
 gulp.task('build', ['build:scripts', 'build:styles']);
 gulp.task('watch', ['watch:scripts', 'watch:styles']);
-gulp.task('default', ['clean', 'build']);
+gulp.task('default', cb => runSequence('clean', 'build', cb));
