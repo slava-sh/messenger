@@ -5,7 +5,7 @@ web:
   links:
     - db
     - queue
-  env_file: development.env
+  env_file: ./development.env
   volumes:
     - ../web:/app
   command: python manage.py runserver 0.0.0.0:80
@@ -14,20 +14,20 @@ worker:
   links:
     - db
     - queue
-  env_file: development.env
+  env_file: ./development.env
   volumes:
     - ../web:/app
   command: celery -A project worker -l info
 realtime:
-  build: ../realtime
+  build: ./realtime
   ports:
     - "3000:3000"
   links:
     - queue
-  env_file: development.env
+  env_file: ./development.env
 db:
   image: postgres
-  env_file: development.env
+  env_file: ./development.env
 queue:
   image: rabbitmq
-  env_file: development.env
+  env_file: ./development.env

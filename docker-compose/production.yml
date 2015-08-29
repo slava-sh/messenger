@@ -5,13 +5,13 @@ web:
   links:
     - db
     - queue
-  env_file: production.env
+  env_file: ./production.env
 worker:
   build: ../web
   links:
     - db
     - queue
-  env_file: production.env
+  env_file: ./production.env
   command: celery -A project worker -l info
 realtime:
   build: ../realtime
@@ -19,10 +19,10 @@ realtime:
     - "3000:3000"
   links:
     - queue
-  env_file: production.env
+  env_file: ./production.env
 db:
   image: postgres
-  env_file: production.env
+  env_file: ./production.env
 queue:
   image: rabbitmq
-  env_file: production.env
+  env_file: ./production.env
