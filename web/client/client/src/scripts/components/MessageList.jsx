@@ -24,6 +24,7 @@ const MessageList = React.createClass({
     return (
       <div className="messages" onScroll={this.handleScroll}>
         {messages.isLoading() && <Spinner />}
+        <div className="messages__spacer" />
         {messages.map(x => x).reverse().reduce( // map to obtain a copy, which is mutated by reverse
           ([previousAuthorId, result], message) => {
             const sequential = message.author.id === previousAuthorId;

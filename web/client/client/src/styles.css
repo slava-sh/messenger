@@ -102,6 +102,16 @@ img {
 .messages {
   padding-top: 1em;
   padding-bottom: 0.25em;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.messages > * {
+  flex: none;
+}
+
+.messages > .messages__spacer {
+  flex: auto;
 }
 
 .new-message {
