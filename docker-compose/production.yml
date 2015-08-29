@@ -6,6 +6,13 @@ web:
     - db
     - queue
   env_file: production.env
+worker:
+  build: ../web
+  links:
+    - db
+    - queue
+  env_file: production.env
+  command: celery -A project worker -l info
 realtime:
   build: ../realtime
   ports:

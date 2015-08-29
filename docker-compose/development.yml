@@ -9,6 +9,15 @@ web:
   volumes:
     - ../web:/app
   command: python manage.py runserver 0.0.0.0:80
+worker:
+  build: ../web
+  links:
+    - db
+    - queue
+  env_file: development.env
+  volumes:
+    - ../web:/app
+  command: celery -A project worker -l info
 realtime:
   build: ../realtime
   ports:
