@@ -19,7 +19,7 @@ worker:
     - ../web:/app
   command: celery -A project worker -l info
 realtime:
-  build: ./realtime
+  build: ../realtime
   ports:
     - "3000:3000"
   links:
