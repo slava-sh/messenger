@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .forms import UserForm
-from .models import User
+from . import models
 
 
-@admin.register(User)
+@admin.register(models.User)
 class UserAdmin(BaseUserAdmin):
     fieldsets = [
         [None, {'fields': ['username', 'email']}],
@@ -22,3 +22,8 @@ class UserAdmin(BaseUserAdmin):
     ]
     form = UserForm
     add_form = UserForm
+
+
+@admin.register(models.LoginCode)
+class LoginCodeAdmin(admin.ModelAdmin):
+    list_display = ['created_at', 'email', 'code']
