@@ -10,9 +10,11 @@ const reducer = createPaginationReducer([
 
   RECEIVE_MESSAGE: (state, action) => {
     const { conversationId } = action.payload;
+    const others = (state.ids || []).filter(id => id !== conversationId);
+    const ids = [conversationId, ...others];
     return {
       ...state,
-      ids: moveItemToFront(state.ids || [], id => id === conversationId),
+      ids,
     };
   },
 });

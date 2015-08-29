@@ -112,7 +112,7 @@ export function sendMessage({ conversationId, text }) {
 }
 
 export function receiveMessage({ conversationId, message }) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(stopTyping({ conversationId, userId: message.author }));
     dispatch({
       type: ActionTypes.RECEIVE_MESSAGE,
@@ -121,5 +121,11 @@ export function receiveMessage({ conversationId, message }) {
       // TODO: better name
       response: normalize(camelizeKeys(message), api.message),
     });
+
+    const { entities: conversations } = getState();
+    if (!conversations[conversationId]) {
+      // TODO: call this unconditionally, but supply required fields
+      dispatch(loadConversation(conversationId));
+    }
   };
 }

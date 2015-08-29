@@ -8,15 +8,3 @@ export function intersperse(items, separator) {
     return acc.concat([separator, item]);
   }, [items[0]]);
 }
-
-export function moveItemToFront(items, predicate) {
-  const index = findIndex(items, predicate);
-  if (index === -1) {
-    return items;
-  }
-  return [
-    items[index],
-    ...items.slice(0, index),
-    ...items.slice(index + 1),
-  ];
-}

@@ -28,7 +28,7 @@ export class Collection {
     if (!this.pagination.ids) {
       return [];
     }
-    return this.pagination.ids.map(id => fn(this._mapItem(this.entities[id])));
+    return this.pagination.ids.map(id => this._mapItem(this.entities[id])).filter(x => x != null).map(fn);
   }
 
   isLoading() {
