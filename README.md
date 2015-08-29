@@ -4,6 +4,7 @@ export COMPOSE_FILE=docker-compose/development.yml
 export COMPOSE_PROJECT_NAME=chat
 docker-compose build
 docker-compose up -d
+docker-compose ps
 ```
 
 ### Upload assets to S3
