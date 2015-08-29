@@ -30,7 +30,7 @@ const Login = React.createClass({
           id="email"
           type="email"
           required
-          autofocus
+          autoFocus
           ref={node => this.email = node}
         />
         {' '}
@@ -40,7 +40,6 @@ const Login = React.createClass({
   },
 
   renderSent() {
-    const { email } = this.state;
     return (
       <div>
         <h1>Check your email.</h1>

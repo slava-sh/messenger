@@ -9,7 +9,7 @@ export function createAuthHandler(store) {
   return (nextState, transition) => {
     const { userId, entities: { users } } = store.getState();
     if (!userId) {
-        transition.to('/login/');
+      transition.to('/login/');
     } else if (!users[userId].username) {
       transition.to('/register/');
     }

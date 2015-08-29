@@ -36,7 +36,7 @@ const Registration = React.createClass({
             id="username"
             type="text"
             required
-            autofocus
+            autoFocus
             ref={node => this.username = node}
           />
           {' '}
