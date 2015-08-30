@@ -9,6 +9,7 @@ html {
 body {
   height: 100%;
   background: #ddd;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 img {
@@ -251,4 +252,9 @@ textarea {
   max-width: 20em;
   margin: 10em auto 2em;
   padding: 1em;
+}
+
+.content--modal h1 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
 }
