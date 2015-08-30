@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { transitionTo } from 'redux-react-router';
 import { createConversation } from 'app/actions/conversation';
-import ConversationCreation from 'app/components/ConversationCreation';
+import NewConversation from 'app/components/NewConversation';
 
 function mapStateToProps(state) {
   const { newConversation } = state;
@@ -22,4 +22,4 @@ export default connect(
   mapStateToProps,
   { createConversation, transitionTo },
   mergeProps,
-)(ConversationCreation);
+)(NewConversation);

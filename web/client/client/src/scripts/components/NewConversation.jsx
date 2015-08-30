@@ -7,7 +7,7 @@ function triggerComplete(props) {
   }
 }
 
-const ConversationCreation = React.createClass({
+const NewConversation = React.createClass({
   propTypes: {
     createConversation: PropTypes.func.isRequired,
     onComplete: PropTypes.func.isRequired,
@@ -49,4 +49,4 @@ const ConversationCreation = React.createClass({
   },
 });
 
-export default ConversationCreation;
+export default NewConversation;
