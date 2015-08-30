@@ -11,7 +11,10 @@ import sourcemaps from 'gulp-sourcemaps';
 import autoprefixer from 'autoprefixer-core';
 import del from 'del';
 
-const DEBUG = process.env.ENVIRONMENT !== 'production';
+const COMPOSE_FILE = process.env.COMPOSE_FILE || '';
+const ENVIRONMENT = process.env.ENVIRONMENT
+  || (COMPOSE_FILE.match(/production/) ? 'production' : 'development');
+const DEBUG = ENVIRONMENT !== 'production';
 
 const paths = {
   styles: 'src/*.css',
