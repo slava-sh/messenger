@@ -129,3 +129,14 @@ export function receiveMessage({ conversationId, message }) {
     }
   };
 }
+
+export function createConversation({ name }) {
+  return {
+    types: [
+      ActionTypes.CREATE_CONVERSATION,
+      ActionTypes.CREATE_CONVERSATION_SUCCESS,
+      ActionTypes.CREATE_CONVERSATION_FAILURE,
+    ],
+    callApi: api.createConversation({ name }),
+  };
+}

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Router, Route } from 'react-router';
 import HomePage from 'app/pages/HomePage';
+import ConversationCreationPage from 'app/pages/ConversationCreationPage';
 import ConversationPage from 'app/pages/ConversationPage';
 import LoginPage from 'app/pages/LoginPage';
 import RegistrationPage from 'app/pages/RegistrationPage';
@@ -35,6 +36,7 @@ const App = React.createClass({
           <Route onEnter={requireAuth}>
             <Route path="/" component={HomePage} />
             <Route path="/c/" component={HomePage} />
+            <Route path="/c/new/" component={ConversationCreationPage} />
             <Route path="/c/:id/" component={ConversationPage} />
           </Route>
           <Route path="/login/" component={LoginPage} />
