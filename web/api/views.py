@@ -21,7 +21,10 @@ class ConversationViewSet(viewsets.ViewSet):
         return paginated_response(queryset, ConversationSerializer, self.request)
 
     def create(self, request):
-        serializer = CreateConversationSerializer(data=request.data)
+        data_with_members = request.data.copy()
+        if 'members' not in data_with_members: # TODO: delete this
+            data_with_members['members'] = list(User.objects.values_list('pk', flat=True))
+        serializer = CreateConversationSerializer(data=data_with_members)
         # TODO: require that the user is a member of the new conversation
         serializer.is_valid(raise_exception=True)
         serializer.save()
