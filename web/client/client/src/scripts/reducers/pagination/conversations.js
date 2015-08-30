@@ -17,6 +17,18 @@ const reducer = createPaginationReducer([
       ids,
     };
   },
+
+  [ActionTypes.CREATE_CONVERSATION_SUCCESS]: (state, action) => {
+    if (!state.ids) {
+      return state;
+    }
+    const { result: conversationId } = action.response;
+    const ids = [conversationId, ...(state.ids || [])];
+    return {
+      ...state,
+      ids,
+    };
+  },
 });
 
 export default reducer;
