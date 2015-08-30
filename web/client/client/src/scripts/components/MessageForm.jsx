@@ -29,18 +29,22 @@ const MessageForm = React.createClass({
   render() {
     const { user, sendTyping } = this.props;
     return (
-      <div className="new-message">
-        <form onSubmit={this.onSubmit}>
-          <div className="username">{user.username}</div>
-          <div className="text">
-            <textarea
-              ref={node => this.textarea = node}
-              onKeyDown={this.onKeyDown}
-              onKeyPress={sendTyping}
-            />
+      <form className="message message--new" onSubmit={this.onSubmit}>
+        <div className="message__avatar">
+          <img src={user.avatarUrl} />
+        </div>
+        <div className="message__body">
+          <div className="message__author">
+            <span className="username">{user.username}</span>
           </div>
-        </form>
-      </div>
+          <textarea
+            className="message__text"
+            ref={node => this.textarea = node}
+            onKeyDown={this.onKeyDown}
+            onKeyPress={sendTyping}
+          />
+        </div>
+      </form>
     );
   },
 });

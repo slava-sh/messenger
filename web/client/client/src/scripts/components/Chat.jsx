@@ -50,11 +50,13 @@ const Chat = React.createClass({
           typingUsers={typingUsers}
           ref={node => this.messageList = node}
         />
-        <MessageForm
-          user={user}
-          sendMessage={sendMessage}
-          sendTyping={sendTyping}
-        />
+        <div className="message-composer">
+          <MessageForm
+            user={user}
+            sendMessage={sendMessage}
+            sendTyping={sendTyping}
+          />
+        </div>
       </div>
     );
   },
