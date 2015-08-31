@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { items, isLoaded, isLoading, loadMore } from 'app/utils/pagination';
 import Message from 'app/components/Message';
 import TypingUsers from 'app/components/TypingUsers';
 import InfiniteList from 'app/mixins/InfiniteList';
@@ -13,19 +12,19 @@ const MessageList = React.createClass({
   mixins: [InfiniteList({ upward: true })],
 
   loadMore() {
-    loadMore(this.props.messages);
+    this.props.messages.loadMore();
   },
 
   render() {
     const { messages, typingUsers } = this.props;
-    if (!isLoaded(messages)) {
+    if (!messages.isLoaded) {
       return <Spinner smooth />;
     }
     return (
       <div className="messages" onScroll={this.handleScroll}>
-        {isLoading(messages) && <Spinner />}
+        {messages.isLoading && <Spinner />}
         <div className="messages__spacer" />
-        {items(messages).map(x => x).reverse().reduce( // map to obtain a copy, which is mutated by reverse
+        {messages.items.reduceRight(
           ([previousAuthorId, result], message) => {
             const sequential = message.author.id === previousAuthorId;
             result.push(

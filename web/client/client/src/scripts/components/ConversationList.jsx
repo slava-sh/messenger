@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { items, isLoaded, isLoading, loadMore } from 'app/utils/pagination';
 import InfiniteList from 'app/mixins/InfiniteList';
 import Link from 'app/components/Link';
 import Spinner from 'app/components/Spinner';
@@ -13,31 +12,31 @@ const ConversationList = React.createClass({
 
   componentDidMount() {
     const { conversations } = this.props;
-    if (!isLoaded(conversations)) {
-      loadMore(conversations);
+    if (conversations.isLoaded) {
+      conversations.loadMore();
     }
   },
 
   loadMore() {
     const { conversations } = this.props;
-    loadMore(conversations);
+    conversations.loadMore();
   },
 
   render() {
     const { conversations, router } = this.props;
-    if (!isLoaded(conversations)) {
+    if (!conversations.isLoaded) {
       return <Spinner smooth />;
     }
     return (
       <div className="conversations" onScroll={this.handleScroll}>
-        {items(conversations).map(conversation => (
+        {conversations.items.map(conversation => (
           <div key={conversation.id} className="conversation">
             <Link to={`/c/${conversation.id}/`} router={router}>
               {conversation.name}
             </Link>
           </div>
         ))}
-        {isLoading(conversations) && <Spinner />}
+        {conversations.isLoading && <Spinner />}
       </div>
     );
   },

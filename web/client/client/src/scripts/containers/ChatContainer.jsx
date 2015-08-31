@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import get from 'lodash/object/get';
 import { loadConversation, loadMessages, sendMessage, sendTyping } from 'app/actions/conversation';
 import { expand, withLoader } from 'app/utils/pagination';
 import Chat from 'app/components/Chat';
@@ -8,7 +9,7 @@ function mapStateToProps(state, ownProps) {
   const { conversationId } = ownProps;
   const { users, messages, conversations } = state;
   const conversation = conversations.byId[conversationId];
-  const typingUserIds = (conversation || {}).typingUserIds || [];
+  const typingUserIds = get(conversation, 'typingUserIds', []);
   const typingUsers = typingUserIds.map(id => users.byId[id]).filter(Boolean);
   return {
     user: users.byId[users.current.id],

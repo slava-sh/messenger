@@ -11,7 +11,6 @@ const Navigation = React.createClass({
 
   render() {
     const { user, conversations, router } = this.props;
-console.log(conversations);
     return (
       <div className="navigation">
         <div className="header">

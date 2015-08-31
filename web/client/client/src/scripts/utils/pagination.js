@@ -1,53 +1,28 @@
-import mapValues from 'lodash/object/mapValues';
 import get from 'lodash/object/get';
-import flatten from 'lodash/array/flatten';
 
 function identity(x) {
   return x;
 }
 
-export function expand(collection, paginationKey = 'all', expandItem = identity) {
-  const pagination = get(collection, paginationKey, {});
+export function expand(collection, paginationPath = 'all', expandItem = identity) {
+  const pagination = get(collection, paginationPath, {});
   const ids = pagination.ids || [];
   const items = ids.map(id => {
     const item = collection.byId[id];
     return item && expandItem ? expandItem(item) : item;
   }).filter(Boolean);
   return {
+    hasMore: false,
     ...pagination,
     items,
+    isLoaded: Boolean(pagination.ids),
   };
 }
 
-export function withLoader(pagination, loader) { // TODO: need this?
+export function withLoader(pagination, loader) {
   return {
     ...pagination,
     loadMore: loader,
+    hasMore: !pagination.isLoaded || Boolean(pagination.nextCursor),
   };
-}
-
-export function items(pagination) {
-  return pagination.items || [];
-}
-
-export function loadMore(pagination) {
-  return pagination.loadMore();
-}
-
-export function isLoaded(pagination) {
-  return Boolean(pagination.ids);
-}
-
-export function isLoading(pagination) {
-  return pagination.isLoading;
-}
-
-export function hasMore(pagination) {
-  if (!pagination.loadMore) {
-    return false;
-  }
-  if (!isLoaded(pagination)) {
-    return true;
-  }
-  return Boolean(pagination.nextCursor);
 }
