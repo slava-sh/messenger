@@ -107,7 +107,8 @@ img {
   flex-flow: column nowrap;
 }
 
-.messages > .messages__spacer {
+.messages::before {
+  content: "";
   flex: auto;
 }
 

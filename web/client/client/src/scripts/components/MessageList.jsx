@@ -23,7 +23,6 @@ const MessageList = React.createClass({
     return (
       <div className="messages" onScroll={this.handleScroll}>
         {messages.isLoading && <Spinner />}
-        <div className="messages__spacer" />
         {messages.items.reduceRight(
           ([previousAuthorId, result], message) => {
             const sequential = message.author.id === previousAuthorId;
