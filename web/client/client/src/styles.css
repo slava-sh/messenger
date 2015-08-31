@@ -82,7 +82,7 @@ img {
   position: relative;
 }
 
-.conversation a:before {
+.conversation a::before {
   content: "";
   display: block;
   position: absolute;
@@ -94,9 +94,9 @@ img {
   transition: left 0.1s;
 }
 
-.conversation a.active:before,
-.conversation a:hover:before,
-.conversation a:active:before {
+.conversation a.active::before,
+.conversation a:hover::before,
+.conversation a:active::before {
   left: 0;
 }
 
