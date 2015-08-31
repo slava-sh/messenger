@@ -49,9 +49,9 @@ export function loadMessages(conversationId) {
     ],
     payload: { conversationId },
     callApi: api.getMessages(conversationId),
-    getPagination: state => state.pagination.messagesByConversation[conversationId],
-    condition: ({ pagination: { messagesByConversation } }) => {
-      const messagePagination = messagesByConversation[conversationId];
+    getPagination: state => state.messages.byConversation[conversationId],
+    condition: ({ messages: { byConversation } }) => {
+      const messagePagination = byConversation[conversationId];
       return !messagePagination
               || (!messagePagination.isLoading
                 && (!messagePagination.ids || messagePagination.nextCursor));

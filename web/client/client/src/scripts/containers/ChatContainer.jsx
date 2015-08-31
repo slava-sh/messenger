@@ -7,8 +7,8 @@ import Chat from 'app/components/Chat';
 function mapStateToProps(state, ownProps) {
   const {
     users,
+    messages,
     entities,
-    pagination: { messagesByConversation },
   } = state;
   const { conversationId } = ownProps;
   const { conversations } = entities;
@@ -20,8 +20,8 @@ function mapStateToProps(state, ownProps) {
     usersById: users.byId,
     conversation,
     typingUsers,
-    messages: entities.messages,
-    messagePagination: messagesByConversation[conversationId],
+    messages: messages.byId,
+    messagePagination: messages.byConversation[conversationId],
   };
 }
 

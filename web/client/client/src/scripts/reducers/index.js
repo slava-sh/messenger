@@ -4,6 +4,7 @@ import newConversation from 'app/reducers/newConversation';
 import entities from 'app/reducers/entities';
 import pagination from 'app/reducers/pagination';
 import users from 'app/reducers/users';
+import messages from 'app/reducers/messages';
 
 const reducer = combineReducers({
   router,
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   entities,
   pagination,
   users,
+  messages,
 });
 
 export default reducer;
