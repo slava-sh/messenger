@@ -15,11 +15,11 @@ export function loadConversations() {
       ActionTypes.FAILURE_CONVERSATIONS,
     ],
     callApi: api.getConversations(),
-    getPagination: state => state.pagination.conversations,
+    getPagination: state => state.conversations.all,
     condition: state => {
-      return !state.pagination.conversations.isLoading
-              && (!state.pagination.conversations.ids
-                || state.pagination.conversations.nextCursor);
+      return !state.conversations.all.isLoading
+              && (!state.conversations.all.ids
+                || state.conversations.all.nextCursor);
     },
   };
 }
@@ -34,7 +34,7 @@ export function loadConversation(conversationId) {
     payload: { conversationId },
     callApi: api.getConversation(conversationId),
     condition: state => {
-      const conversation = state.entities.conversations[conversationId];
+      const conversation = state.conversations.byId[conversationId];
       return !conversation || !conversation.members || !conversation.messages;
     },
   };
@@ -61,8 +61,8 @@ export function loadMessages(conversationId) {
 
 export function sendTyping(conversationId) { // TODO: refactor
   return (dispatch, getState) => {
-    const { users, entities: { conversations } } = getState();
-    const conversation = conversations[conversationId];
+    const { users, conversations } = getState();
+    const conversation = conversations.byId[conversationId];
     if (contains(conversation.typingUserIds, users.current.id)) {
       return;
     }
@@ -122,8 +122,8 @@ export function receiveMessage({ conversationId, message }) {
       response: normalize(camelizeKeys(message), api.message),
     });
 
-    const { entities: conversations } = getState();
-    if (!conversations[conversationId]) {
+    const { conversations } = getState();
+    if (!conversations.byId[conversationId]) {
       // TODO: call this unconditionally, but supply required fields
       dispatch(loadConversation(conversationId));
     }

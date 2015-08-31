@@ -5,14 +5,9 @@ import Collection from 'app/utils/Collection';
 import Chat from 'app/components/Chat';
 
 function mapStateToProps(state, ownProps) {
-  const {
-    users,
-    messages,
-    entities,
-  } = state;
+  const { users, messages, conversations } = state;
   const { conversationId } = ownProps;
-  const { conversations } = entities;
-  const conversation = conversations[conversationId];
+  const conversation = conversations.byId[conversationId];
   const typingUserIds = (conversation || {}).typingUserIds || [];
   const typingUsers = typingUserIds.map(id => users.byId[id]).filter(Boolean);
   return {

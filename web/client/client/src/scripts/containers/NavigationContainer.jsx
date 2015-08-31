@@ -4,17 +4,12 @@ import Collection from 'app/utils/Collection';
 import Navigation from 'app/components/Navigation';
 
 function mapStateToProps(state) {
-  const {
-    router,
-    users,
-    entities: { conversations },
-    pagination: { conversations: conversationPagination },
-  } = state;
+  const { router, users, conversations } = state;
   return {
     router,
     user: users.byId[users.current.id],
-    conversations,
-    conversationPagination,
+    conversations: conversations.byId,
+    conversationPagination: conversations.all,
   };
 }
 
