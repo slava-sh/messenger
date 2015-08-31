@@ -1,4 +1,3 @@
-import { moveItemToFront } from 'app/utils';
 import { createPaginationReducer } from 'app/utils/reducers';
 import * as ActionTypes from 'app/ActionTypes';
 

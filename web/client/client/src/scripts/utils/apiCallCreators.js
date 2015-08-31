@@ -1,6 +1,5 @@
 import { Schema, arrayOf } from 'app/utils/normalizer';
 import { pagesOf } from 'app/utils/apiPagination';
-import range from 'lodash/utility/range';
 
 const user = new Schema('users');
 const conversation = new Schema('conversations');

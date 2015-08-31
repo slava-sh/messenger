@@ -5,7 +5,7 @@ import Spinner from 'app/components/Spinner';
 
 const ConversationList = React.createClass({
   propTypes: {
-//conversations: collectionShape.isRequired,
+// conversations: collectionShape.isRequired,
     router: PropTypes.object.isRequired,
   },
   mixins: [InfiniteList()],

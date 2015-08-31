@@ -6,7 +6,7 @@ import Spinner from 'app/components/Spinner';
 
 const MessageList = React.createClass({
   propTypes: {
-//messages: collectionShape.isRequired,
+// messages: collectionShape.isRequired,
     typingUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   },
   mixins: [InfiniteList({ upward: true })],

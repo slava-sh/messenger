@@ -1,5 +1,3 @@
-import findIndex from 'lodash/array/findIndex';
-
 export function intersperse(items, separator) {
   if (items.length === 0) {
     return [];
