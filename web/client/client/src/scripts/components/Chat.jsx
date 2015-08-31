@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import DocumentTitle from 'react-document-title';
-import { collectionShape } from 'app/utils/Collection';
 import MessageList from 'app/components/MessageList';
 import MessageForm from 'app/components/MessageForm';
 import Spinner from 'app/components/Spinner';
@@ -9,7 +8,7 @@ const Chat = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
     conversation: PropTypes.object,
-    messages: collectionShape.isRequired,
+//    messages: collectionShape.isRequired,
     typingUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
     sendMessage: PropTypes.func.isRequired,
     sendTyping: PropTypes.func.isRequired,

@@ -1,65 +1,53 @@
-import pick from 'lodash/object/pick';
 import mapValues from 'lodash/object/mapValues';
+import get from 'lodash/object/get';
 import flatten from 'lodash/array/flatten';
 
-export function identity(x) {
+function identity(x) {
   return x;
 }
 
-export function expand(collection, expanders) {
-  return mapValues(expanders, (expandItem, paginationKey) => {
-    const pagination = collection[paginationKey];
-    const ids = pagination.ids || [];
-    const items = ids.map(id => {
-      const item = collection.byId[id];
-      return item && expandItem ? expandItem(item) : item;
-    }).filter(Boolean);
-    return {
-      ...pagination,
-      items,
-    };
-  });
+export function expand(collection, paginationKey = 'all', expandItem = identity) {
+  const pagination = get(collection, paginationKey, {});
+  const ids = pagination.ids || [];
+  const items = ids.map(id => {
+    const item = collection.byId[id];
+    return item && expandItem ? expandItem(item) : item;
+  }).filter(Boolean);
+  return {
+    ...pagination,
+    items,
+  };
 }
 
-export function withLoaders(collection, loaders) {
-  return mapValues(collection, (pagination, paginationKey) => {
-    const loader = loaders[paginationKey];
-    if (!loader) {
-      return value;
-    }
-    return {
-      ...pagination,
-      loadMore: loader,
-    };
-  });
+export function withLoader(pagination, loader) { // TODO: need this?
+  return {
+    ...pagination,
+    loadMore: loader,
+  };
 }
 
-export function items(collection, paginationKey = 'all') {
-//  if (!collection[paginationKey]) {
-//    return [];
-//  }
-  return collection[paginationKey].items || [];
+export function items(pagination) {
+  return pagination.items || [];
 }
 
-export function loadMore(collection, paginationKey = 'all') {
-  return collection[paginationKey].loadMore();
+export function loadMore(pagination) {
+  return pagination.loadMore();
 }
 
-export function isLoaded(collection, paginationKey = 'all') {
-//  collection && collection[paginationKey]
-  return Boolean(collection[paginationKey].ids);
+export function isLoaded(pagination) {
+  return Boolean(pagination.ids);
 }
 
-export function isLoading(collection, paginationKey = 'all') {
-  return collection[paginationKey].isLoading;
+export function isLoading(pagination) {
+  return pagination.isLoading;
 }
 
-export function hasMore(collection, paginationKey = 'all') {
-  if (!collection[paginationKey].loadMore) {
+export function hasMore(pagination) {
+  if (!pagination.loadMore) {
     return false;
   }
-  if (!isLoaded(collection, paginationKey)) {
+  if (!isLoaded(pagination)) {
     return true;
   }
-  return Boolean(collection[paginationKey].nextCursor);
+  return Boolean(pagination.nextCursor);
 }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { loadConversations } from 'app/actions/conversation';
-import { expand, identity, withLoaders } from 'app/utils/pagination';
+import { expand, withLoader } from 'app/utils/pagination';
 import Navigation from 'app/components/Navigation';
 
 function mapStateToProps(state) {
@@ -8,9 +8,7 @@ function mapStateToProps(state) {
   return {
     router,
     user: users.byId[users.current.id],
-    conversations: expand(conversations, {
-      all: identity,
-    }),
+    conversations: expand(conversations),
   };
 }
 
@@ -19,9 +17,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    conversations: withLoaders(stateProps.conversations, {
-      all: dispatchProps.loadConversations,
-    }),
+    conversations: withLoader(stateProps.conversations, dispatchProps.loadConversations),
   };
 }
 

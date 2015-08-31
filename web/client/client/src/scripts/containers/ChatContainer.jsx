@@ -1,41 +1,37 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { loadConversation, loadMessages, sendMessage, sendTyping } from 'app/actions/conversation';
-import Collection from 'app/utils/Collection';
+import { expand, withLoader } from 'app/utils/pagination';
 import Chat from 'app/components/Chat';
 
 function mapStateToProps(state, ownProps) {
-  const { users, messages, conversations } = state;
   const { conversationId } = ownProps;
+  const { users, messages, conversations } = state;
   const conversation = conversations.byId[conversationId];
   const typingUserIds = (conversation || {}).typingUserIds || [];
   const typingUsers = typingUserIds.map(id => users.byId[id]).filter(Boolean);
   return {
     user: users.byId[users.current.id],
-    usersById: users.byId,
     conversation,
     typingUsers,
-    messages: messages.byId,
-    messagePagination: messages.byConversation[conversationId],
+    messages: expand(
+      messages, ['byConversation', conversationId],
+      message => ({
+        ...message,
+        author: users.byId[message.author] || {},
+      }),
+    ),
   };
 }
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
   const { conversationId } = ownProps;
-  const { messagePagination, messages, usersById, ...other } = stateProps;
+  const { messages, ...other } = stateProps;
   return {
     ...ownProps,
     ...other,
     ...dispatchProps,
-    messages: new Collection(
-      messagePagination,
-      messages,
-      () => dispatchProps.loadMessages(conversationId),
-      message => ({
-        ...message,
-        author: usersById[message.author] || {},
-      }),
-    ),
+    messages: withLoader(messages, () => dispatchProps.loadMessages(conversationId)),
     sendMessage: text => dispatchProps.sendMessage({ conversationId, text }),
     sendTyping: () => dispatchProps.sendTyping(conversationId),
     loadConversation: () => dispatchProps.loadConversation(conversationId),
