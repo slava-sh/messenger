@@ -10,7 +10,10 @@ export function executeApiCall([method, endpoint, responseSchema, data]) { // TO
     method,
     credentials: 'same-origin',
     headers: {
-      'X-CSRFToken': cookie.get('csrftoken'),
+      // TODO: remove String call when whatwg-fetch updates from 0.9.0, see
+      // https://github.com/github/fetch/blob/v0.9.0/fetch.js#L20
+      // https://github.com/github/fetch/blob/master/fetch.js#L20
+      'X-CSRFToken': String(cookie.get('csrftoken')),
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
