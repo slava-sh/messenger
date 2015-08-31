@@ -4,9 +4,9 @@ import { updateProfile } from 'app/actions/auth';
 import Registration from 'app/components/Registration';
 
 function mapStateToProps(state) {
-  const { userId, entities: { users } } = state;
+  const { users } = state;
   return {
-    user: users[userId],
+    user: users.byId[users.current.id],
   };
 }
 

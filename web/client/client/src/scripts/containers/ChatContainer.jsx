@@ -6,20 +6,20 @@ import Chat from 'app/components/Chat';
 
 function mapStateToProps(state, ownProps) {
   const {
-    userId,
+    users,
     entities,
     pagination: { messagesByConversation },
   } = state;
   const { conversationId } = ownProps;
-  const { conversations, users } = entities;
+  const { conversations } = entities;
   const conversation = conversations[conversationId];
   const typingUserIds = (conversation || {}).typingUserIds || [];
-  const typingUsers = typingUserIds.map(id => users[id]).filter(Boolean);
+  const typingUsers = typingUserIds.map(id => users.byId[id]).filter(Boolean);
   return {
-    user: entities.users[userId],
+    user: users.byId[users.current.id],
+    usersById: users.byId,
     conversation,
     typingUsers,
-    users,
     messages: entities.messages,
     messagePagination: messagesByConversation[conversationId],
   };
@@ -27,7 +27,7 @@ function mapStateToProps(state, ownProps) {
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
   const { conversationId } = ownProps;
-  const { messagePagination, messages, users, ...other } = stateProps;
+  const { messagePagination, messages, usersById, ...other } = stateProps;
   return {
     ...ownProps,
     ...other,
@@ -38,7 +38,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
       () => dispatchProps.loadMessages(conversationId),
       message => ({
         ...message,
-        author: users[message.author] || {},
+        author: usersById[message.author] || {},
       }),
     ),
     sendMessage: text => dispatchProps.sendMessage({ conversationId, text }),

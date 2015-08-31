@@ -61,9 +61,9 @@ export function loadMessages(conversationId) {
 
 export function sendTyping(conversationId) { // TODO: refactor
   return (dispatch, getState) => {
-    const { userId, entities: { conversations } } = getState();
+    const { users, entities: { conversations } } = getState();
     const conversation = conversations[conversationId];
-    if (contains(conversation.typingUserIds, userId)) {
+    if (contains(conversation.typingUserIds, users.current.id)) {
       return;
     }
     dispatch({
@@ -101,7 +101,7 @@ export function receiveTyping({ conversationId, userId }) {
 
 export function sendMessage({ conversationId, text }) {
   return (dispatch, getState) => {
-    const { userId } = getState();
+    const { users: { current: { id: userId }} } = getState();
     dispatch(stopTyping({ conversationId, userId }));
     dispatch({
       type: ActionTypes.SEND_MESSAGE,

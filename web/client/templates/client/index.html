@@ -16,15 +16,17 @@
   <script>
     window.app = initialize({
       {% if user.is_authenticated %}
-        userId: '{{ user.pk|escapejs }}',
-        entities: {
-          users: {
+        users: {
+          current: {
+            id: '{{ user.pk|escapejs }}',
+          },
+          byId: {
             '{{ user.pk|escapejs }}': {
               id: '{{ user.pk|escapejs }}',
               username: '{{ user.username|default:""|escapejs }}',
             },
           },
-        },
+        }
       {% endif %}
     }, '{{ realtime_url|escapejs }}');
   </script>

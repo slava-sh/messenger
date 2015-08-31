@@ -6,13 +6,13 @@ import Navigation from 'app/components/Navigation';
 function mapStateToProps(state) {
   const {
     router,
-    userId,
-    entities: { conversations, users },
+    users,
+    entities: { conversations },
     pagination: { conversations: conversationPagination },
   } = state;
   return {
     router,
-    user: users[userId],
+    user: users.byId[users.current.id],
     conversations,
     conversationPagination,
   };
