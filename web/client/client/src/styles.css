@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  flex: none;
 }
 
 html {
@@ -58,7 +59,6 @@ img {
 }
 
 .header {
-  flex: none;
   padding: 0.5em;
   border-bottom: 4px solid #000;
 }
@@ -105,10 +105,6 @@ img {
   padding-bottom: 0.25em;
   display: flex;
   flex-flow: column nowrap;
-}
-
-.messages > * {
-  flex: none;
 }
 
 .messages > .messages__spacer {
@@ -195,7 +191,6 @@ textarea {
 }
 
 .message__avatar {
-  flex: none;
   padding-right: 0.75em;
 }
 
@@ -227,7 +222,6 @@ textarea {
 }
 
 .message-composer {
-  flex: none;
   border-top: 4px solid #000;
   padding: 0.5em 0;
 }
