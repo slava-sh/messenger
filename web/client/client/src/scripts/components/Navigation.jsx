@@ -1,24 +1,17 @@
 import React, { PropTypes } from 'react';
-import { collectionShape } from 'app/utils/Collection';
 import Link from 'app/components/Link';
 import ConversationList from 'app/components/ConversationList';
 
 const Navigation = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
-    conversations: collectionShape.isRequired,
+// conversations: collectionShape.isRequired,
     router: PropTypes.object.isRequired,
-  },
-
-  componentDidMount() {
-    const { conversations } = this.props;
-    if (!conversations.isLoaded()) {
-      conversations.loadMore();
-    }
   },
 
   render() {
     const { user, conversations, router } = this.props;
+console.log(conversations);
     return (
       <div className="navigation">
         <div className="header">
