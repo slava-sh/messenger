@@ -73,8 +73,8 @@ const webpackConfig = {
   devtool: DEBUG && 'inline-source-map',
 };
 
-gulp.task('clean', cb => {
-  del(paths.build, cb);
+gulp.task('clean', () => {
+  return del(paths.build);
 });
 
 function scriptsTask(watch) {
