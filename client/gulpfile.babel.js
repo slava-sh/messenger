@@ -17,6 +17,7 @@ const DEBUG = ENVIRONMENT !== 'production';
 
 const paths = {
   styles: 'src/*.css',
+  html: 'src/index.html',
   src: path.resolve(__dirname, 'src'),
   build: path.resolve(__dirname, 'build'),
   node_modules: path.resolve(__dirname, 'node_modules'),
@@ -102,6 +103,12 @@ gulp.task('watch:styles', ['build:styles'], () => {
   gulp.watch(paths.styles, ['build:styles']);
 });
 
-gulp.task('build', ['build:scripts', 'build:styles']);
+gulp.task('build:html', () => {
+  return gulp.src(paths.html)
+// TODO: .pipe(cleanhtml())
+    .pipe(gulp.dest(paths.build));
+});
+
+gulp.task('build', ['build:scripts', 'build:styles', 'build:html']);
 gulp.task('watch', ['watch:scripts', 'watch:styles']);
 gulp.task('default', ['build']);

@@ -1,7 +1,13 @@
-web:
-  build: ../web
+nginx:
+  build: ../nginx
   ports:
     - "80:80"
+    - "443:443"
+  links:
+    - web
+    - realtime
+web:
+  build: ../web
   links:
     - db
     - queue

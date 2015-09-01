@@ -1,1 +1,34 @@
-../../templates/client/index.html
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Loading…</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'client/build/styles.css' %}">
+  <script src="{{ realtime_url }}/primus.js"></script> {# TODO #}
+  <script src="{% static 'client/build/vendor.js' %}"></script>
+  <script src="{% static 'client/build/app.js' %}"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    window.app = initialize({
+      {% if user.is_authenticated %}
+        users: {
+          current: {
+            id: '{{ user.pk|escapejs }}',
+          },
+          byId: {
+            '{{ user.pk|escapejs }}': {
+              id: '{{ user.pk|escapejs }}',
+              username: '{{ user.username|default:""|escapejs }}',
+            },
+          },
+        }
+      {% endif %}
+    }, '{{ realtime_url|escapejs }}');
+  </script>
+</body>
+</html>
