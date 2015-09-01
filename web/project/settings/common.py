@@ -22,7 +22,6 @@ INSTALLED_APPS = (
     'accounts',
     'old_chat',
     'api',
-    'client',
 )
 
 MIDDLEWARE_CLASSES = (
