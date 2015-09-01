@@ -11,7 +11,7 @@
     "isomorphic-fetch": "^2.1.1",
     "lodash": "^3.10.1",
     "react": "0.14.0-beta3",
-    "react-document-title": "^1.0.3",
+    "react-document-title": "^2.0.0",
     "react-dom": "0.14.0-beta3",
     "react-infinite-scroll": "^0.1.5",
     "react-redux": "^0.9.0",
