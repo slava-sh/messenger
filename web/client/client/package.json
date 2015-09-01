@@ -17,7 +17,6 @@
     "react-redux": "^0.9.0",
     "react-router": "1.0.0-beta3",
     "redux": "^1.0.1",
-    "redux-logger": "0.0.3",
     "redux-react-router": "^0.4.0",
     "redux-thunk": "^0.1.0",
     "sockjs-client": "^1.0.3"
@@ -37,6 +36,7 @@
     "gulp-minify-css": "^1.2.1",
     "gulp-postcss": "^6.0.0",
     "gulp-sourcemaps": "^1.5.2",
+    "redux-logger": "^1.0.6",
     "run-sequence": "^1.1.2",
     "webpack": "^1.10.5",
     "webpack-split-by-path": "0.0.2",

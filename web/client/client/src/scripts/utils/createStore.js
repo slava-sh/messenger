@@ -8,7 +8,7 @@ const middleware = [
   conditionMiddleware,
   apiMiddleware,
   thunkMiddleware,
-  DEBUG && require('redux-logger'),
+  DEBUG && require('redux-logger')({ collapsed: true }),
 ].filter(Boolean);
 
 export function createStore(initialState) {
