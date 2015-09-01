@@ -16,17 +16,19 @@ db                          | database            | PostgreSQL
 
 ## Running
 
-### Backend
-```sh
-docker-machine create chat
-eval $(docker-machine env chat)
+1. Create a Docker machine
+   ```sh
+   docker-machine create chat.local
+   eval $(docker-machine env chat.local)
+   ```
 
-export COMPOSE_FILE=docker-compose/development.yml
-export COMPOSE_PROJECT_NAME=chat
-docker-compose build
-docker-compose up -d
-docker-compose ps
-```
+2. Set up Docker Composer
+   ```sh
+   export COMPOSE_FILE=docker-compose/development.yml
+   export COMPOSE_PROJECT_NAME=chat
+   ```
 
-### Frontend
-See [client](web/client/client).
+3. Build and start containers
+   ```sh
+   make deploy
+   ```
