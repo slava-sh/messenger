@@ -1,10 +1,9 @@
-### Development
+### Developing
 ```sh
-npm install
-gulp watch
+make development
 ```
 
-### Production
+### Building for production
 ```sh
-ENVIRONMENT=production gulp
+make
 ```
