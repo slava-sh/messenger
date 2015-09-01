@@ -26,8 +26,6 @@ worker:
   command: celery -A project worker -l info
 realtime:
   build: ../realtime
-  ports:
-    - "3000:3000"
   links:
     - queue
   env_file: ./development.env
