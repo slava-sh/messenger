@@ -7,8 +7,8 @@ const HomePage = React.createClass({
     return (
       <DefaultLayout>
         <DocumentTitle title="Home" />
-        <div>
-          Home
+        <div className="home">
+          Select a conversation to start messaging
         </div>
       </DefaultLayout>
     );

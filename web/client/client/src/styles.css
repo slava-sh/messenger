@@ -46,6 +46,10 @@ img {
   flex-flow: row nowrap;
 }
 
+.content > main > .home {
+  margin: 10em auto 2em;
+}
+
 .navigation {
   flex: auto;
   display: flex;
