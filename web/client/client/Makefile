@@ -1,10 +1,10 @@
 .PHONY: build development lint clean
 
 build: node_modules
-	ENVIRONMENT=production gulp
+	gulp
 
 development: node_modules
-	ENVIRONMENT=development gulp watch
+	gulp watch
 
 lint: node_modules
 	npm run -s lint
