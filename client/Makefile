@@ -10,7 +10,7 @@ lint: node_modules
 	npm run -s lint
 
 clean:
-	rm -rf build node_modules
+	rm -rf build/* node_modules
 
 node_modules:
 	npm install
