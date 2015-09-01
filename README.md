@@ -18,14 +18,14 @@ db                          | database            | PostgreSQL
 
 1. Create a Docker machine
    ```sh
-   docker-machine create chat.local
-   eval $(docker-machine env chat.local)
+   docker-machine create messenger.local --driver virtualbox
+   eval $(docker-machine env messenger.local)
    ```
 
 2. Set up Docker Composer
    ```sh
    export COMPOSE_FILE=docker-compose/development.yml
-   export COMPOSE_PROJECT_NAME=chat
+   export COMPOSE_PROJECT_NAME=messenger
    ```
 
 3. Build and start containers
