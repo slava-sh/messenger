@@ -35,7 +35,6 @@
     "gulp-postcss": "^6.0.0",
     "gulp-sourcemaps": "^1.5.2",
     "redux-logger": "^1.0.6",
-    "run-sequence": "^1.1.2",
     "webpack": "^1.10.5",
     "webpack-split-by-path": "0.0.2",
     "webpack-stream": "^2.1.0"

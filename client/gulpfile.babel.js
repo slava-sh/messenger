@@ -1,6 +1,5 @@
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
-import runSequence from 'run-sequence';
 import minifycss from 'gulp-minify-css';
 import path from 'path';
 import webpack from 'webpack';
@@ -73,10 +72,6 @@ const webpackConfig = {
   devtool: DEBUG && 'inline-source-map',
 };
 
-gulp.task('clean', () => {
-  return del(paths.build);
-});
-
 function scriptsTask(watch) {
   return () => gulp.src([])
     .pipe(webpackStream({
@@ -109,4 +104,4 @@ gulp.task('watch:styles', ['build:styles'], () => {
 
 gulp.task('build', ['build:scripts', 'build:styles']);
 gulp.task('watch', ['watch:scripts', 'watch:styles']);
-gulp.task('default', cb => runSequence('clean', 'build', cb));
+gulp.task('default', ['build']);
