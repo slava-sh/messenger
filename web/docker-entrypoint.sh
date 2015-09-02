@@ -1,9 +1,15 @@
 #!/bin/bash
 set -e
 
-if [ "$1" = 'gunicorn-server' ]; then
+case "$1" in
+"serve")
     python manage.py collectstatic --noinput
-    exec gunicorn project.wsgi --config gunicorn.conf.py "$@"
-fi
-
-exec "$@"
+    exec gunicorn project.wsgi --config gunicorn.conf.py
+    ;;
+"manage.py")
+    exec python "$@"
+    ;;
+*)
+    exec "$@"
+    ;;
+esac

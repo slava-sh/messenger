@@ -2,6 +2,6 @@ These commands are to be run from the root directory.
 
 ### Migrate
 ```sh
-docker-compose run --rm web python manage.py makemigrations
-docker-compose run --rm web python manage.py migrate
+docker-compose run --rm web manage.py makemigrations
+docker-compose run --rm web manage.py migrate
 ```

@@ -19,4 +19,4 @@ COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 80
-CMD ["gunicorn-server"]
+CMD ["serve"]
