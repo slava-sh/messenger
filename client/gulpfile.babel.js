@@ -1,6 +1,6 @@
 import gulp from 'gulp';
-import gulpif from 'gulp-if';
-import minifycss from 'gulp-minify-css';
+import gulpIf from 'gulp-if';
+import minifyCss from 'gulp-minify-css';
 import minifyHtml from 'gulp-minify-html';
 import path from 'path';
 import webpack from 'webpack';
@@ -89,14 +89,14 @@ gulp.task('watch:scripts', scriptsTask(true));
 
 gulp.task('build:styles', () => {
   return gulp.src(paths.styles)
-    .pipe(gulpif(DEBUG, sourcemaps.init()))
+    .pipe(gulpIf(DEBUG, sourcemaps.init()))
     .pipe(postcss([
       autoprefixer({
         browsers: ['last 2 versions'],
       }),
     ]))
-    .pipe(gulpif(!DEBUG, minifycss()))
-    .pipe(gulpif(DEBUG, sourcemaps.write()))
+    .pipe(gulpIf(!DEBUG, minifyCss()))
+    .pipe(gulpIf(DEBUG, sourcemaps.write()))
     .pipe(gulp.dest(paths.build));
 });
 
@@ -106,7 +106,7 @@ gulp.task('watch:styles', ['build:styles'], () => {
 
 gulp.task('build:html', () => {
   return gulp.src(paths.html)
-    .pipe(gulpif(!DEBUG, minifyHtml()))
+    .pipe(gulpIf(!DEBUG, minifyHtml()))
     .pipe(gulp.dest(paths.build));
 });
 
