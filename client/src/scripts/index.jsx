@@ -7,23 +7,21 @@ import createStore from 'app/utils/createStore';
 import createPushClient from 'app/utils/createPushClient';
 import App, { createAuthHandler } from 'app/containers/App';
 
-function initialize(state, primusUrl) {
-  const store = createStore(state);
-  const pushClient = createPushClient(primusUrl, store);
-  const ReduxRouteComponent = reduxRouteComponent(store);
-  const requireAuth = createAuthHandler(store);
-  const app = (
-    <App
-      ReduxRouteComponent={ReduxRouteComponent}
-      requireAuth={requireAuth}
-      history={history}
-    />
-  );
-  ReactDOM.render(app, document.getElementById('root'));
-  return {
-    store,
-    pushClient,
-  };
-}
+const store = createStore();
+const pushClient = createPushClient('/realtime', store);
+const ReduxRouteComponent = reduxRouteComponent(store);
+const requireAuth = createAuthHandler(store);
+const app = (
+  <App
+    ReduxRouteComponent={ReduxRouteComponent}
+    requireAuth={requireAuth}
+    history={history}
+  />
+);
 
-window.initialize = initialize;
+ReactDOM.render(app, document.getElementById('root'));
+
+window.app = {
+  store,
+  pushClient,
+};
