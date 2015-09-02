@@ -89,8 +89,4 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 
 
-REALTIME_PORT = 3000
-REALTIME_URL = 'http://{}:{}/primus'.format(HOSTNAME, REALTIME_PORT)
-
-
 LOGIN_CODE_EXPIRES = datetime.timedelta(days=1)
