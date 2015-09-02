@@ -10,7 +10,6 @@ deploy:
 	docker-compose build
 	docker-compose up -d
 	docker-compose run --rm web python manage.py migrate
-	#docker-compose run --rm web python manage.py collectstatic --noinput
 
 clean:
 	$(MAKE) -C client clean
