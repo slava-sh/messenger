@@ -74,18 +74,20 @@ const webpackConfig = {
   devtool: DEBUG && 'inline-source-map',
 };
 
-function scriptsTask(watch) {
-  return () => gulp.src([])
-    .pipe(webpackStream({
-      ...webpackConfig,
-      colors: true,
-      watch: watch,
-    }))
-    .pipe(gulp.dest(paths.build));
+function defineWebpackTask(name, options) {
+  gulp.task(name, () => {
+    return gulp.src([])
+      .pipe(webpackStream({
+        ...webpackConfig,
+        colors: true,
+        ...options,
+      }))
+      .pipe(gulp.dest(paths.build));
+  });
 }
 
-gulp.task('build:scripts', scriptsTask(false));
-gulp.task('watch:scripts', scriptsTask(true));
+defineWebpackTask('build:scripts', { watch: false });
+defineWebpackTask('watch:scripts', { watch: true });
 
 gulp.task('build:styles', () => {
   return gulp.src(paths.styles)
@@ -100,19 +102,20 @@ gulp.task('build:styles', () => {
     .pipe(gulp.dest(paths.build));
 });
 
-gulp.task('watch:styles', ['build:styles'], () => {
-  gulp.watch(paths.styles, ['build:styles']);
-});
-
 gulp.task('build:html', () => {
   return gulp.src(paths.html)
     .pipe(gulpIf(!DEBUG, minifyHtml()))
     .pipe(gulp.dest(paths.build));
 });
 
-gulp.task('watch:html', ['build:html'], () => {
-  gulp.watch(paths.html, ['build:html']);
-});
+function defineWatchTask(what) {
+  gulp.task(`watch:${what}`, [`build:${what}`], () => {
+    gulp.watch(paths[what], [`build:${what}`]);
+  });
+}
+
+defineWatchTask('styles');
+defineWatchTask('html');
 
 gulp.task('build', ['build:scripts', 'build:styles', 'build:html']);
 gulp.task('watch', ['watch:scripts', 'watch:styles', 'watch:html']);
