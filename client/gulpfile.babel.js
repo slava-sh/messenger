@@ -110,6 +110,10 @@ gulp.task('build:html', () => {
     .pipe(gulp.dest(paths.build));
 });
 
+gulp.task('watch:html', ['build:html'], () => {
+  gulp.watch(paths.html, ['build:html']);
+});
+
 gulp.task('build', ['build:scripts', 'build:styles', 'build:html']);
-gulp.task('watch', ['watch:scripts', 'watch:styles']);
+gulp.task('watch', ['watch:scripts', 'watch:styles', 'watch:html']);
 gulp.task('default', ['build']);
