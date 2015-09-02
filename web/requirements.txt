@@ -5,3 +5,4 @@ gunicorn
 djangorestframework
 django-storages-redux
 boto
+whitenoise
