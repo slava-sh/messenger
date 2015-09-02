@@ -17,7 +17,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'storages',
     'rest_framework',
     'accounts',
     'old_chat',
@@ -77,6 +76,11 @@ DATABASES = {
         'PASSWORD': os.environ['DB_PASSWORD'],
     }
 }
+
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 
 
 BROKER_URL = 'amqp://{}:{}@queue//'.format(os.environ['QUEUE_USER'],
