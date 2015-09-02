@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import minifycss from 'gulp-minify-css';
+import minifyHtml from 'gulp-minify-html';
 import path from 'path';
 import webpack from 'webpack';
 import SplitByPathPlugin from 'webpack-split-by-path';
@@ -105,7 +106,7 @@ gulp.task('watch:styles', ['build:styles'], () => {
 
 gulp.task('build:html', () => {
   return gulp.src(paths.html)
-// TODO: .pipe(cleanhtml())
+    .pipe(gulpif(!DEBUG, minifyHtml()))
     .pipe(gulp.dest(paths.build));
 });
 
