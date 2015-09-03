@@ -84,6 +84,14 @@ class MessageViewSet(viewsets.ViewSet):
 
 class UserViewSet(viewsets.ViewSet):
 
+    def retrieve(self, request, pk):
+        if pk == 'me':
+            user = request.user
+        else:
+            user = get_object_or_404(User, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
     def partial_update(self, request, pk):
         instance = get_object_or_404(User, pk=pk)
         serializer = UserSerializer(instance, data=request.data, partial=True)
