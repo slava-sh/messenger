@@ -7,6 +7,7 @@ import webpack from 'webpack';
 import SplitByPathPlugin from 'webpack-split-by-path';
 import webpackStream from 'webpack-stream';
 import postcss from 'gulp-postcss';
+import postcssImport from 'postcss-import';
 import sourcemaps from 'gulp-sourcemaps';
 import autoprefixer from 'autoprefixer-core';
 import del from 'del';
@@ -19,8 +20,10 @@ const DEBUG = ENVIRONMENT !== 'production';
 const paths = {
   styles: 'src/*.css',
   html: 'src/index.html',
+  fonts: 'vendor/font-awesome/fonts/*',
   src: path.resolve(__dirname, 'src'),
   build: path.resolve(__dirname, 'build'),
+  buildFonts: path.resolve(__dirname, 'build', 'fonts'),
   node_modules: path.resolve(__dirname, 'node_modules'),
 };
 
@@ -93,6 +96,7 @@ gulp.task('build:styles', () => {
   return gulp.src(paths.styles)
     .pipe(gulpIf(DEBUG, sourcemaps.init()))
     .pipe(postcss([
+      postcssImport(),
       autoprefixer({
         browsers: ['last 2 versions'],
       }),
@@ -108,6 +112,11 @@ gulp.task('build:html', () => {
     .pipe(gulp.dest(paths.build));
 });
 
+gulp.task('build:fonts', () => {
+  return gulp.src(paths.fonts)
+    .pipe(gulp.dest(paths.buildFonts));
+});
+
 function defineWatchTask(what) {
   gulp.task(`watch:${what}`, [`build:${what}`], () => {
     gulp.watch(paths[what], [`build:${what}`]);
@@ -117,6 +126,6 @@ function defineWatchTask(what) {
 defineWatchTask('styles');
 defineWatchTask('html');
 
-gulp.task('build', ['build:scripts', 'build:styles', 'build:html']);
-gulp.task('watch', ['watch:scripts', 'watch:styles', 'watch:html']);
+gulp.task('build', ['build:scripts', 'build:styles', 'build:html', 'build:fonts']);
+gulp.task('watch', ['watch:scripts', 'watch:styles', 'watch:html', 'build:fonts']);
 gulp.task('default', ['build']);
