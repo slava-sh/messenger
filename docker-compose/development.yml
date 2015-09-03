@@ -6,6 +6,9 @@ nginx:
   links:
     - web
     - realtime
+  env_file: ./development.env
+  volumes:
+    - ../nginx:/app
 web:
   build: ../web
   links:
