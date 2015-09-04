@@ -86,6 +86,8 @@ class UserViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk):
         if pk == 'me':
+            if not request.user.is_authenticated():
+                return Response({ 'id': 'anonymous' }) # TODO: respond with an error
             user = request.user
         else:
             user = get_object_or_404(User, pk=pk)
@@ -95,6 +97,7 @@ class UserViewSet(viewsets.ViewSet):
     def partial_update(self, request, pk):
         instance = get_object_or_404(User, pk=pk)
         serializer = UserSerializer(instance, data=request.data, partial=True)
+        # TODO: permissions
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
