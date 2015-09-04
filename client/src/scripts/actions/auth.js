@@ -22,3 +22,17 @@ export function updateProfile({ userId, data }) {
     callApi: api.updateProfile({ userId, data }),
   };
 }
+
+export function loadUser(userId = 'me') {
+  return {
+    types: [
+      ActionTypes.REQUEST_CURRENT_USER,
+      ActionTypes.RECEIVE_CURRENT_USER,
+      ActionTypes.RECEIVE_CURRENT_USER_FAILURE,
+    ],
+    callApi: api.getUser(userId),
+    condition: state => {
+      return !state.users.current.isLoading;
+    },
+  };
+}

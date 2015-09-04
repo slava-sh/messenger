@@ -26,3 +26,14 @@ export function withLoader(pagination, loader) {
     hasMore: !pagination.isLoaded || Boolean(pagination.nextCursor),
   };
 }
+
+export function expandSingleton(collection, path, expandItem = identity) {
+  const singleton = get(collection, path, {});
+  const item = collection.byId[singleton.id];
+  const expandedItem = item && expandItem ? expandItem(item) : (item || {});
+  return {
+    ...singleton,
+    ...expandedItem,
+    isLoaded: Boolean(singleton.id),
+  };
+}

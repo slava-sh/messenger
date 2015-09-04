@@ -43,3 +43,7 @@ export function updateProfile({ userId, data }) {
 export function createConversation({ name, members }) {
   return ['POST', `conversations`, conversation, { name, members }];
 }
+
+export function getUser(userId) {
+  return ['GET', `users/${userId}`, user];
+}

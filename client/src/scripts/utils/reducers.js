@@ -74,3 +74,37 @@ export function createPaginationReducer(types, handlers) {
     return handleAction(handlers, newState, action);
   };
 }
+
+export const initialSingletonState = {
+  id: null,
+  isLoading: false,
+};
+
+export function createSingletonReducer(types, handlers) {
+  const [REQUEST, SUCCESS, FAILURE] = types;
+  const updateState = handleAction.bind(null, {
+    [REQUEST]: (state) => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    },
+    [SUCCESS]: (state, action) => {
+      return {
+        ...state,
+        id: action.response.result,
+        isLoading: false,
+      };
+    },
+    [FAILURE]: (state) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    },
+  });
+  return function reducer(state = initialSingletonState, action) {
+    const newState = updateState(state, action);
+    return handleAction(handlers, newState, action);
+  };
+}
