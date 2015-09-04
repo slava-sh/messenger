@@ -61,7 +61,8 @@ function handleNotification({ args: [userIds, payload] }) {
 
 export function run() {
   const primus = Primus.createServer({
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 80,
+    pathname: '/realtime',
     transformer: 'sockjs',
   });
   primus.on('connection', spark => {

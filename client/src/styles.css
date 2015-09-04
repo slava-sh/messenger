@@ -1,0 +1,265 @@
+@import "../vendor/meyer-reset.min.css";
+@import "../vendor/font-awesome/css/font-awesome.css";
+
+* {
+  box-sizing: border-box;
+  flex: none;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background: #ddd;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+img {
+  display: block;
+}
+
+#root {
+  height: 100%;
+}
+
+.content {
+  height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border: 4px solid #000;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.content > aside {
+  order: 1;
+  flex: 25;
+  border-right: 4px solid #000;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.content > main {
+  order: 2;
+  flex: 75;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.content > main > .home {
+  margin: 10em auto 2em;
+}
+
+.navigation {
+  flex: auto;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.chat {
+  flex: auto;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.header {
+  padding: 0.5em;
+  border-bottom: 4px solid #000;
+}
+
+.conversations,
+.messages {
+  flex: auto;
+  overflow-y: scroll;
+}
+
+.conversation a {
+  display: block;
+  padding: 0.5em;
+  border-bottom: 2px solid #000;
+}
+
+.conversation a,
+.header a {
+  text-decoration: none;
+  color: #000;
+  position: relative;
+}
+
+.conversation a::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  left: -2px;
+  background: #000;
+  transition: left 0.1s;
+}
+
+.conversation a.active::before,
+.conversation a:hover::before,
+.conversation a:active::before {
+  left: 0;
+}
+
+.messages {
+  padding-top: 1em;
+  padding-bottom: 0.25em;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.messages::before {
+  content: "";
+  flex: auto;
+}
+
+.username {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  border: 2px solid black;
+}
+
+.spinner {
+  flex: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner--smooth {
+  animation: fade-in 1s, fa-zoom-in 0.75s;
+}
+
+.spinner > i {
+  animation-duration: 1s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fa-zoom-in {
+  from {
+    font-size: 0;
+  }
+  to {
+    font-size: 100%;
+  }
+}
+
+.typing-users {
+  margin: 0.25em 1em 0.25em calc(2em + 40px + 0.75em);
+}
+
+.typing-users__dots span {
+  animation: typing-users__dots 0.8s infinite;
+}
+
+.typing-users__dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-users__dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing-users__dots {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.message {
+  max-width: 28em;
+  padding: 0.25em 1em 0.25em 2em;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.message__avatar {
+  padding-right: 0.75em;
+}
+
+.message__avatar img {
+  width: 40px;
+  border-radius: 50%;
+  margin-bottom: -30%;
+}
+
+.message__body {
+  flex: auto;
+}
+
+.message__author {
+  margin: 0.25em 0;
+}
+
+.message__text {
+  white-space: pre-wrap;
+}
+
+.message--sequential .message__avatar img {
+  visibility: hidden;
+  height: 0;
+}
+
+.message--sequential .message__author {
+  display: none;
+}
+
+.message-composer {
+  border-top: 4px solid #000;
+  padding: 0.5em 0;
+}
+
+.message--new .message__text {
+  font-size: 1em;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  max-width: 28em;
+  width: 100%;
+  height: 2.5em;
+  outline: none;
+  resize: none;
+  padding: 0.2em;
+}
+
+.content--modal {
+  height: initial;
+  background: initial;
+  border: none;
+}
+
+.content--modal > main {
+  background: #fff;
+  border: 4px solid #000;
+  max-width: 20em;
+  margin: 10em auto 2em;
+  padding: 1em;
+}
+
+.content--modal h1 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}

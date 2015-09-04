@@ -17,12 +17,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'storages',
     'rest_framework',
     'accounts',
     'old_chat',
     'api',
-    'client',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -80,14 +78,15 @@ DATABASES = {
 }
 
 
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+
 BROKER_URL = 'amqp://{}:{}@queue//'.format(os.environ['QUEUE_USER'],
                                            os.environ['QUEUE_PASSWORD'])
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
-
-
-REALTIME_PORT = 3000
-REALTIME_URL = 'http://{}:{}/primus'.format(HOSTNAME, REALTIME_PORT)
 
 
 LOGIN_CODE_EXPIRES = datetime.timedelta(days=1)

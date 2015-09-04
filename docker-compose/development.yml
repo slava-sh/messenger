@@ -1,7 +1,16 @@
-web:
-  build: ../web
+nginx:
+  build: ../nginx
   ports:
     - "80:80"
+    - "443:443"
+  links:
+    - web
+    - realtime
+  env_file: ./development.env
+  volumes:
+    - ../nginx:/app
+web:
+  build: ../web
   links:
     - db
     - queue
@@ -20,8 +29,6 @@ worker:
   command: celery -A project worker -l info
 realtime:
   build: ../realtime
-  ports:
-    - "3000:3000"
   links:
     - queue
   env_file: ./development.env

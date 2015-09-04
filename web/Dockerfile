@@ -15,5 +15,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
 EXPOSE 80
-CMD ["/usr/local/bin/gunicorn", "project.wsgi", "--config", "gunicorn.conf.py"]
+CMD ["serve"]

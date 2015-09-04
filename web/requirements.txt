@@ -1,7 +1,6 @@
-Django
+django
 psycopg2
 celery
 gunicorn
 djangorestframework
-django-storages-redux
-boto
+whitenoise
