@@ -14,3 +14,4 @@ deploy:
 clean:
 	$(MAKE) -C client clean
 	$(MAKE) -C realtime clean
+	$(MAKE) -C web clean
