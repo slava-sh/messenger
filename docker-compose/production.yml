@@ -19,7 +19,7 @@ worker:
     - db
     - queue
   env_file: ./production.env
-  command: celery -A project worker -l info
+  command: worker
 realtime:
   build: ../realtime
   links:
