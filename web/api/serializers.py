@@ -1,7 +1,7 @@
 from rest_framework import serializers, pagination
-from old_chat.models import Conversation, Message
 from django.utils import timezone
 from accounts.models import User, LoginCode
+from messaging.models import Conversation, Message
 from .fields import StringIntegerField, StringPrimaryKeyRelatedField
 from .utils import gravatar_url
 

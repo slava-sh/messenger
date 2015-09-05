@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 class Config(AppConfig):
-    name = 'old_chat'
+    name = 'messaging'
 
     def ready(self):
         from . import signals

@@ -2,7 +2,7 @@ import random
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from accounts.models import User
-from old_chat.models import Conversation, Message
+from messaging.models import Conversation, Message
 
 class Command(BaseCommand):
 

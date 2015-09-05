@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status, pagination
 from rest_framework.response import Response
-from old_chat.models import Conversation
+from messaging.models import Conversation
 from accounts.models import User, LoginCode
 from .serializers import ConversationSerializer, ConversationVerboseSerializer, MessageSerializer, CreateConversationSerializer, CreateLoginCodeSerializer, UserSerializer
 from .tasks import notify_users

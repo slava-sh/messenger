@@ -8,7 +8,7 @@ import datetime
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('old_chat', '0001_initial'),
+        ('messaging', '0001_initial'),
     ]
 
     operations = [
