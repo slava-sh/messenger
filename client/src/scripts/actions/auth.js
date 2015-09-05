@@ -36,3 +36,17 @@ export function loadUser(userId = 'me') {
     },
   };
 }
+
+export function loadUsers() {
+  return {
+    types: [
+      ActionTypes.REQUEST_USERS,
+      ActionTypes.RECEIVE_USERS,
+      ActionTypes.FAILURE_USERS,
+    ],
+    callApi: api.getUsers(),
+    condition: state => {
+      return !state.users.all.isLoading;
+    },
+  };
+}

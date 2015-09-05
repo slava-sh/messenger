@@ -2,6 +2,7 @@ import { Schema, arrayOf } from 'app/utils/normalizer';
 import { pagesOf } from 'app/utils/apiPagination';
 
 const user = new Schema('users');
+const users = pagesOf(user);
 const conversation = new Schema('conversations');
 const conversations = pagesOf(conversation);
 export const message = new Schema('messages'); // TODO: don't export
@@ -46,4 +47,8 @@ export function createConversation({ name, members }) {
 
 export function getUser(userId) {
   return ['GET', `users/${userId}`, user];
+}
+
+export function getUsers() {
+  return ['GET', `users`, users];
 }
