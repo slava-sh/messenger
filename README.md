@@ -26,8 +26,7 @@ The backend is managed with Docker Compose. Containers:
 
 2. Set up Docker Composer
    ```sh
-   export COMPOSE_FILE=docker-compose/development.yml
-   export COMPOSE_PROJECT_NAME=messenger
+   export COMPOSE_PROJECT_NAME=messenger COMPOSE_FILE=docker-compose/development.yml
    ```
 
 3. Build and start containers
