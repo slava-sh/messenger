@@ -24,12 +24,17 @@ The backend is managed with Docker Compose. Containers:
    eval $(docker-machine env messenger.local)
    ```
 
-2. Set up Docker Composer
+2. (Optional) Add `messenger.local` to your `hosts` file:
+   ```sh
+   echo "$(docker-machine ip messenger.local) messenger.local" | sudo tee -a /etc/hosts
+   ```
+
+3. Set up Docker Composer
    ```sh
    export COMPOSE_PROJECT_NAME=messenger COMPOSE_FILE=docker-compose/development.yml
    ```
 
-3. Build and start containers
+4. Build and start containers
    ```sh
    make deploy
    ```
