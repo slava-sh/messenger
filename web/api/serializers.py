@@ -52,6 +52,9 @@ class UserSerializer(BaseModelSerializer):
         model = User
         fields = ['id', 'username', 'avatar_url']
 
+    class Pagination(BasePagination):
+        ordering = 'username'
+
     def build_standard_field(self, field_name, model_field):
         field_class, field_kwargs = super().build_standard_field(field_name, model_field)
         if field_name == 'username':

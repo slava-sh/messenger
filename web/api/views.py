@@ -18,7 +18,7 @@ class ConversationViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = request.user.conversations
-        return paginated_response(queryset, ConversationSerializer, self.request)
+        return paginated_response(queryset, ConversationSerializer, request)
 
     def create(self, request):
         data_with_members = request.data.copy()
@@ -59,7 +59,7 @@ class MessageViewSet(viewsets.ViewSet):
         conversation = get_object_or_404(Conversation, pk=pk)
         # TODO: validate membership
         queryset = conversation.messages
-        return paginated_response(queryset, MessageSerializer, self.request)
+        return paginated_response(queryset, MessageSerializer, request)
 
     def create(self, request, pk):
         conversation = get_object_or_404(Conversation, pk=pk)
@@ -83,6 +83,10 @@ class MessageViewSet(viewsets.ViewSet):
 
 
 class UserViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        queryset = User.objects.all()
+        return paginated_response(queryset, UserSerializer, request)
 
     def retrieve(self, request, pk):
         if pk == 'me':
