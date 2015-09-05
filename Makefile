@@ -9,7 +9,7 @@ deploy:
 	$(MAKE) -C client
 	docker-compose build
 	docker-compose up -d
-	docker-compose run --rm web python manage.py migrate
+	docker-compose run --rm web manage.py migrate
 
 clean:
 	$(MAKE) -C client clean
