@@ -7,3 +7,7 @@ make development
 ```sh
 make
 ```
+
+### TODO
+- [ ] Refactor components
+- [ ] Refactor API abstractions
