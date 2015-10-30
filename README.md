@@ -1,6 +1,6 @@
 # Messenger
 
-![Architecture Overview](./docs/architecture.png)
+![Screenshot](./docs/screenshot.png)
 
 The [client](web/client/client) is a single-page app built with React, Redux,
 ES6+, and webpack.
@@ -15,6 +15,8 @@ The backend is managed with Docker Compose. Containers:
 | queue                | message broker                      | RabbitMQ              |
 | worker               | queue worker                        | Celery                |
 | db                   | database                            | PostgreSQL            |
+
+![Architecture Overview](./docs/architecture.png)
 
 ## Running
 
